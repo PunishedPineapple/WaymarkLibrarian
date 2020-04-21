@@ -46,8 +46,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Data\CharacterAliasConfig.cs" />
+    <Compile Include="Data\Config.cs" />
     <Compile Include="Data\GameDataConfig.cs" />
     <Compile Include="Data\GameDataHandler.cs" />
+    <Compile Include="Data\PresetLibrary.cs" />
     <Compile Include="Data\ProgramConfig.cs" />
     <Compile Include="Data\Waymark.cs" />
     <Compile Include="Data\ZoneInfo.cs" />

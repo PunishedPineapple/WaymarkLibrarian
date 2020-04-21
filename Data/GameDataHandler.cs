@@ -65,6 +65,18 @@ namespace WaymarkLibrarian
 			return waymarkData;
 		}
 
+		public void WriteGameData( string fileName, byte[] data )
+		{
+			//	*****TODO: Verify very carefully that the file is the expected size, etc. before writing.*****
+		}
+
+		protected byte[] ConstructGameData( WaymarkPresets presets )
+		{
+			byte[] newData = new byte[mGameDataConfig.NumberOfPresets * mGameDataConfig.BytesPerPreset()];
+			
+			return newData;
+		}
+
 		protected byte[] CorrectData( byte[] data )
 		{
 			byte[] newData = (byte[])data.Clone();
@@ -74,6 +86,7 @@ namespace WaymarkLibrarian
 
 		protected byte[] VerifyEndianness( byte[] data, uint startPos, uint count, bool wantLittleEndian )
 		{
+			//	*****TODO: Swap byte order if needed.*****
 			byte[] newData = new byte[count];
 			for( uint i = 0; i < count; ++i )
 			{
