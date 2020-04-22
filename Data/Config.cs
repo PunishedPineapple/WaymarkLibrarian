@@ -16,7 +16,7 @@ namespace WaymarkLibrarian
 			ConfigFolderPath = Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ) + "\\WaymarkLibrarian\\";
 
 			//	Instantiate members.
-			ProgramSettings = new ProgramConfig();
+			ProgramSettings = new ProgramConfig( ConfigFolderPath + "Options.cfg" );
 			GameDataSettings = new GameDataConfig();
 			CharacterAliasSettings = new CharacterAliasConfig( ConfigFolderPath + "CharacterAliases.cfg" );
 
@@ -48,7 +48,8 @@ namespace WaymarkLibrarian
 
 		public void SaveConfig()
 		{
-			//copy old doc for backup first.
+			ProgramSettings.SaveConfig();
+			//copy old files for backup first.
 		}
 
 		public ProgramConfig ProgramSettings{ get; protected set; }

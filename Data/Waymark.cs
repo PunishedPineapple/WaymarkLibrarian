@@ -17,6 +17,18 @@ namespace WaymarkLibrarian
 				Y = 0.0;
 				Z = 0.0;
 			}
+			public Point3D( Point3D objToCopy )
+			{
+				X = objToCopy.X;
+				Y = objToCopy.Y;
+				Z = objToCopy.Z;
+			}
+			public Point3D( double x, double y, double z )
+			{
+				X = x;
+				Y = y;
+				Z = z;
+			}
 			public double X { get; set; }
 			public double Y { get; set; }
 			public double Z { get; set; }
@@ -29,6 +41,11 @@ namespace WaymarkLibrarian
 			Pos = new Point3D();
 		}
 
+		public Waymark( Waymark oldObj )
+		{
+			IsEnabled = oldObj.IsEnabled;
+			Pos = new Point3D( oldObj.Pos );
+		}
 		public string GetWaymarkDataString()
 		{
 			return IsEnabled ? ( Pos.X.ToString( " 000.00;-000.00" ) + ", " + Pos.Y.ToString( " 000.00;-000.00" ) + ", " + Pos.Z.ToString( " 000.00;-000.00" ) ) : "Unused";

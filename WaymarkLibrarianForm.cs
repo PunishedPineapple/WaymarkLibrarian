@@ -34,6 +34,9 @@ namespace WaymarkLibrarian
 			//	Load zone ID dictionary data.
 
 			//	Load waymark library.
+			mPresetLibrary = new PresetLibrary();
+			//	*****TODO: Actually load in the library file.*****
+			PopulateLibraryListBox();
 
 			//	Initialize the game settings folder, character list, and game preset list.
 			if( Directory.Exists( mSettings.ProgramSettings.CharacterDataFolderPath ) )
@@ -55,23 +58,9 @@ namespace WaymarkLibrarian
 			}
 		}
 
-		private void GamePresetListBox_SelectedIndexChanged( object sender, EventArgs e )
-		{
-			if( mGamePresetContainer != null )
-			{
-				if( GamePresetListBox.SelectedIndex < 0 )
-				{
-					SelectedPresetInfoBox.Text = "";
-				}
-				else
-				{
-					SelectedPresetInfoBox.Text = mGamePresetContainer[(uint)GamePresetListBox.SelectedIndex].GetPresetDataString();
-				}
-			}
-		}
-
 		private WaymarkPresets mGamePresetContainer;
 		private GameDataHandler mGameDataHandler;
+		private PresetLibrary mPresetLibrary;
 		private string[] mCharacterFolderList;
 		private Config mSettings;
 
@@ -103,6 +92,32 @@ namespace WaymarkLibrarian
 			}
 		}
 
+		private void PopulateGamePresetInfoBox()
+		{
+			if( mGamePresetContainer != null && GamePresetListBox.SelectedIndex >= 0 && GamePresetListBox.SelectedIndex < mSettings.GameDataSettings.NumberOfPresets )
+			{
+				SelectedPresetInfoBox.Text = mGamePresetContainer[(uint)GamePresetListBox.SelectedIndex].GetPresetDataString();
+			}
+			else
+			{
+				SelectedPresetInfoBox.Text = "";
+			}
+		}
+
+		private void PopulateLibraryListBox( bool clear = false )
+		{
+			LibraryListBox.SelectedIndex = -1;
+			LibraryListBox.Items.Clear();
+
+			if( !clear )
+			{
+				foreach( WaymarkPreset preset in mPresetLibrary.Presets )
+				{
+					LibraryListBox.Items.Add( preset.Name + " (" + preset.ZoneID.ToString() + ") (" + preset.LastModified.ToString() + ")" );
+				}
+			}
+		}
+
 		private void CharacterFolderBrowseButton_Click( object sender, EventArgs e )
 		{
 			CharacterDataFolderDialog.ShowDialog();
@@ -117,6 +132,45 @@ namespace WaymarkLibrarian
 		private void CharacterListDropdown_SelectionChangeCommitted( object sender, EventArgs e )
 		{
 			PopulateGamePresetListBox( CharacterListDropdown.SelectedIndex < 0 );
+		}
+
+		private void CopyToLibraryButton_Click( object sender, EventArgs e )
+		{
+			if( GamePresetListBox.SelectedIndex > -1 || GamePresetListBox.SelectedIndex < mSettings.GameDataSettings.NumberOfPresets )
+			{
+				mPresetLibrary.AddPreset( mGamePresetContainer.Presets[GamePresetListBox.SelectedIndex] );
+				PopulateLibraryListBox();
+			}
+		}
+
+		private void CopyToGameButton_Click( object sender, EventArgs e )
+		{
+			//	*****TODO: Pop up a context menu for which preset slot to overwrite rather than just using the selected one.*****
+			if( LibraryListBox.SelectedIndex > -1 && LibraryListBox.SelectedIndex < mPresetLibrary.Presets.Count && GamePresetListBox.SelectedIndex > -1 && GamePresetListBox.SelectedIndex < mSettings.GameDataSettings.NumberOfPresets )
+			{
+				mGamePresetContainer.ReplacePreset( (uint)GamePresetListBox.SelectedIndex, mPresetLibrary.Presets[LibraryListBox.SelectedIndex] );
+				//PopulateGamePresetListBox();
+			}
+		}
+
+		private void GamePresetListBox_SelectedIndexChanged( object sender, EventArgs e )
+		{
+			PopulateGamePresetInfoBox();
+		}
+
+		private void WriteGameFileButton_Click( object sender, EventArgs e )
+		{
+			//	*****TODO: Prompt user to confirm, also validate file is really selected character.
+			mGameDataHandler.WriteGameData( mCharacterFolderList[CharacterListDropdown.SelectedIndex] + '\\' + mSettings.GameDataSettings.WaymarkDataFileName, mGameDataHandler.ConstructGameData( mGamePresetContainer ) );
+		}
+
+		private void WaymarkLibrarianForm_FormClosed( object sender, FormClosedEventArgs e )
+		{
+			if( CharacterListDropdown.SelectedIndex > -1 && CharacterListDropdown.SelectedIndex < mCharacterFolderList.Length )
+			{
+				mSettings.ProgramSettings.DefaultCharacterID = mCharacterFolderList[CharacterListDropdown.SelectedIndex].Split( '\\' ).Last();
+			}
+			mSettings.SaveConfig();
 		}
 	}
 }

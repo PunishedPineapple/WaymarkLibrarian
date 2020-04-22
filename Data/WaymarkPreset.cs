@@ -20,6 +20,18 @@ namespace WaymarkLibrarian
 			}
 		}
 
+		public WaymarkPreset( WaymarkPreset objToCopy )
+		{
+			Name = objToCopy.Name;
+			ZoneID = objToCopy.ZoneID;
+			LastModified = objToCopy.LastModified;
+			Waymarks = new Waymark[objToCopy.Waymarks.Length];
+			for( uint i = 0u; i < Waymarks.Length; ++i )
+			{
+				Waymarks[i] = new Waymark( objToCopy.Waymarks[i] );
+			}
+		}
+
 		public Waymark this[uint key]
 		{
 			get { return Waymarks[(int)key]; }

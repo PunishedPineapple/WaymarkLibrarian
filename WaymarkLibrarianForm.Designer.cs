@@ -35,21 +35,21 @@
 			this.label2 = new System.Windows.Forms.Label();
 			this.GamePresetListBox = new System.Windows.Forms.ListBox();
 			this.label3 = new System.Windows.Forms.Label();
-			this.listBox2 = new System.Windows.Forms.ListBox();
+			this.LibraryListBox = new System.Windows.Forms.ListBox();
 			this.label4 = new System.Windows.Forms.Label();
 			this.button2 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
 			this.SelectedPresetInfoBox = new System.Windows.Forms.TextBox();
 			this.button4 = new System.Windows.Forms.Button();
 			this.button5 = new System.Windows.Forms.Button();
-			this.button6 = new System.Windows.Forms.Button();
-			this.button7 = new System.Windows.Forms.Button();
+			this.CopyToLibraryButton = new System.Windows.Forms.Button();
+			this.CopyToGameButton = new System.Windows.Forms.Button();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
 			this.textBox3 = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-			this.button8 = new System.Windows.Forms.Button();
+			this.WriteGameFileButton = new System.Windows.Forms.Button();
 			this.checkBox1 = new System.Windows.Forms.CheckBox();
 			this.checkBox2 = new System.Windows.Forms.CheckBox();
 			this.checkBox3 = new System.Windows.Forms.CheckBox();
@@ -164,13 +164,13 @@
 			this.label3.TabIndex = 6;
 			this.label3.Text = "Current Presets:";
 			// 
-			// listBox2
+			// LibraryListBox
 			// 
-			this.listBox2.FormattingEnabled = true;
-			this.listBox2.Location = new System.Drawing.Point(392, 24);
-			this.listBox2.Name = "listBox2";
-			this.listBox2.Size = new System.Drawing.Size(248, 381);
-			this.listBox2.TabIndex = 7;
+			this.LibraryListBox.FormattingEnabled = true;
+			this.LibraryListBox.Location = new System.Drawing.Point(392, 24);
+			this.LibraryListBox.Name = "LibraryListBox";
+			this.LibraryListBox.Size = new System.Drawing.Size(248, 381);
+			this.LibraryListBox.TabIndex = 7;
 			// 
 			// label4
 			// 
@@ -227,23 +227,25 @@
 			this.button5.Text = "Clear Slot";
 			this.button5.UseVisualStyleBackColor = true;
 			// 
-			// button6
+			// CopyToLibraryButton
 			// 
-			this.button6.Location = new System.Drawing.Point(272, 120);
-			this.button6.Name = "button6";
-			this.button6.Size = new System.Drawing.Size(107, 23);
-			this.button6.TabIndex = 15;
-			this.button6.Text = "Copy to Library ->";
-			this.button6.UseVisualStyleBackColor = true;
+			this.CopyToLibraryButton.Location = new System.Drawing.Point(272, 120);
+			this.CopyToLibraryButton.Name = "CopyToLibraryButton";
+			this.CopyToLibraryButton.Size = new System.Drawing.Size(107, 23);
+			this.CopyToLibraryButton.TabIndex = 15;
+			this.CopyToLibraryButton.Text = "Copy to Library ->";
+			this.CopyToLibraryButton.UseVisualStyleBackColor = true;
+			this.CopyToLibraryButton.Click += new System.EventHandler(this.CopyToLibraryButton_Click);
 			// 
-			// button7
+			// CopyToGameButton
 			// 
-			this.button7.Location = new System.Drawing.Point(272, 176);
-			this.button7.Name = "button7";
-			this.button7.Size = new System.Drawing.Size(107, 23);
-			this.button7.TabIndex = 16;
-			this.button7.Text = "<- Copy to Game";
-			this.button7.UseVisualStyleBackColor = true;
+			this.CopyToGameButton.Location = new System.Drawing.Point(272, 176);
+			this.CopyToGameButton.Name = "CopyToGameButton";
+			this.CopyToGameButton.Size = new System.Drawing.Size(107, 23);
+			this.CopyToGameButton.TabIndex = 16;
+			this.CopyToGameButton.Text = "<- Copy to Game";
+			this.CopyToGameButton.UseVisualStyleBackColor = true;
+			this.CopyToGameButton.Click += new System.EventHandler(this.CopyToGameButton_Click);
 			// 
 			// label5
 			// 
@@ -286,14 +288,18 @@
 			this.dateTimePicker1.Size = new System.Drawing.Size(240, 20);
 			this.dateTimePicker1.TabIndex = 21;
 			// 
-			// button8
+			// WriteGameFileButton
 			// 
-			this.button8.Location = new System.Drawing.Point(280, 288);
-			this.button8.Name = "button8";
-			this.button8.Size = new System.Drawing.Size(96, 96);
-			this.button8.TabIndex = 22;
-			this.button8.Text = "Write Game File";
-			this.button8.UseVisualStyleBackColor = true;
+			this.WriteGameFileButton.FlatAppearance.BorderColor = System.Drawing.Color.Red;
+			this.WriteGameFileButton.FlatAppearance.BorderSize = 2;
+			this.WriteGameFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.WriteGameFileButton.Location = new System.Drawing.Point(280, 288);
+			this.WriteGameFileButton.Name = "WriteGameFileButton";
+			this.WriteGameFileButton.Size = new System.Drawing.Size(96, 96);
+			this.WriteGameFileButton.TabIndex = 22;
+			this.WriteGameFileButton.Text = "Write Game File";
+			this.WriteGameFileButton.UseVisualStyleBackColor = true;
+			this.WriteGameFileButton.Click += new System.EventHandler(this.WriteGameFileButton_Click);
 			// 
 			// checkBox1
 			// 
@@ -724,21 +730,21 @@
 			this.Controls.Add(this.checkBox3);
 			this.Controls.Add(this.checkBox2);
 			this.Controls.Add(this.checkBox1);
-			this.Controls.Add(this.button8);
+			this.Controls.Add(this.WriteGameFileButton);
 			this.Controls.Add(this.dateTimePicker1);
 			this.Controls.Add(this.label7);
 			this.Controls.Add(this.textBox3);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.label5);
-			this.Controls.Add(this.button7);
-			this.Controls.Add(this.button6);
+			this.Controls.Add(this.CopyToGameButton);
+			this.Controls.Add(this.CopyToLibraryButton);
 			this.Controls.Add(this.button5);
 			this.Controls.Add(this.button4);
 			this.Controls.Add(this.SelectedPresetInfoBox);
 			this.Controls.Add(this.button3);
 			this.Controls.Add(this.button2);
 			this.Controls.Add(this.label4);
-			this.Controls.Add(this.listBox2);
+			this.Controls.Add(this.LibraryListBox);
 			this.Controls.Add(this.label3);
 			this.Controls.Add(this.GamePresetListBox);
 			this.Controls.Add(this.label2);
@@ -748,6 +754,7 @@
 			this.Controls.Add(this.CharacterListDropdown);
 			this.Name = "WaymarkLibrarianForm";
 			this.Text = "FFXIV Waymark Librarian";
+			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WaymarkLibrarianForm_FormClosed);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -762,21 +769,21 @@
 		private System.Windows.Forms.Label label2;
 		private System.Windows.Forms.ListBox GamePresetListBox;
 		private System.Windows.Forms.Label label3;
-		private System.Windows.Forms.ListBox listBox2;
+		private System.Windows.Forms.ListBox LibraryListBox;
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.TextBox SelectedPresetInfoBox;
 		private System.Windows.Forms.Button button4;
 		private System.Windows.Forms.Button button5;
-		private System.Windows.Forms.Button button6;
-		private System.Windows.Forms.Button button7;
+		private System.Windows.Forms.Button CopyToLibraryButton;
+		private System.Windows.Forms.Button CopyToGameButton;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label6;
 		private System.Windows.Forms.TextBox textBox3;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.DateTimePicker dateTimePicker1;
-		private System.Windows.Forms.Button button8;
+		private System.Windows.Forms.Button WriteGameFileButton;
 		private System.Windows.Forms.CheckBox checkBox1;
 		private System.Windows.Forms.CheckBox checkBox2;
 		private System.Windows.Forms.CheckBox checkBox3;

@@ -17,9 +17,23 @@ namespace WaymarkLibrarian
 			}
 		}
 
+		public WaymarkPresets( WaymarkPresets objToCopy )
+		{
+			Presets = new WaymarkPreset[objToCopy.Presets.Length];
+			for( uint i = 0u; i < Presets.Length; ++i )
+			{
+				Presets[i] = new WaymarkPreset( objToCopy.Presets[i] );
+			}
+		}
+
 		public WaymarkPreset this[uint key]
 		{
 			get { return Presets[(int)key]; }
+		}
+
+		public void ReplacePreset( uint index, WaymarkPreset preset )
+		{
+			if( index < Presets.Length ) Presets[index] = preset;
 		}
 
 		public string GetDataString()

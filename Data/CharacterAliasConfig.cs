@@ -19,6 +19,7 @@ namespace WaymarkLibrarian
 		protected void SetDefaultConfig()
 		{
 		}
+
 		protected void ReadSavedConfig()
 		{
 			if( File.Exists( ConfigFilePath ) )
