@@ -8,12 +8,14 @@ namespace WaymarkLibrarian
 {
 	class WaymarkPreset
 	{
-		public WaymarkPreset( uint numWaymarks )
+		public WaymarkPreset()
 		{
+			if( mWaymarkIDs == null || mWaymarkIDs.Count < 1 ) throw new Exception( "Error constructing WaymarkPreset object: The waymark ID list is either null or empty." );
+
 			Name			= "Unknown";
 			ZoneID			= 0;
-			LastModified	= DateTime.UtcNow;
-			Waymarks		= new Waymark[(int)numWaymarks];
+			LastModified	= DateTimeOffset.UtcNow;
+			Waymarks		= new Waymark[mWaymarkIDs.Count];
 			for( uint i = 0u; i < Waymarks.Length; ++i )
 			{
 				Waymarks[i] = new Waymark();
@@ -42,23 +44,38 @@ namespace WaymarkLibrarian
 			string str = "";
 			for( uint i = 0u; i < Waymarks.Length; ++i )
 			{
-				str += GetWaymarkName( i ) + ": " + Waymarks[i].GetWaymarkDataString() + "\r\n";
+				str += GetWaymarkID( i ) + ": " + Waymarks[i].GetWaymarkDataString() + "\r\n";
 			}
-			str += "\r\nZone ID: " + ZoneID.ToString() + "\r\nLast Modified: " + LastModified.ToLocalTime().ToString();
+			str += "\r\nZone ID: " + ZoneID.ToString() + "\r\nLast Modified: " + LastModified.ToLocalTime().ToString( "g" );
 			return str;
 		}
 
-		public string GetWaymarkName( uint key )
+		public static void SetWaymarkIDOrder( string IDs )
 		{
-			string[] names = { "A", "B", "C", "D", "1", "2", "3", "4" };
-			if( key >= names.Length ) return "Error: Invalid waymark number.";
-			return names[(int)key];
+			mWaymarkIDs = new List<string>();
+			foreach( char c in IDs )
+			{
+				mWaymarkIDs.Add( c.ToString() );
+			}
+		}
+
+		public static string GetWaymarkID( uint key )
+		{
+			if( key >= mWaymarkIDs.Count ) return "Error: Invalid waymark number.";
+			return mWaymarkIDs.ElementAt((int)key);
+		}
+
+		public static int GetWaymarkNumber( string key )
+		{
+			return mWaymarkIDs.IndexOf( key );
 		}
 
 		//	Members
 		public string Name { get; set; }
-		public DateTime LastModified { get; set; }
+		public DateTimeOffset LastModified { get; set; }
 		public UInt16 ZoneID { get; set; }
 		public Waymark[] Waymarks { get; protected set; }
+
+		protected static List<string> mWaymarkIDs;
 	}
 }

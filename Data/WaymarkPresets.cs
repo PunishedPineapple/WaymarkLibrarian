@@ -8,12 +8,12 @@ namespace WaymarkLibrarian
 {
 	class WaymarkPresets
 	{
-		public WaymarkPresets( uint numPresets, uint waymarksPerPreset )
+		public WaymarkPresets( uint numPresets )
 		{
 			Presets = new WaymarkPreset[numPresets];
 			for( uint i = 0u; i < Presets.Length; ++i )
 			{
-				Presets[i] = new WaymarkPreset( waymarksPerPreset );
+				Presets[i] = new WaymarkPreset();
 			}
 		}
 

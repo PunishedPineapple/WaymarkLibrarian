@@ -17,7 +17,7 @@ namespace WaymarkLibrarian
 		public WaymarkPresets ReadGameData( string fileName )
 		{
 			//	Object to populate with the game data.
-			WaymarkPresets presets = new WaymarkPresets( mGameDataConfig.NumberOfPresets, mGameDataConfig.NumberOfWaymarks );
+			WaymarkPresets presets = new WaymarkPresets( mGameDataConfig.NumberOfPresets );
 
 			//	Read the raw data from the file.
 			if( !File.Exists( fileName ) ) throw new Exception( "File does not exist (" + fileName + ")" ) ;
@@ -58,7 +58,7 @@ namespace WaymarkLibrarian
 				presets[presetNumber].ZoneID = BitConverter.ToUInt16( ReadBytes( correctedData, offset + 2u, sizeof( Int16 ), !BitConverter.IsLittleEndian ), 0 );
 
 				//	Time last modified.
-				presets[presetNumber].LastModified = DateTimeOffset.FromUnixTimeSeconds( BitConverter.ToInt32( ReadBytes( correctedData, offset + 4u, sizeof( Int32 ), !BitConverter.IsLittleEndian ), 0 ) ).UtcDateTime;
+				presets[presetNumber].LastModified = DateTimeOffset.FromUnixTimeSeconds( BitConverter.ToInt32( ReadBytes( correctedData, offset + 4u, sizeof( Int32 ), !BitConverter.IsLittleEndian ), 0 ) );
 			}
 
 			//	Return the processed data.
@@ -117,7 +117,7 @@ namespace WaymarkLibrarian
 				WriteBytes( BitConverter.GetBytes( presets[presetNumber].ZoneID ), newData, offset + 2u, !BitConverter.IsLittleEndian );
 
 				//	Time last modified.
-				WriteBytes( BitConverter.GetBytes( (Int32)new DateTimeOffset( presets[presetNumber].LastModified ).ToUnixTimeSeconds() ), newData, offset + 4u, !BitConverter.IsLittleEndian );
+				WriteBytes( BitConverter.GetBytes( (Int32)presets[presetNumber].LastModified.ToUnixTimeSeconds() ), newData, offset + 4u, !BitConverter.IsLittleEndian );
 			}
 
 			//	Don't correct it here; let the actual write function do that.

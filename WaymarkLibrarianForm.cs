@@ -34,7 +34,8 @@ namespace WaymarkLibrarian
 			//	Load zone ID dictionary data.
 
 			//	Load waymark library.
-			mPresetLibrary = new PresetLibrary();
+			mPresetLibrary = new PresetLibrary( Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ) + "\\WaymarkLibrarian\\WaymarkLibrary.xml" );
+
 			//	*****TODO: Actually load in the library file.*****
 			PopulateLibraryListBox();
 
@@ -113,7 +114,7 @@ namespace WaymarkLibrarian
 			{
 				foreach( WaymarkPreset preset in mPresetLibrary.Presets )
 				{
-					LibraryListBox.Items.Add( preset.Name + " (" + preset.ZoneID.ToString() + ") (" + preset.LastModified.ToString() + ")" );
+					LibraryListBox.Items.Add( preset.Name + " (" + preset.ZoneID.ToString() + ") (" + preset.LastModified.ToLocalTime().ToString( "g" ) + ")" );
 				}
 			}
 		}
