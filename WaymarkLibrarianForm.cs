@@ -28,6 +28,10 @@ namespace WaymarkLibrarian
 			//	WinForms Stuff
 			InitializeComponent();
 
+			//	Control setup.
+			PresetTimePicker.Format = DateTimePickerFormat.Time;
+			PresetTimePicker.ShowUpDown = true;
+
 			//	Get config settings.
 			mSettings = new Config();
 
@@ -111,6 +115,7 @@ namespace WaymarkLibrarian
 
 		private void PopulateLibraryListBox( bool clear = false )
 		{
+			int previousSelectedIndex = LibraryListBox.SelectedIndex;
 			LibraryListBox.SelectedIndex = -1;
 			LibraryListBox.Items.Clear();
 
@@ -120,6 +125,120 @@ namespace WaymarkLibrarian
 				{
 					LibraryListBox.Items.Add( preset.Name + " (" + preset.ZoneID.ToString() + ") (" + preset.LastModified.ToLocalTime().ToString( "g" ) + ")" );
 				}
+
+				if( previousSelectedIndex < LibraryListBox.Items.Count )
+				{
+					LibraryListBox.SelectedIndex = previousSelectedIndex;
+				}
+			}
+		}
+
+		private void PopulatePresetEditor( bool clear = false )
+		{
+			if( !clear && LibraryListBox.SelectedIndex > -1 && LibraryListBox.SelectedIndex < mPresetLibrary.Presets.Count )
+			{
+				PresetNameTextBox.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Name;
+				PresetDatePicker.Value = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].LastModified.LocalDateTime.Date;
+				PresetTimePicker.Value = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].LastModified.LocalDateTime;
+
+				//	*****TODO: Make this the actual dropdown once the zone dictionary is implemented.*****
+				PresetZoneDropdown.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].ZoneID.ToString();
+
+				WaymarkACheckbox.Checked = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].IsEnabled;
+				WaymarkATextBox_X.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.X.ToString();
+				WaymarkATextBox_Y.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.Y.ToString();
+				WaymarkATextBox_Z.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.Z.ToString();
+
+				WaymarkBCheckbox.Checked = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].IsEnabled;
+				WaymarkBTextBox_X.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.X.ToString();
+				WaymarkBTextBox_Y.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.Y.ToString();
+				WaymarkBTextBox_Z.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.Z.ToString();
+
+				WaymarkCCheckbox.Checked = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].IsEnabled;
+				WaymarkCTextBox_X.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.X.ToString();
+				WaymarkCTextBox_Y.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.Y.ToString();
+				WaymarkCTextBox_Z.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.Z.ToString();
+
+				WaymarkDCheckbox.Checked = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].IsEnabled;
+				WaymarkDTextBox_X.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.X.ToString();
+				WaymarkDTextBox_Y.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.Y.ToString();
+				WaymarkDTextBox_Z.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.Z.ToString();
+
+				Waymark1Checkbox.Checked = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].IsEnabled;
+				Waymark1TextBox_X.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.X.ToString();
+				Waymark1TextBox_Y.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.Y.ToString();
+				Waymark1TextBox_Z.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.Z.ToString();
+
+				Waymark2Checkbox.Checked = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].IsEnabled;
+				Waymark2TextBox_X.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.X.ToString();
+				Waymark2TextBox_Y.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.Y.ToString();
+				Waymark2TextBox_Z.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.Z.ToString();
+
+				Waymark3Checkbox.Checked = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].IsEnabled;
+				Waymark3TextBox_X.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.X.ToString();
+				Waymark3TextBox_Y.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.Y.ToString();
+				Waymark3TextBox_Z.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.Z.ToString();
+
+				Waymark4Checkbox.Checked = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].IsEnabled;
+				Waymark4TextBox_X.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.X.ToString();
+				Waymark4TextBox_Y.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.Y.ToString();
+				Waymark4TextBox_Z.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.Z.ToString();
+			}
+			else
+			{
+				PresetNameTextBox.Text = "";
+				PresetDatePicker.Value = DateTime.Now;
+				PresetTimePicker.Value = DateTime.Now;
+
+				//	*****TODO: Set dropdown index instead once zone dictionary is implemented.*****
+				PresetZoneDropdown.Text = "";
+
+				WaymarkACheckbox.Checked = false;
+				WaymarkATextBox_X.Text = "";
+				WaymarkATextBox_Y.Text = "";
+				WaymarkATextBox_Z.Text = "";
+
+
+				WaymarkBCheckbox.Checked = false;
+				WaymarkBTextBox_X.Text = "";
+				WaymarkBTextBox_Y.Text = "";
+				WaymarkBTextBox_Z.Text = "";
+
+
+				WaymarkCCheckbox.Checked = false;
+				WaymarkCTextBox_X.Text = "";
+				WaymarkCTextBox_Y.Text = "";
+				WaymarkCTextBox_Z.Text = "";
+
+
+				WaymarkDCheckbox.Checked = false;
+				WaymarkDTextBox_X.Text = "";
+				WaymarkDTextBox_Y.Text = "";
+				WaymarkDTextBox_Z.Text = "";
+
+
+				Waymark1Checkbox.Checked = false;
+				Waymark1TextBox_X.Text = "";
+				Waymark1TextBox_Y.Text = "";
+				Waymark1TextBox_Z.Text = "";
+
+
+				Waymark2Checkbox.Checked = false;
+				Waymark2TextBox_X.Text = "";
+				Waymark2TextBox_Y.Text = "";
+				Waymark2TextBox_Z.Text = "";
+
+
+				Waymark3Checkbox.Checked = false;
+				Waymark3TextBox_X.Text = "";
+				Waymark3TextBox_Y.Text = "";
+				Waymark3TextBox_Z.Text = "";
+
+
+				Waymark4Checkbox.Checked = false;
+				Waymark4TextBox_X.Text = "";
+				Waymark4TextBox_Y.Text = "";
+				Waymark4TextBox_Z.Text = "";
 			}
 		}
 
@@ -202,6 +321,67 @@ namespace WaymarkLibrarian
 					PopulateCharacterListDropdown();
 					CharacterListDropdown.SelectedIndex = currentCharacterIndex;
 				}
+			}
+		}
+
+		private void LibraryListBox_SelectedIndexChanged( object sender, EventArgs e )
+		{
+			PopulatePresetEditor();
+		}
+
+		private void LibraryPresetUpdateButton_Click( object sender, EventArgs e )
+		{
+			if( LibraryListBox.SelectedIndex > -1 && LibraryListBox.SelectedIndex < mPresetLibrary.Presets.Count )
+			{
+				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Name = PresetNameTextBox.Text;
+				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].LastModified = ( PresetDatePicker.Value.Date + PresetTimePicker.Value.TimeOfDay ).ToUniversalTime();
+
+				//	*****TODO: Make this use the actual dropdown once the zone dictionary is implemented.*****
+				UInt16 tempShort;
+				if( UInt16.TryParse( PresetZoneDropdown.Text, out tempShort ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].ZoneID = tempShort;
+
+				double tempDouble;
+				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].IsEnabled = WaymarkACheckbox.Checked;
+				if( double.TryParse( WaymarkATextBox_X.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.X = tempDouble;
+				if( double.TryParse( WaymarkATextBox_Y.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.Y = tempDouble;
+				if( double.TryParse( WaymarkATextBox_Z.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.Z = tempDouble;
+
+				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].IsEnabled = WaymarkACheckbox.Checked;
+				if( double.TryParse( WaymarkBTextBox_X.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.X = tempDouble;
+				if( double.TryParse( WaymarkBTextBox_Y.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.Y = tempDouble;
+				if( double.TryParse( WaymarkBTextBox_Z.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.Z = tempDouble;
+
+				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].IsEnabled = WaymarkCCheckbox.Checked;
+				if( double.TryParse( WaymarkCTextBox_X.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.X = tempDouble;
+				if( double.TryParse( WaymarkCTextBox_Y.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.Y = tempDouble;
+				if( double.TryParse( WaymarkCTextBox_Z.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.Z = tempDouble;
+
+				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].IsEnabled = WaymarkDCheckbox.Checked;
+				if( double.TryParse( WaymarkDTextBox_X.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.X = tempDouble;
+				if( double.TryParse( WaymarkDTextBox_Y.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.Y = tempDouble;
+				if( double.TryParse( WaymarkDTextBox_Z.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.Z = tempDouble;
+
+				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].IsEnabled = Waymark1Checkbox.Checked;
+				if( double.TryParse( Waymark1TextBox_X.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.X = tempDouble;
+				if( double.TryParse( Waymark1TextBox_Y.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.Y = tempDouble;
+				if( double.TryParse( Waymark1TextBox_Z.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.Z = tempDouble;
+
+				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].IsEnabled = Waymark2Checkbox.Checked;
+				if( double.TryParse( Waymark2TextBox_X.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.X = tempDouble;
+				if( double.TryParse( Waymark2TextBox_Y.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.Y = tempDouble;
+				if( double.TryParse( Waymark2TextBox_Z.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.Z = tempDouble;
+
+				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].IsEnabled = Waymark3Checkbox.Checked;
+				if( double.TryParse( Waymark3TextBox_X.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.X = tempDouble;
+				if( double.TryParse( Waymark3TextBox_Y.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.Y = tempDouble;
+				if( double.TryParse( Waymark3TextBox_Z.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.Z = tempDouble;
+
+				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].IsEnabled = Waymark4Checkbox.Checked;
+				if( double.TryParse( Waymark4TextBox_X.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.X = tempDouble;
+				if( double.TryParse( Waymark4TextBox_Y.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.Y = tempDouble;
+				if( double.TryParse( Waymark4TextBox_Z.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.Z = tempDouble;
+
+				PopulateLibraryListBox();
 			}
 		}
 	}

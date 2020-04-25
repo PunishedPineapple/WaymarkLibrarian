@@ -37,8 +37,8 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.LibraryListBox = new System.Windows.Forms.ListBox();
 			this.label4 = new System.Windows.Forms.Label();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button3 = new System.Windows.Forms.Button();
+			this.LibraryPresetAddButton = new System.Windows.Forms.Button();
+			this.LibraryPresetRemoveButton = new System.Windows.Forms.Button();
 			this.SelectedPresetInfoBox = new System.Windows.Forms.TextBox();
 			this.SetCharacterAliasButton = new System.Windows.Forms.Button();
 			this.ClearGameSlotButton = new System.Windows.Forms.Button();
@@ -46,19 +46,19 @@
 			this.CopyToGameButton = new System.Windows.Forms.Button();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label6 = new System.Windows.Forms.Label();
-			this.textBox3 = new System.Windows.Forms.TextBox();
+			this.PresetNameTextBox = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
-			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+			this.PresetDatePicker = new System.Windows.Forms.DateTimePicker();
 			this.WriteGameFileButton = new System.Windows.Forms.Button();
-			this.checkBox1 = new System.Windows.Forms.CheckBox();
-			this.checkBox2 = new System.Windows.Forms.CheckBox();
-			this.checkBox3 = new System.Windows.Forms.CheckBox();
-			this.checkBox4 = new System.Windows.Forms.CheckBox();
-			this.checkBox5 = new System.Windows.Forms.CheckBox();
-			this.checkBox6 = new System.Windows.Forms.CheckBox();
-			this.checkBox7 = new System.Windows.Forms.CheckBox();
-			this.checkBox8 = new System.Windows.Forms.CheckBox();
-			this.comboBox2 = new System.Windows.Forms.ComboBox();
+			this.WaymarkACheckbox = new System.Windows.Forms.CheckBox();
+			this.WaymarkBCheckbox = new System.Windows.Forms.CheckBox();
+			this.WaymarkCCheckbox = new System.Windows.Forms.CheckBox();
+			this.WaymarkDCheckbox = new System.Windows.Forms.CheckBox();
+			this.Waymark1Checkbox = new System.Windows.Forms.CheckBox();
+			this.Waymark2Checkbox = new System.Windows.Forms.CheckBox();
+			this.Waymark3Checkbox = new System.Windows.Forms.CheckBox();
+			this.Waymark4Checkbox = new System.Windows.Forms.CheckBox();
+			this.PresetZoneDropdown = new System.Windows.Forms.ComboBox();
 			this.label9 = new System.Windows.Forms.Label();
 			this.label10 = new System.Windows.Forms.Label();
 			this.label11 = new System.Windows.Forms.Label();
@@ -68,37 +68,37 @@
 			this.label15 = new System.Windows.Forms.Label();
 			this.label16 = new System.Windows.Forms.Label();
 			this.label17 = new System.Windows.Forms.Label();
-			this.textBox4 = new System.Windows.Forms.TextBox();
-			this.textBox5 = new System.Windows.Forms.TextBox();
-			this.textBox6 = new System.Windows.Forms.TextBox();
-			this.textBox7 = new System.Windows.Forms.TextBox();
-			this.textBox8 = new System.Windows.Forms.TextBox();
-			this.textBox9 = new System.Windows.Forms.TextBox();
-			this.textBox10 = new System.Windows.Forms.TextBox();
-			this.textBox11 = new System.Windows.Forms.TextBox();
-			this.textBox12 = new System.Windows.Forms.TextBox();
-			this.textBox13 = new System.Windows.Forms.TextBox();
-			this.textBox14 = new System.Windows.Forms.TextBox();
-			this.textBox15 = new System.Windows.Forms.TextBox();
-			this.textBox16 = new System.Windows.Forms.TextBox();
-			this.textBox17 = new System.Windows.Forms.TextBox();
-			this.textBox18 = new System.Windows.Forms.TextBox();
-			this.textBox19 = new System.Windows.Forms.TextBox();
-			this.textBox20 = new System.Windows.Forms.TextBox();
-			this.textBox21 = new System.Windows.Forms.TextBox();
-			this.textBox22 = new System.Windows.Forms.TextBox();
-			this.textBox23 = new System.Windows.Forms.TextBox();
-			this.textBox24 = new System.Windows.Forms.TextBox();
-			this.textBox25 = new System.Windows.Forms.TextBox();
-			this.textBox26 = new System.Windows.Forms.TextBox();
-			this.textBox27 = new System.Windows.Forms.TextBox();
+			this.WaymarkATextBox_X = new System.Windows.Forms.TextBox();
+			this.WaymarkATextBox_Y = new System.Windows.Forms.TextBox();
+			this.WaymarkATextBox_Z = new System.Windows.Forms.TextBox();
+			this.WaymarkBTextBox_X = new System.Windows.Forms.TextBox();
+			this.WaymarkBTextBox_Y = new System.Windows.Forms.TextBox();
+			this.WaymarkBTextBox_Z = new System.Windows.Forms.TextBox();
+			this.WaymarkCTextBox_X = new System.Windows.Forms.TextBox();
+			this.WaymarkCTextBox_Y = new System.Windows.Forms.TextBox();
+			this.WaymarkCTextBox_Z = new System.Windows.Forms.TextBox();
+			this.WaymarkDTextBox_X = new System.Windows.Forms.TextBox();
+			this.WaymarkDTextBox_Y = new System.Windows.Forms.TextBox();
+			this.WaymarkDTextBox_Z = new System.Windows.Forms.TextBox();
+			this.Waymark1TextBox_X = new System.Windows.Forms.TextBox();
+			this.Waymark1TextBox_Y = new System.Windows.Forms.TextBox();
+			this.Waymark1TextBox_Z = new System.Windows.Forms.TextBox();
+			this.Waymark2TextBox_X = new System.Windows.Forms.TextBox();
+			this.Waymark2TextBox_Y = new System.Windows.Forms.TextBox();
+			this.Waymark2TextBox_Z = new System.Windows.Forms.TextBox();
+			this.Waymark3TextBox_X = new System.Windows.Forms.TextBox();
+			this.Waymark3TextBox_Y = new System.Windows.Forms.TextBox();
+			this.Waymark3TextBox_Z = new System.Windows.Forms.TextBox();
+			this.Waymark4TextBox_X = new System.Windows.Forms.TextBox();
+			this.Waymark4TextBox_Y = new System.Windows.Forms.TextBox();
+			this.Waymark4TextBox_Z = new System.Windows.Forms.TextBox();
 			this.label19 = new System.Windows.Forms.Label();
 			this.label20 = new System.Windows.Forms.Label();
 			this.label21 = new System.Windows.Forms.Label();
-			this.textBox28 = new System.Windows.Forms.TextBox();
-			this.button9 = new System.Windows.Forms.Button();
+			this.LibraryPresetUpdateButton = new System.Windows.Forms.Button();
 			this.CharacterDataFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this.label8 = new System.Windows.Forms.Label();
+			this.PresetTimePicker = new System.Windows.Forms.DateTimePicker();
 			this.SuspendLayout();
 			// 
 			// CharacterListDropdown
@@ -172,6 +172,7 @@
 			this.LibraryListBox.Name = "LibraryListBox";
 			this.LibraryListBox.Size = new System.Drawing.Size(248, 381);
 			this.LibraryListBox.TabIndex = 10;
+			this.LibraryListBox.SelectedIndexChanged += new System.EventHandler(this.LibraryListBox_SelectedIndexChanged);
 			// 
 			// label4
 			// 
@@ -182,23 +183,23 @@
 			this.label4.TabIndex = 8;
 			this.label4.Text = "Preset Library:";
 			// 
-			// button2
+			// LibraryPresetAddButton
 			// 
-			this.button2.Location = new System.Drawing.Point(392, 408);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(72, 23);
-			this.button2.TabIndex = 11;
-			this.button2.Text = "Add";
-			this.button2.UseVisualStyleBackColor = true;
+			this.LibraryPresetAddButton.Location = new System.Drawing.Point(392, 408);
+			this.LibraryPresetAddButton.Name = "LibraryPresetAddButton";
+			this.LibraryPresetAddButton.Size = new System.Drawing.Size(72, 23);
+			this.LibraryPresetAddButton.TabIndex = 11;
+			this.LibraryPresetAddButton.Text = "Add";
+			this.LibraryPresetAddButton.UseVisualStyleBackColor = true;
 			// 
-			// button3
+			// LibraryPresetRemoveButton
 			// 
-			this.button3.Location = new System.Drawing.Point(480, 408);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(72, 23);
-			this.button3.TabIndex = 12;
-			this.button3.Text = "Remove";
-			this.button3.UseVisualStyleBackColor = true;
+			this.LibraryPresetRemoveButton.Location = new System.Drawing.Point(480, 408);
+			this.LibraryPresetRemoveButton.Name = "LibraryPresetRemoveButton";
+			this.LibraryPresetRemoveButton.Size = new System.Drawing.Size(72, 23);
+			this.LibraryPresetRemoveButton.TabIndex = 12;
+			this.LibraryPresetRemoveButton.Text = "Remove";
+			this.LibraryPresetRemoveButton.UseVisualStyleBackColor = true;
 			// 
 			// SelectedPresetInfoBox
 			// 
@@ -268,12 +269,12 @@
 			this.label6.TabIndex = 18;
 			this.label6.Text = "Preset Name (Library-Only):";
 			// 
-			// textBox3
+			// PresetNameTextBox
 			// 
-			this.textBox3.Location = new System.Drawing.Point(656, 24);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(360, 20);
-			this.textBox3.TabIndex = 13;
+			this.PresetNameTextBox.Location = new System.Drawing.Point(656, 24);
+			this.PresetNameTextBox.Name = "PresetNameTextBox";
+			this.PresetNameTextBox.Size = new System.Drawing.Size(360, 20);
+			this.PresetNameTextBox.TabIndex = 13;
 			// 
 			// label7
 			// 
@@ -284,12 +285,14 @@
 			this.label7.TabIndex = 20;
 			this.label7.Text = "Time/Date Created:";
 			// 
-			// dateTimePicker1
+			// PresetDatePicker
 			// 
-			this.dateTimePicker1.Location = new System.Drawing.Point(656, 72);
-			this.dateTimePicker1.Name = "dateTimePicker1";
-			this.dateTimePicker1.Size = new System.Drawing.Size(240, 20);
-			this.dateTimePicker1.TabIndex = 14;
+			this.PresetDatePicker.CustomFormat = "";
+			this.PresetDatePicker.Location = new System.Drawing.Point(656, 72);
+			this.PresetDatePicker.MinDate = new System.DateTime(2020, 2, 18, 0, 0, 0, 0);
+			this.PresetDatePicker.Name = "PresetDatePicker";
+			this.PresetDatePicker.Size = new System.Drawing.Size(240, 20);
+			this.PresetDatePicker.TabIndex = 14;
 			// 
 			// WriteGameFileButton
 			// 
@@ -304,86 +307,86 @@
 			this.WriteGameFileButton.UseVisualStyleBackColor = true;
 			this.WriteGameFileButton.Click += new System.EventHandler(this.WriteGameFileButton_Click);
 			// 
-			// checkBox1
+			// WaymarkACheckbox
 			// 
-			this.checkBox1.AutoSize = true;
-			this.checkBox1.Location = new System.Drawing.Point(656, 184);
-			this.checkBox1.Name = "checkBox1";
-			this.checkBox1.Size = new System.Drawing.Size(15, 14);
-			this.checkBox1.TabIndex = 17;
-			this.checkBox1.UseVisualStyleBackColor = true;
+			this.WaymarkACheckbox.AutoSize = true;
+			this.WaymarkACheckbox.Location = new System.Drawing.Point(656, 184);
+			this.WaymarkACheckbox.Name = "WaymarkACheckbox";
+			this.WaymarkACheckbox.Size = new System.Drawing.Size(15, 14);
+			this.WaymarkACheckbox.TabIndex = 17;
+			this.WaymarkACheckbox.UseVisualStyleBackColor = true;
 			// 
-			// checkBox2
+			// WaymarkBCheckbox
 			// 
-			this.checkBox2.AutoSize = true;
-			this.checkBox2.Location = new System.Drawing.Point(656, 216);
-			this.checkBox2.Name = "checkBox2";
-			this.checkBox2.Size = new System.Drawing.Size(15, 14);
-			this.checkBox2.TabIndex = 21;
-			this.checkBox2.UseVisualStyleBackColor = true;
+			this.WaymarkBCheckbox.AutoSize = true;
+			this.WaymarkBCheckbox.Location = new System.Drawing.Point(656, 216);
+			this.WaymarkBCheckbox.Name = "WaymarkBCheckbox";
+			this.WaymarkBCheckbox.Size = new System.Drawing.Size(15, 14);
+			this.WaymarkBCheckbox.TabIndex = 21;
+			this.WaymarkBCheckbox.UseVisualStyleBackColor = true;
 			// 
-			// checkBox3
+			// WaymarkCCheckbox
 			// 
-			this.checkBox3.AutoSize = true;
-			this.checkBox3.Location = new System.Drawing.Point(656, 248);
-			this.checkBox3.Name = "checkBox3";
-			this.checkBox3.Size = new System.Drawing.Size(15, 14);
-			this.checkBox3.TabIndex = 25;
-			this.checkBox3.UseVisualStyleBackColor = true;
+			this.WaymarkCCheckbox.AutoSize = true;
+			this.WaymarkCCheckbox.Location = new System.Drawing.Point(656, 248);
+			this.WaymarkCCheckbox.Name = "WaymarkCCheckbox";
+			this.WaymarkCCheckbox.Size = new System.Drawing.Size(15, 14);
+			this.WaymarkCCheckbox.TabIndex = 25;
+			this.WaymarkCCheckbox.UseVisualStyleBackColor = true;
 			// 
-			// checkBox4
+			// WaymarkDCheckbox
 			// 
-			this.checkBox4.AutoSize = true;
-			this.checkBox4.Location = new System.Drawing.Point(656, 280);
-			this.checkBox4.Name = "checkBox4";
-			this.checkBox4.Size = new System.Drawing.Size(15, 14);
-			this.checkBox4.TabIndex = 29;
-			this.checkBox4.UseVisualStyleBackColor = true;
+			this.WaymarkDCheckbox.AutoSize = true;
+			this.WaymarkDCheckbox.Location = new System.Drawing.Point(656, 280);
+			this.WaymarkDCheckbox.Name = "WaymarkDCheckbox";
+			this.WaymarkDCheckbox.Size = new System.Drawing.Size(15, 14);
+			this.WaymarkDCheckbox.TabIndex = 29;
+			this.WaymarkDCheckbox.UseVisualStyleBackColor = true;
 			// 
-			// checkBox5
+			// Waymark1Checkbox
 			// 
-			this.checkBox5.AutoSize = true;
-			this.checkBox5.Location = new System.Drawing.Point(656, 312);
-			this.checkBox5.Name = "checkBox5";
-			this.checkBox5.Size = new System.Drawing.Size(15, 14);
-			this.checkBox5.TabIndex = 33;
-			this.checkBox5.UseVisualStyleBackColor = true;
+			this.Waymark1Checkbox.AutoSize = true;
+			this.Waymark1Checkbox.Location = new System.Drawing.Point(656, 312);
+			this.Waymark1Checkbox.Name = "Waymark1Checkbox";
+			this.Waymark1Checkbox.Size = new System.Drawing.Size(15, 14);
+			this.Waymark1Checkbox.TabIndex = 33;
+			this.Waymark1Checkbox.UseVisualStyleBackColor = true;
 			// 
-			// checkBox6
+			// Waymark2Checkbox
 			// 
-			this.checkBox6.AutoSize = true;
-			this.checkBox6.Location = new System.Drawing.Point(656, 344);
-			this.checkBox6.Name = "checkBox6";
-			this.checkBox6.Size = new System.Drawing.Size(15, 14);
-			this.checkBox6.TabIndex = 37;
-			this.checkBox6.UseVisualStyleBackColor = true;
+			this.Waymark2Checkbox.AutoSize = true;
+			this.Waymark2Checkbox.Location = new System.Drawing.Point(656, 344);
+			this.Waymark2Checkbox.Name = "Waymark2Checkbox";
+			this.Waymark2Checkbox.Size = new System.Drawing.Size(15, 14);
+			this.Waymark2Checkbox.TabIndex = 37;
+			this.Waymark2Checkbox.UseVisualStyleBackColor = true;
 			// 
-			// checkBox7
+			// Waymark3Checkbox
 			// 
-			this.checkBox7.AutoSize = true;
-			this.checkBox7.Location = new System.Drawing.Point(656, 376);
-			this.checkBox7.Name = "checkBox7";
-			this.checkBox7.Size = new System.Drawing.Size(15, 14);
-			this.checkBox7.TabIndex = 41;
-			this.checkBox7.UseVisualStyleBackColor = true;
+			this.Waymark3Checkbox.AutoSize = true;
+			this.Waymark3Checkbox.Location = new System.Drawing.Point(656, 376);
+			this.Waymark3Checkbox.Name = "Waymark3Checkbox";
+			this.Waymark3Checkbox.Size = new System.Drawing.Size(15, 14);
+			this.Waymark3Checkbox.TabIndex = 41;
+			this.Waymark3Checkbox.UseVisualStyleBackColor = true;
 			// 
-			// checkBox8
+			// Waymark4Checkbox
 			// 
-			this.checkBox8.AutoSize = true;
-			this.checkBox8.Location = new System.Drawing.Point(656, 408);
-			this.checkBox8.Name = "checkBox8";
-			this.checkBox8.Size = new System.Drawing.Size(15, 14);
-			this.checkBox8.TabIndex = 45;
-			this.checkBox8.UseVisualStyleBackColor = true;
+			this.Waymark4Checkbox.AutoSize = true;
+			this.Waymark4Checkbox.Location = new System.Drawing.Point(656, 408);
+			this.Waymark4Checkbox.Name = "Waymark4Checkbox";
+			this.Waymark4Checkbox.Size = new System.Drawing.Size(15, 14);
+			this.Waymark4Checkbox.TabIndex = 45;
+			this.Waymark4Checkbox.UseVisualStyleBackColor = true;
 			// 
-			// comboBox2
+			// PresetZoneDropdown
 			// 
-			this.comboBox2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.comboBox2.FormattingEnabled = true;
-			this.comboBox2.Location = new System.Drawing.Point(656, 120);
-			this.comboBox2.Name = "comboBox2";
-			this.comboBox2.Size = new System.Drawing.Size(360, 21);
-			this.comboBox2.TabIndex = 16;
+			this.PresetZoneDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
+			this.PresetZoneDropdown.FormattingEnabled = true;
+			this.PresetZoneDropdown.Location = new System.Drawing.Point(656, 120);
+			this.PresetZoneDropdown.Name = "PresetZoneDropdown";
+			this.PresetZoneDropdown.Size = new System.Drawing.Size(360, 21);
+			this.PresetZoneDropdown.TabIndex = 16;
 			// 
 			// label9
 			// 
@@ -466,173 +469,173 @@
 			this.label17.TabIndex = 41;
 			this.label17.Text = "4:";
 			// 
-			// textBox4
+			// WaymarkATextBox_X
 			// 
-			this.textBox4.Location = new System.Drawing.Point(696, 184);
-			this.textBox4.Name = "textBox4";
-			this.textBox4.Size = new System.Drawing.Size(100, 20);
-			this.textBox4.TabIndex = 18;
+			this.WaymarkATextBox_X.Location = new System.Drawing.Point(696, 184);
+			this.WaymarkATextBox_X.Name = "WaymarkATextBox_X";
+			this.WaymarkATextBox_X.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkATextBox_X.TabIndex = 18;
 			// 
-			// textBox5
+			// WaymarkATextBox_Y
 			// 
-			this.textBox5.Location = new System.Drawing.Point(808, 184);
-			this.textBox5.Name = "textBox5";
-			this.textBox5.Size = new System.Drawing.Size(100, 20);
-			this.textBox5.TabIndex = 19;
+			this.WaymarkATextBox_Y.Location = new System.Drawing.Point(808, 184);
+			this.WaymarkATextBox_Y.Name = "WaymarkATextBox_Y";
+			this.WaymarkATextBox_Y.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkATextBox_Y.TabIndex = 19;
 			// 
-			// textBox6
+			// WaymarkATextBox_Z
 			// 
-			this.textBox6.Location = new System.Drawing.Point(920, 184);
-			this.textBox6.Name = "textBox6";
-			this.textBox6.Size = new System.Drawing.Size(100, 20);
-			this.textBox6.TabIndex = 20;
+			this.WaymarkATextBox_Z.Location = new System.Drawing.Point(920, 184);
+			this.WaymarkATextBox_Z.Name = "WaymarkATextBox_Z";
+			this.WaymarkATextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkATextBox_Z.TabIndex = 20;
 			// 
-			// textBox7
+			// WaymarkBTextBox_X
 			// 
-			this.textBox7.Location = new System.Drawing.Point(696, 216);
-			this.textBox7.Name = "textBox7";
-			this.textBox7.Size = new System.Drawing.Size(100, 20);
-			this.textBox7.TabIndex = 22;
+			this.WaymarkBTextBox_X.Location = new System.Drawing.Point(696, 216);
+			this.WaymarkBTextBox_X.Name = "WaymarkBTextBox_X";
+			this.WaymarkBTextBox_X.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkBTextBox_X.TabIndex = 22;
 			// 
-			// textBox8
+			// WaymarkBTextBox_Y
 			// 
-			this.textBox8.Location = new System.Drawing.Point(808, 216);
-			this.textBox8.Name = "textBox8";
-			this.textBox8.Size = new System.Drawing.Size(100, 20);
-			this.textBox8.TabIndex = 23;
+			this.WaymarkBTextBox_Y.Location = new System.Drawing.Point(808, 216);
+			this.WaymarkBTextBox_Y.Name = "WaymarkBTextBox_Y";
+			this.WaymarkBTextBox_Y.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkBTextBox_Y.TabIndex = 23;
 			// 
-			// textBox9
+			// WaymarkBTextBox_Z
 			// 
-			this.textBox9.Location = new System.Drawing.Point(920, 216);
-			this.textBox9.Name = "textBox9";
-			this.textBox9.Size = new System.Drawing.Size(100, 20);
-			this.textBox9.TabIndex = 24;
+			this.WaymarkBTextBox_Z.Location = new System.Drawing.Point(920, 216);
+			this.WaymarkBTextBox_Z.Name = "WaymarkBTextBox_Z";
+			this.WaymarkBTextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkBTextBox_Z.TabIndex = 24;
 			// 
-			// textBox10
+			// WaymarkCTextBox_X
 			// 
-			this.textBox10.Location = new System.Drawing.Point(696, 248);
-			this.textBox10.Name = "textBox10";
-			this.textBox10.Size = new System.Drawing.Size(100, 20);
-			this.textBox10.TabIndex = 26;
+			this.WaymarkCTextBox_X.Location = new System.Drawing.Point(696, 248);
+			this.WaymarkCTextBox_X.Name = "WaymarkCTextBox_X";
+			this.WaymarkCTextBox_X.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkCTextBox_X.TabIndex = 26;
 			// 
-			// textBox11
+			// WaymarkCTextBox_Y
 			// 
-			this.textBox11.Location = new System.Drawing.Point(808, 248);
-			this.textBox11.Name = "textBox11";
-			this.textBox11.Size = new System.Drawing.Size(100, 20);
-			this.textBox11.TabIndex = 27;
+			this.WaymarkCTextBox_Y.Location = new System.Drawing.Point(808, 248);
+			this.WaymarkCTextBox_Y.Name = "WaymarkCTextBox_Y";
+			this.WaymarkCTextBox_Y.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkCTextBox_Y.TabIndex = 27;
 			// 
-			// textBox12
+			// WaymarkCTextBox_Z
 			// 
-			this.textBox12.Location = new System.Drawing.Point(920, 248);
-			this.textBox12.Name = "textBox12";
-			this.textBox12.Size = new System.Drawing.Size(100, 20);
-			this.textBox12.TabIndex = 28;
+			this.WaymarkCTextBox_Z.Location = new System.Drawing.Point(920, 248);
+			this.WaymarkCTextBox_Z.Name = "WaymarkCTextBox_Z";
+			this.WaymarkCTextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkCTextBox_Z.TabIndex = 28;
 			// 
-			// textBox13
+			// WaymarkDTextBox_X
 			// 
-			this.textBox13.Location = new System.Drawing.Point(696, 280);
-			this.textBox13.Name = "textBox13";
-			this.textBox13.Size = new System.Drawing.Size(100, 20);
-			this.textBox13.TabIndex = 30;
+			this.WaymarkDTextBox_X.Location = new System.Drawing.Point(696, 280);
+			this.WaymarkDTextBox_X.Name = "WaymarkDTextBox_X";
+			this.WaymarkDTextBox_X.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkDTextBox_X.TabIndex = 30;
 			// 
-			// textBox14
+			// WaymarkDTextBox_Y
 			// 
-			this.textBox14.Location = new System.Drawing.Point(808, 280);
-			this.textBox14.Name = "textBox14";
-			this.textBox14.Size = new System.Drawing.Size(100, 20);
-			this.textBox14.TabIndex = 31;
+			this.WaymarkDTextBox_Y.Location = new System.Drawing.Point(808, 280);
+			this.WaymarkDTextBox_Y.Name = "WaymarkDTextBox_Y";
+			this.WaymarkDTextBox_Y.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkDTextBox_Y.TabIndex = 31;
 			// 
-			// textBox15
+			// WaymarkDTextBox_Z
 			// 
-			this.textBox15.Location = new System.Drawing.Point(920, 280);
-			this.textBox15.Name = "textBox15";
-			this.textBox15.Size = new System.Drawing.Size(100, 20);
-			this.textBox15.TabIndex = 32;
+			this.WaymarkDTextBox_Z.Location = new System.Drawing.Point(920, 280);
+			this.WaymarkDTextBox_Z.Name = "WaymarkDTextBox_Z";
+			this.WaymarkDTextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkDTextBox_Z.TabIndex = 32;
 			// 
-			// textBox16
+			// Waymark1TextBox_X
 			// 
-			this.textBox16.Location = new System.Drawing.Point(696, 312);
-			this.textBox16.Name = "textBox16";
-			this.textBox16.Size = new System.Drawing.Size(100, 20);
-			this.textBox16.TabIndex = 34;
+			this.Waymark1TextBox_X.Location = new System.Drawing.Point(696, 312);
+			this.Waymark1TextBox_X.Name = "Waymark1TextBox_X";
+			this.Waymark1TextBox_X.Size = new System.Drawing.Size(100, 20);
+			this.Waymark1TextBox_X.TabIndex = 34;
 			// 
-			// textBox17
+			// Waymark1TextBox_Y
 			// 
-			this.textBox17.Location = new System.Drawing.Point(808, 312);
-			this.textBox17.Name = "textBox17";
-			this.textBox17.Size = new System.Drawing.Size(100, 20);
-			this.textBox17.TabIndex = 35;
+			this.Waymark1TextBox_Y.Location = new System.Drawing.Point(808, 312);
+			this.Waymark1TextBox_Y.Name = "Waymark1TextBox_Y";
+			this.Waymark1TextBox_Y.Size = new System.Drawing.Size(100, 20);
+			this.Waymark1TextBox_Y.TabIndex = 35;
 			// 
-			// textBox18
+			// Waymark1TextBox_Z
 			// 
-			this.textBox18.Location = new System.Drawing.Point(920, 312);
-			this.textBox18.Name = "textBox18";
-			this.textBox18.Size = new System.Drawing.Size(100, 20);
-			this.textBox18.TabIndex = 36;
+			this.Waymark1TextBox_Z.Location = new System.Drawing.Point(920, 312);
+			this.Waymark1TextBox_Z.Name = "Waymark1TextBox_Z";
+			this.Waymark1TextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.Waymark1TextBox_Z.TabIndex = 36;
 			// 
-			// textBox19
+			// Waymark2TextBox_X
 			// 
-			this.textBox19.Location = new System.Drawing.Point(696, 344);
-			this.textBox19.Name = "textBox19";
-			this.textBox19.Size = new System.Drawing.Size(100, 20);
-			this.textBox19.TabIndex = 38;
+			this.Waymark2TextBox_X.Location = new System.Drawing.Point(696, 344);
+			this.Waymark2TextBox_X.Name = "Waymark2TextBox_X";
+			this.Waymark2TextBox_X.Size = new System.Drawing.Size(100, 20);
+			this.Waymark2TextBox_X.TabIndex = 38;
 			// 
-			// textBox20
+			// Waymark2TextBox_Y
 			// 
-			this.textBox20.Location = new System.Drawing.Point(808, 344);
-			this.textBox20.Name = "textBox20";
-			this.textBox20.Size = new System.Drawing.Size(100, 20);
-			this.textBox20.TabIndex = 39;
+			this.Waymark2TextBox_Y.Location = new System.Drawing.Point(808, 344);
+			this.Waymark2TextBox_Y.Name = "Waymark2TextBox_Y";
+			this.Waymark2TextBox_Y.Size = new System.Drawing.Size(100, 20);
+			this.Waymark2TextBox_Y.TabIndex = 39;
 			// 
-			// textBox21
+			// Waymark2TextBox_Z
 			// 
-			this.textBox21.Location = new System.Drawing.Point(920, 344);
-			this.textBox21.Name = "textBox21";
-			this.textBox21.Size = new System.Drawing.Size(100, 20);
-			this.textBox21.TabIndex = 40;
+			this.Waymark2TextBox_Z.Location = new System.Drawing.Point(920, 344);
+			this.Waymark2TextBox_Z.Name = "Waymark2TextBox_Z";
+			this.Waymark2TextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.Waymark2TextBox_Z.TabIndex = 40;
 			// 
-			// textBox22
+			// Waymark3TextBox_X
 			// 
-			this.textBox22.Location = new System.Drawing.Point(696, 376);
-			this.textBox22.Name = "textBox22";
-			this.textBox22.Size = new System.Drawing.Size(100, 20);
-			this.textBox22.TabIndex = 42;
+			this.Waymark3TextBox_X.Location = new System.Drawing.Point(696, 376);
+			this.Waymark3TextBox_X.Name = "Waymark3TextBox_X";
+			this.Waymark3TextBox_X.Size = new System.Drawing.Size(100, 20);
+			this.Waymark3TextBox_X.TabIndex = 42;
 			// 
-			// textBox23
+			// Waymark3TextBox_Y
 			// 
-			this.textBox23.Location = new System.Drawing.Point(808, 376);
-			this.textBox23.Name = "textBox23";
-			this.textBox23.Size = new System.Drawing.Size(100, 20);
-			this.textBox23.TabIndex = 43;
+			this.Waymark3TextBox_Y.Location = new System.Drawing.Point(808, 376);
+			this.Waymark3TextBox_Y.Name = "Waymark3TextBox_Y";
+			this.Waymark3TextBox_Y.Size = new System.Drawing.Size(100, 20);
+			this.Waymark3TextBox_Y.TabIndex = 43;
 			// 
-			// textBox24
+			// Waymark3TextBox_Z
 			// 
-			this.textBox24.Location = new System.Drawing.Point(920, 376);
-			this.textBox24.Name = "textBox24";
-			this.textBox24.Size = new System.Drawing.Size(100, 20);
-			this.textBox24.TabIndex = 44;
+			this.Waymark3TextBox_Z.Location = new System.Drawing.Point(920, 376);
+			this.Waymark3TextBox_Z.Name = "Waymark3TextBox_Z";
+			this.Waymark3TextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.Waymark3TextBox_Z.TabIndex = 44;
 			// 
-			// textBox25
+			// Waymark4TextBox_X
 			// 
-			this.textBox25.Location = new System.Drawing.Point(696, 408);
-			this.textBox25.Name = "textBox25";
-			this.textBox25.Size = new System.Drawing.Size(100, 20);
-			this.textBox25.TabIndex = 46;
+			this.Waymark4TextBox_X.Location = new System.Drawing.Point(696, 408);
+			this.Waymark4TextBox_X.Name = "Waymark4TextBox_X";
+			this.Waymark4TextBox_X.Size = new System.Drawing.Size(100, 20);
+			this.Waymark4TextBox_X.TabIndex = 46;
 			// 
-			// textBox26
+			// Waymark4TextBox_Y
 			// 
-			this.textBox26.Location = new System.Drawing.Point(808, 408);
-			this.textBox26.Name = "textBox26";
-			this.textBox26.Size = new System.Drawing.Size(100, 20);
-			this.textBox26.TabIndex = 47;
+			this.Waymark4TextBox_Y.Location = new System.Drawing.Point(808, 408);
+			this.Waymark4TextBox_Y.Name = "Waymark4TextBox_Y";
+			this.Waymark4TextBox_Y.Size = new System.Drawing.Size(100, 20);
+			this.Waymark4TextBox_Y.TabIndex = 47;
 			// 
-			// textBox27
+			// Waymark4TextBox_Z
 			// 
-			this.textBox27.Location = new System.Drawing.Point(920, 408);
-			this.textBox27.Name = "textBox27";
-			this.textBox27.Size = new System.Drawing.Size(100, 20);
-			this.textBox27.TabIndex = 48;
+			this.Waymark4TextBox_Z.Location = new System.Drawing.Point(920, 408);
+			this.Waymark4TextBox_Z.Name = "Waymark4TextBox_Z";
+			this.Waymark4TextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.Waymark4TextBox_Z.TabIndex = 48;
 			// 
 			// label19
 			// 
@@ -661,21 +664,15 @@
 			this.label21.TabIndex = 69;
 			this.label21.Text = "Z Pos:";
 			// 
-			// textBox28
+			// LibraryPresetUpdateButton
 			// 
-			this.textBox28.Location = new System.Drawing.Point(904, 72);
-			this.textBox28.Name = "textBox28";
-			this.textBox28.Size = new System.Drawing.Size(112, 20);
-			this.textBox28.TabIndex = 15;
-			// 
-			// button9
-			// 
-			this.button9.Location = new System.Drawing.Point(568, 408);
-			this.button9.Name = "button9";
-			this.button9.Size = new System.Drawing.Size(72, 23);
-			this.button9.TabIndex = 49;
-			this.button9.Text = "Update";
-			this.button9.UseVisualStyleBackColor = true;
+			this.LibraryPresetUpdateButton.Location = new System.Drawing.Point(568, 408);
+			this.LibraryPresetUpdateButton.Name = "LibraryPresetUpdateButton";
+			this.LibraryPresetUpdateButton.Size = new System.Drawing.Size(72, 23);
+			this.LibraryPresetUpdateButton.TabIndex = 49;
+			this.LibraryPresetUpdateButton.Text = "Update";
+			this.LibraryPresetUpdateButton.UseVisualStyleBackColor = true;
+			this.LibraryPresetUpdateButton.Click += new System.EventHandler(this.LibraryPresetUpdateButton_Click);
 			// 
 			// CharacterDataFolderDialog
 			// 
@@ -691,41 +688,49 @@
 			this.label8.Text = "IMPORTANT: The game\'s preset slots are not affected until this button is pressed." +
     "";
 			// 
+			// PresetTimePicker
+			// 
+			this.PresetTimePicker.CustomFormat = "";
+			this.PresetTimePicker.Location = new System.Drawing.Point(904, 72);
+			this.PresetTimePicker.Name = "PresetTimePicker";
+			this.PresetTimePicker.Size = new System.Drawing.Size(112, 20);
+			this.PresetTimePicker.TabIndex = 15;
+			// 
 			// WaymarkLibrarianForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1034, 444);
+			this.Controls.Add(this.PresetTimePicker);
 			this.Controls.Add(this.label8);
-			this.Controls.Add(this.button9);
-			this.Controls.Add(this.textBox28);
+			this.Controls.Add(this.LibraryPresetUpdateButton);
 			this.Controls.Add(this.label21);
 			this.Controls.Add(this.label20);
 			this.Controls.Add(this.label19);
-			this.Controls.Add(this.textBox27);
-			this.Controls.Add(this.textBox26);
-			this.Controls.Add(this.textBox25);
-			this.Controls.Add(this.textBox24);
-			this.Controls.Add(this.textBox23);
-			this.Controls.Add(this.textBox22);
-			this.Controls.Add(this.textBox21);
-			this.Controls.Add(this.textBox20);
-			this.Controls.Add(this.textBox19);
-			this.Controls.Add(this.textBox18);
-			this.Controls.Add(this.textBox17);
-			this.Controls.Add(this.textBox16);
-			this.Controls.Add(this.textBox15);
-			this.Controls.Add(this.textBox14);
-			this.Controls.Add(this.textBox13);
-			this.Controls.Add(this.textBox12);
-			this.Controls.Add(this.textBox11);
-			this.Controls.Add(this.textBox10);
-			this.Controls.Add(this.textBox9);
-			this.Controls.Add(this.textBox8);
-			this.Controls.Add(this.textBox7);
-			this.Controls.Add(this.textBox6);
-			this.Controls.Add(this.textBox5);
-			this.Controls.Add(this.textBox4);
+			this.Controls.Add(this.Waymark4TextBox_Z);
+			this.Controls.Add(this.Waymark4TextBox_Y);
+			this.Controls.Add(this.Waymark4TextBox_X);
+			this.Controls.Add(this.Waymark3TextBox_Z);
+			this.Controls.Add(this.Waymark3TextBox_Y);
+			this.Controls.Add(this.Waymark3TextBox_X);
+			this.Controls.Add(this.Waymark2TextBox_Z);
+			this.Controls.Add(this.Waymark2TextBox_Y);
+			this.Controls.Add(this.Waymark2TextBox_X);
+			this.Controls.Add(this.Waymark1TextBox_Z);
+			this.Controls.Add(this.Waymark1TextBox_Y);
+			this.Controls.Add(this.Waymark1TextBox_X);
+			this.Controls.Add(this.WaymarkDTextBox_Z);
+			this.Controls.Add(this.WaymarkDTextBox_Y);
+			this.Controls.Add(this.WaymarkDTextBox_X);
+			this.Controls.Add(this.WaymarkCTextBox_Z);
+			this.Controls.Add(this.WaymarkCTextBox_Y);
+			this.Controls.Add(this.WaymarkCTextBox_X);
+			this.Controls.Add(this.WaymarkBTextBox_Z);
+			this.Controls.Add(this.WaymarkBTextBox_Y);
+			this.Controls.Add(this.WaymarkBTextBox_X);
+			this.Controls.Add(this.WaymarkATextBox_Z);
+			this.Controls.Add(this.WaymarkATextBox_Y);
+			this.Controls.Add(this.WaymarkATextBox_X);
 			this.Controls.Add(this.label17);
 			this.Controls.Add(this.label16);
 			this.Controls.Add(this.label15);
@@ -735,19 +740,19 @@
 			this.Controls.Add(this.label11);
 			this.Controls.Add(this.label10);
 			this.Controls.Add(this.label9);
-			this.Controls.Add(this.comboBox2);
-			this.Controls.Add(this.checkBox8);
-			this.Controls.Add(this.checkBox7);
-			this.Controls.Add(this.checkBox6);
-			this.Controls.Add(this.checkBox5);
-			this.Controls.Add(this.checkBox4);
-			this.Controls.Add(this.checkBox3);
-			this.Controls.Add(this.checkBox2);
-			this.Controls.Add(this.checkBox1);
+			this.Controls.Add(this.PresetZoneDropdown);
+			this.Controls.Add(this.Waymark4Checkbox);
+			this.Controls.Add(this.Waymark3Checkbox);
+			this.Controls.Add(this.Waymark2Checkbox);
+			this.Controls.Add(this.Waymark1Checkbox);
+			this.Controls.Add(this.WaymarkDCheckbox);
+			this.Controls.Add(this.WaymarkCCheckbox);
+			this.Controls.Add(this.WaymarkBCheckbox);
+			this.Controls.Add(this.WaymarkACheckbox);
 			this.Controls.Add(this.WriteGameFileButton);
-			this.Controls.Add(this.dateTimePicker1);
+			this.Controls.Add(this.PresetDatePicker);
 			this.Controls.Add(this.label7);
-			this.Controls.Add(this.textBox3);
+			this.Controls.Add(this.PresetNameTextBox);
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.CopyToGameButton);
@@ -755,8 +760,8 @@
 			this.Controls.Add(this.ClearGameSlotButton);
 			this.Controls.Add(this.SetCharacterAliasButton);
 			this.Controls.Add(this.SelectedPresetInfoBox);
-			this.Controls.Add(this.button3);
-			this.Controls.Add(this.button2);
+			this.Controls.Add(this.LibraryPresetRemoveButton);
+			this.Controls.Add(this.LibraryPresetAddButton);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.LibraryListBox);
 			this.Controls.Add(this.label3);
@@ -785,8 +790,8 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ListBox LibraryListBox;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.Button button3;
+		private System.Windows.Forms.Button LibraryPresetAddButton;
+		private System.Windows.Forms.Button LibraryPresetRemoveButton;
 		private System.Windows.Forms.TextBox SelectedPresetInfoBox;
 		private System.Windows.Forms.Button SetCharacterAliasButton;
 		private System.Windows.Forms.Button ClearGameSlotButton;
@@ -794,19 +799,19 @@
 		private System.Windows.Forms.Button CopyToGameButton;
 		private System.Windows.Forms.Label label5;
 		private System.Windows.Forms.Label label6;
-		private System.Windows.Forms.TextBox textBox3;
+		private System.Windows.Forms.TextBox PresetNameTextBox;
 		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.DateTimePicker dateTimePicker1;
+		private System.Windows.Forms.DateTimePicker PresetDatePicker;
 		private System.Windows.Forms.Button WriteGameFileButton;
-		private System.Windows.Forms.CheckBox checkBox1;
-		private System.Windows.Forms.CheckBox checkBox2;
-		private System.Windows.Forms.CheckBox checkBox3;
-		private System.Windows.Forms.CheckBox checkBox4;
-		private System.Windows.Forms.CheckBox checkBox5;
-		private System.Windows.Forms.CheckBox checkBox6;
-		private System.Windows.Forms.CheckBox checkBox7;
-		private System.Windows.Forms.CheckBox checkBox8;
-		private System.Windows.Forms.ComboBox comboBox2;
+		private System.Windows.Forms.CheckBox WaymarkACheckbox;
+		private System.Windows.Forms.CheckBox WaymarkBCheckbox;
+		private System.Windows.Forms.CheckBox WaymarkCCheckbox;
+		private System.Windows.Forms.CheckBox WaymarkDCheckbox;
+		private System.Windows.Forms.CheckBox Waymark1Checkbox;
+		private System.Windows.Forms.CheckBox Waymark2Checkbox;
+		private System.Windows.Forms.CheckBox Waymark3Checkbox;
+		private System.Windows.Forms.CheckBox Waymark4Checkbox;
+		private System.Windows.Forms.ComboBox PresetZoneDropdown;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.Label label10;
 		private System.Windows.Forms.Label label11;
@@ -816,37 +821,37 @@
 		private System.Windows.Forms.Label label15;
 		private System.Windows.Forms.Label label16;
 		private System.Windows.Forms.Label label17;
-		private System.Windows.Forms.TextBox textBox4;
-		private System.Windows.Forms.TextBox textBox5;
-		private System.Windows.Forms.TextBox textBox6;
-		private System.Windows.Forms.TextBox textBox7;
-		private System.Windows.Forms.TextBox textBox8;
-		private System.Windows.Forms.TextBox textBox9;
-		private System.Windows.Forms.TextBox textBox10;
-		private System.Windows.Forms.TextBox textBox11;
-		private System.Windows.Forms.TextBox textBox12;
-		private System.Windows.Forms.TextBox textBox13;
-		private System.Windows.Forms.TextBox textBox14;
-		private System.Windows.Forms.TextBox textBox15;
-		private System.Windows.Forms.TextBox textBox16;
-		private System.Windows.Forms.TextBox textBox17;
-		private System.Windows.Forms.TextBox textBox18;
-		private System.Windows.Forms.TextBox textBox19;
-		private System.Windows.Forms.TextBox textBox20;
-		private System.Windows.Forms.TextBox textBox21;
-		private System.Windows.Forms.TextBox textBox22;
-		private System.Windows.Forms.TextBox textBox23;
-		private System.Windows.Forms.TextBox textBox24;
-		private System.Windows.Forms.TextBox textBox25;
-		private System.Windows.Forms.TextBox textBox26;
-		private System.Windows.Forms.TextBox textBox27;
+		private System.Windows.Forms.TextBox WaymarkATextBox_X;
+		private System.Windows.Forms.TextBox WaymarkATextBox_Y;
+		private System.Windows.Forms.TextBox WaymarkATextBox_Z;
+		private System.Windows.Forms.TextBox WaymarkBTextBox_X;
+		private System.Windows.Forms.TextBox WaymarkBTextBox_Y;
+		private System.Windows.Forms.TextBox WaymarkBTextBox_Z;
+		private System.Windows.Forms.TextBox WaymarkCTextBox_X;
+		private System.Windows.Forms.TextBox WaymarkCTextBox_Y;
+		private System.Windows.Forms.TextBox WaymarkCTextBox_Z;
+		private System.Windows.Forms.TextBox WaymarkDTextBox_X;
+		private System.Windows.Forms.TextBox WaymarkDTextBox_Y;
+		private System.Windows.Forms.TextBox WaymarkDTextBox_Z;
+		private System.Windows.Forms.TextBox Waymark1TextBox_X;
+		private System.Windows.Forms.TextBox Waymark1TextBox_Y;
+		private System.Windows.Forms.TextBox Waymark1TextBox_Z;
+		private System.Windows.Forms.TextBox Waymark2TextBox_X;
+		private System.Windows.Forms.TextBox Waymark2TextBox_Y;
+		private System.Windows.Forms.TextBox Waymark2TextBox_Z;
+		private System.Windows.Forms.TextBox Waymark3TextBox_X;
+		private System.Windows.Forms.TextBox Waymark3TextBox_Y;
+		private System.Windows.Forms.TextBox Waymark3TextBox_Z;
+		private System.Windows.Forms.TextBox Waymark4TextBox_X;
+		private System.Windows.Forms.TextBox Waymark4TextBox_Y;
+		private System.Windows.Forms.TextBox Waymark4TextBox_Z;
 		private System.Windows.Forms.Label label19;
 		private System.Windows.Forms.Label label20;
 		private System.Windows.Forms.Label label21;
-		private System.Windows.Forms.TextBox textBox28;
-		private System.Windows.Forms.Button button9;
+		private System.Windows.Forms.Button LibraryPresetUpdateButton;
 		private System.Windows.Forms.FolderBrowserDialog CharacterDataFolderDialog;
 		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.DateTimePicker PresetTimePicker;
 	}
 }
 
