@@ -35,10 +35,11 @@ namespace WaymarkLibrarian
 		}
 
 		//	Construction
-		public Waymark()
+		public Waymark( char id )
 		{
 			IsEnabled = false;
 			Pos = new Point3D();
+			ID = id;
 		}
 
 		public Waymark( Waymark oldObj )
@@ -54,5 +55,6 @@ namespace WaymarkLibrarian
 		//	Members
 		public bool IsEnabled { get; set; }
 		public Point3D Pos { get; set; }
+		public char ID { get; set; }
 	}
 }

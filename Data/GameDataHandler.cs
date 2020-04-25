@@ -9,19 +9,22 @@ namespace WaymarkLibrarian
 {
 	class GameDataHandler
 	{
+		//	Construction
 		public GameDataHandler( GameDataConfig gameDataConfig )
 		{
 			mGameDataConfig = gameDataConfig;
 		}
 
-		public WaymarkPresets ReadGameData( string fileName )
+		//	Read and decode the waymark section of the game file.
+		public GamePresetContainer ReadGameData( string fileName )
 		{
 			//	Object to populate with the game data.
-			WaymarkPresets presets = new WaymarkPresets( mGameDataConfig.NumberOfPresets );
+			GamePresetContainer presets = new GamePresetContainer( mGameDataConfig.NumberOfPresets );
 
 			//	Read the raw data from the file.
 			if( !File.Exists( fileName ) ) throw new Exception( "File does not exist (" + fileName + ")" ) ;
 			FileStream fs = File.OpenRead( fileName );
+			if( fs.Length != mGameDataConfig.ExpectedFileLength_Bytes ) throw new Exception( "Error while reading game data file: Unexpected file size.  You may not have logged on with this character since the latest patch, or this program may not have been updated for the current patch." );
 			byte[] rawData = new byte[mGameDataConfig.NumberOfPresets * mGameDataConfig.BytesPerPreset()];
 			int numBytesToRead = (int)mGameDataConfig.NumberOfPresets * (int)mGameDataConfig.BytesPerPreset();
 			fs.Seek( (int)mGameDataConfig.WaymarkDataOffset, SeekOrigin.Begin );
@@ -65,6 +68,7 @@ namespace WaymarkLibrarian
 			return presets;
 		}
 
+		//	Encode and write the waymark section of the game file.
 		public void WriteGameData( string fileName, byte[] data )
 		{
 			//	XOR the data as expected by the game.
@@ -74,12 +78,14 @@ namespace WaymarkLibrarian
 			//	*****TODO: Verify very carefully that the file is the expected size, etc. before writing.*****
 			if( !File.Exists( fileName ) ) throw new Exception( "File does not exist (" + fileName + ")" );
 			FileStream fs = File.OpenWrite( fileName );
+			if( fs.Length != mGameDataConfig.ExpectedFileLength_Bytes ) throw new Exception( "Error while preparing to write game data file: Unexpected file size." );
 			fs.Seek( (int)mGameDataConfig.WaymarkDataOffset, SeekOrigin.Begin );
 			fs.Write( correctedData, 0, correctedData.Length );
 			fs.Close();
 		}
 
-		public byte[] ConstructGameData( WaymarkPresets presets )
+		//	Fill an unencoded byte array with the provided waymark data.
+		public byte[] ConstructGameData( GamePresetContainer presets )
 		{
 			//	Memory to hold the new data.
 			byte[] newData = new byte[mGameDataConfig.NumberOfPresets * mGameDataConfig.BytesPerPreset()];
@@ -92,9 +98,10 @@ namespace WaymarkLibrarian
 				//	Waymark coordinates.
 				for( uint waymarkNumber = 0u; waymarkNumber < presets[presetNumber].Waymarks.Length; ++waymarkNumber )
 				{
-					WriteBytes( BitConverter.GetBytes( (Int32)( presets[presetNumber][waymarkNumber].Pos.X * 1000.0 ) ), newData, offset + 0u, !BitConverter.IsLittleEndian );
-					WriteBytes( BitConverter.GetBytes( (Int32)( presets[presetNumber][waymarkNumber].Pos.Y * 1000.0 ) ), newData, offset + 4u, !BitConverter.IsLittleEndian );
-					WriteBytes( BitConverter.GetBytes( (Int32)( presets[presetNumber][waymarkNumber].Pos.Z * 1000.0 ) ), newData, offset + 8u, !BitConverter.IsLittleEndian );
+					//	Make sure to write zeros if the waymark is active in order to keep the same format as the game itself writes.
+					WriteBytes( BitConverter.GetBytes( presets[presetNumber][waymarkNumber].IsEnabled ? (Int32)( presets[presetNumber][waymarkNumber].Pos.X * 1000.0 ) : 0 ), newData, offset + 0u, !BitConverter.IsLittleEndian );
+					WriteBytes( BitConverter.GetBytes( presets[presetNumber][waymarkNumber].IsEnabled ? (Int32)( presets[presetNumber][waymarkNumber].Pos.Y * 1000.0 ) : 0 ), newData, offset + 4u, !BitConverter.IsLittleEndian );
+					WriteBytes( BitConverter.GetBytes( presets[presetNumber][waymarkNumber].IsEnabled ? (Int32)( presets[presetNumber][waymarkNumber].Pos.Z * 1000.0 ) : 0 ), newData, offset + 8u, !BitConverter.IsLittleEndian );
 					offset += 12u;
 				}
 
@@ -124,13 +131,16 @@ namespace WaymarkLibrarian
 			return newData;
 		}
 
+		//	Encode or decode raw data as required by the game's file format.
 		protected byte[] CorrectData( byte[] data )
 		{
+			
 			byte[] newData = (byte[])data.Clone();
 			for( uint i = 0; i < newData.Length; ++i ) newData[i] ^= mGameDataConfig.ConfigFileMagicNumber;
 			return newData;
 		}
 
+		//	Read specific bytes out of a byte array.
 		protected byte[] ReadBytes( byte[] data, uint startPos, uint count, bool swapByteOrder )
 		{
 			//	*****TODO: Swap byte order if needed.*****
@@ -142,6 +152,7 @@ namespace WaymarkLibrarian
 			return newData;
 		}
 
+		//	Write bytes into a specific position in a byte array.
 		protected void WriteBytes( byte[] bytesToWrite, byte[] dest, uint startPos, bool swapByteOrder )
 		{
 			if( startPos + bytesToWrite.Length > dest.Length ) throw new Exception( "Attempt made to write beyond the end of the destination array." );
@@ -153,7 +164,7 @@ namespace WaymarkLibrarian
 			}
 		}
 
-		//	Members
+		//	Data Members
 		protected GameDataConfig mGameDataConfig;
 	}
 }

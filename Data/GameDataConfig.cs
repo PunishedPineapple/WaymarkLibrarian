@@ -8,6 +8,7 @@ namespace WaymarkLibrarian
 {
 	class GameDataConfig
 	{
+		//	Construction
 		public GameDataConfig()
 		{
 			SetDefaultConfig();
@@ -22,6 +23,7 @@ namespace WaymarkLibrarian
 		protected void SetDefaultConfig()
 		{
 			WaymarkDataFileName = "UISAVE.DAT";
+			ExpectedFileLength_Bytes = 0x7420;
 			WaymarkDataOffset = 0x6C97;
 			NumberOfPresets = 5u;
 			WaymarkIDOrder = "ABCD1234";
@@ -37,6 +39,7 @@ namespace WaymarkLibrarian
 
 		//	Data Members
 		public string WaymarkDataFileName { get; protected set; }
+		public uint ExpectedFileLength_Bytes { get; protected set; }
 		public uint WaymarkDataOffset { get; protected set; }
 		public uint NumberOfPresets { get; protected set; }
 		public uint NumberOfWaymarks() { return (uint)WaymarkIDOrder.Length; }

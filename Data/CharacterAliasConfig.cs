@@ -32,11 +32,36 @@ namespace WaymarkLibrarian
 			}
 		}
 
+		public void SaveConfig()
+		{
+			if( Directory.Exists( Path.GetDirectoryName( ConfigFilePath ) ) )
+			{
+				string cfgString = "";
+				foreach( KeyValuePair<string, string> entry in mAliases )
+				{
+					cfgString += entry.Key + " = " + entry.Value + "\r\n";
+				}
+				File.WriteAllText( ConfigFilePath, cfgString );
+			}
+		}
+
 		public string GetAlias( string characterID )
 		{
 			string alias = "";
 			if( mAliases.TryGetValue( characterID, out alias ) )	return alias;
 			else													return characterID;
+		}
+
+		public void SetAlias( string characterID, string alias )
+		{
+			if( mAliases.ContainsKey( characterID ) )
+			{
+				mAliases[characterID] = alias;
+			}
+			else
+			{
+				mAliases.Add( characterID, alias );
+			}
 		}
 
 		protected Dictionary<string, string> mAliases;

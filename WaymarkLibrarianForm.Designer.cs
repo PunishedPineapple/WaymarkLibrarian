@@ -40,8 +40,8 @@
 			this.button2 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
 			this.SelectedPresetInfoBox = new System.Windows.Forms.TextBox();
-			this.button4 = new System.Windows.Forms.Button();
-			this.button5 = new System.Windows.Forms.Button();
+			this.SetCharacterAliasButton = new System.Windows.Forms.Button();
+			this.ClearGameSlotButton = new System.Windows.Forms.Button();
 			this.CopyToLibraryButton = new System.Windows.Forms.Button();
 			this.CopyToGameButton = new System.Windows.Forms.Button();
 			this.label5 = new System.Windows.Forms.Label();
@@ -98,6 +98,7 @@
 			this.textBox28 = new System.Windows.Forms.TextBox();
 			this.button9 = new System.Windows.Forms.Button();
 			this.CharacterDataFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
+			this.label8 = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// CharacterListDropdown
@@ -108,7 +109,7 @@
 			this.CharacterListDropdown.Name = "CharacterListDropdown";
 			this.CharacterListDropdown.Size = new System.Drawing.Size(256, 21);
 			this.CharacterListDropdown.TabIndex = 0;
-			this.CharacterListDropdown.SelectionChangeCommitted += new System.EventHandler(this.CharacterListDropdown_SelectionChangeCommitted);
+			this.CharacterListDropdown.SelectedIndexChanged += new System.EventHandler(this.CharacterListDropdown_SelectedIndexChanged);
 			// 
 			// label1
 			// 
@@ -151,7 +152,7 @@
 			this.GamePresetListBox.FormattingEnabled = true;
 			this.GamePresetListBox.Location = new System.Drawing.Point(8, 120);
 			this.GamePresetListBox.Name = "GamePresetListBox";
-			this.GamePresetListBox.Size = new System.Drawing.Size(256, 82);
+			this.GamePresetListBox.Size = new System.Drawing.Size(256, 69);
 			this.GamePresetListBox.TabIndex = 5;
 			this.GamePresetListBox.SelectedIndexChanged += new System.EventHandler(this.GamePresetListBox_SelectedIndexChanged);
 			// 
@@ -202,34 +203,36 @@
 			// SelectedPresetInfoBox
 			// 
 			this.SelectedPresetInfoBox.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.SelectedPresetInfoBox.Location = new System.Drawing.Point(8, 256);
+			this.SelectedPresetInfoBox.Location = new System.Drawing.Point(8, 248);
 			this.SelectedPresetInfoBox.Multiline = true;
 			this.SelectedPresetInfoBox.Name = "SelectedPresetInfoBox";
 			this.SelectedPresetInfoBox.ReadOnly = true;
-			this.SelectedPresetInfoBox.Size = new System.Drawing.Size(256, 161);
+			this.SelectedPresetInfoBox.Size = new System.Drawing.Size(256, 176);
 			this.SelectedPresetInfoBox.TabIndex = 12;
 			// 
-			// button4
+			// SetCharacterAliasButton
 			// 
-			this.button4.Location = new System.Drawing.Point(272, 72);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(75, 23);
-			this.button4.TabIndex = 13;
-			this.button4.Text = "Set Alias";
-			this.button4.UseVisualStyleBackColor = true;
+			this.SetCharacterAliasButton.Location = new System.Drawing.Point(272, 72);
+			this.SetCharacterAliasButton.Name = "SetCharacterAliasButton";
+			this.SetCharacterAliasButton.Size = new System.Drawing.Size(75, 23);
+			this.SetCharacterAliasButton.TabIndex = 13;
+			this.SetCharacterAliasButton.Text = "Set Alias";
+			this.SetCharacterAliasButton.UseVisualStyleBackColor = true;
+			this.SetCharacterAliasButton.Click += new System.EventHandler(this.SetCharacterAliasButton_Click);
 			// 
-			// button5
+			// ClearGameSlotButton
 			// 
-			this.button5.Location = new System.Drawing.Point(8, 208);
-			this.button5.Name = "button5";
-			this.button5.Size = new System.Drawing.Size(72, 23);
-			this.button5.TabIndex = 14;
-			this.button5.Text = "Clear Slot";
-			this.button5.UseVisualStyleBackColor = true;
+			this.ClearGameSlotButton.Location = new System.Drawing.Point(8, 192);
+			this.ClearGameSlotButton.Name = "ClearGameSlotButton";
+			this.ClearGameSlotButton.Size = new System.Drawing.Size(72, 23);
+			this.ClearGameSlotButton.TabIndex = 14;
+			this.ClearGameSlotButton.Text = "Clear Slot";
+			this.ClearGameSlotButton.UseVisualStyleBackColor = true;
+			this.ClearGameSlotButton.Click += new System.EventHandler(this.ClearGameSlotButton_Click);
 			// 
 			// CopyToLibraryButton
 			// 
-			this.CopyToLibraryButton.Location = new System.Drawing.Point(272, 120);
+			this.CopyToLibraryButton.Location = new System.Drawing.Point(272, 168);
 			this.CopyToLibraryButton.Name = "CopyToLibraryButton";
 			this.CopyToLibraryButton.Size = new System.Drawing.Size(107, 23);
 			this.CopyToLibraryButton.TabIndex = 15;
@@ -239,7 +242,7 @@
 			// 
 			// CopyToGameButton
 			// 
-			this.CopyToGameButton.Location = new System.Drawing.Point(272, 176);
+			this.CopyToGameButton.Location = new System.Drawing.Point(272, 120);
 			this.CopyToGameButton.Name = "CopyToGameButton";
 			this.CopyToGameButton.Size = new System.Drawing.Size(107, 23);
 			this.CopyToGameButton.TabIndex = 16;
@@ -250,7 +253,7 @@
 			// label5
 			// 
 			this.label5.AutoSize = true;
-			this.label5.Location = new System.Drawing.Point(8, 240);
+			this.label5.Location = new System.Drawing.Point(8, 232);
 			this.label5.Name = "label5";
 			this.label5.Size = new System.Drawing.Size(106, 13);
 			this.label5.TabIndex = 17;
@@ -293,7 +296,7 @@
 			this.WriteGameFileButton.FlatAppearance.BorderColor = System.Drawing.Color.Red;
 			this.WriteGameFileButton.FlatAppearance.BorderSize = 2;
 			this.WriteGameFileButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.WriteGameFileButton.Location = new System.Drawing.Point(280, 288);
+			this.WriteGameFileButton.Location = new System.Drawing.Point(280, 248);
 			this.WriteGameFileButton.Name = "WriteGameFileButton";
 			this.WriteGameFileButton.Size = new System.Drawing.Size(96, 96);
 			this.WriteGameFileButton.TabIndex = 22;
@@ -678,11 +681,22 @@
 			// 
 			this.CharacterDataFolderDialog.RootFolder = System.Environment.SpecialFolder.MyComputer;
 			// 
+			// label8
+			// 
+			this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 6.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.label8.Location = new System.Drawing.Point(280, 352);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(96, 72);
+			this.label8.TabIndex = 72;
+			this.label8.Text = "IMPORTANT: The game\'s preset slots are not affected until this button is pressed." +
+    "";
+			// 
 			// WaymarkLibrarianForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1034, 444);
+			this.Controls.Add(this.label8);
 			this.Controls.Add(this.button9);
 			this.Controls.Add(this.textBox28);
 			this.Controls.Add(this.label21);
@@ -738,8 +752,8 @@
 			this.Controls.Add(this.label5);
 			this.Controls.Add(this.CopyToGameButton);
 			this.Controls.Add(this.CopyToLibraryButton);
-			this.Controls.Add(this.button5);
-			this.Controls.Add(this.button4);
+			this.Controls.Add(this.ClearGameSlotButton);
+			this.Controls.Add(this.SetCharacterAliasButton);
 			this.Controls.Add(this.SelectedPresetInfoBox);
 			this.Controls.Add(this.button3);
 			this.Controls.Add(this.button2);
@@ -774,8 +788,8 @@
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.Button button3;
 		private System.Windows.Forms.TextBox SelectedPresetInfoBox;
-		private System.Windows.Forms.Button button4;
-		private System.Windows.Forms.Button button5;
+		private System.Windows.Forms.Button SetCharacterAliasButton;
+		private System.Windows.Forms.Button ClearGameSlotButton;
 		private System.Windows.Forms.Button CopyToLibraryButton;
 		private System.Windows.Forms.Button CopyToGameButton;
 		private System.Windows.Forms.Label label5;
@@ -832,6 +846,7 @@
 		private System.Windows.Forms.TextBox textBox28;
 		private System.Windows.Forms.Button button9;
 		private System.Windows.Forms.FolderBrowserDialog CharacterDataFolderDialog;
+		private System.Windows.Forms.Label label8;
 	}
 }
 

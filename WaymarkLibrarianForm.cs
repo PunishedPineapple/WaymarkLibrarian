@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 
+//	Use for InputBox rather than rolling our own trivial input dialog.
+using Microsoft.VisualBasic;
+
 namespace WaymarkLibrarian
 {
 	public partial class WaymarkLibrarianForm : Form
@@ -35,8 +38,6 @@ namespace WaymarkLibrarian
 
 			//	Load waymark library.
 			mPresetLibrary = new PresetLibrary( Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ) + "\\WaymarkLibrarian\\WaymarkLibrary.xml" );
-
-			//	*****TODO: Actually load in the library file.*****
 			PopulateLibraryListBox();
 
 			//	Initialize the game settings folder, character list, and game preset list.
@@ -51,6 +52,7 @@ namespace WaymarkLibrarian
 						if( mCharacterFolderList[i].Split( '\\' ).Last() == mSettings.ProgramSettings.DefaultCharacterID )
 						{
 							CharacterListDropdown.SelectedIndex = i;
+							mGamePresetContainer = mGameDataHandler.ReadGameData( mCharacterFolderList[CharacterListDropdown.SelectedIndex] + '\\' + mSettings.GameDataSettings.WaymarkDataFileName );
 							PopulateGamePresetListBox();
 							break;
 						}
@@ -59,7 +61,7 @@ namespace WaymarkLibrarian
 			}
 		}
 
-		private WaymarkPresets mGamePresetContainer;
+		private GamePresetContainer mGamePresetContainer;
 		private GameDataHandler mGameDataHandler;
 		private PresetLibrary mPresetLibrary;
 		private string[] mCharacterFolderList;
@@ -77,18 +79,20 @@ namespace WaymarkLibrarian
 		}
 		private void PopulateGamePresetListBox( bool clear = false )
 		{
+			int previousSelectedIndex = GamePresetListBox.SelectedIndex;
 			GamePresetListBox.SelectedIndex = -1;
 			GamePresetListBox.Items.Clear();
 
-			if( !clear )
+			if( !clear && mGamePresetContainer != null )
 			{
-				mGamePresetContainer = mGameDataHandler.ReadGameData( mCharacterFolderList[CharacterListDropdown.SelectedIndex] + '\\' + mSettings.GameDataSettings.WaymarkDataFileName );
-				if( mGamePresetContainer != null )
+				for( uint i = 0u; i < mGamePresetContainer.Presets.Length; ++i )
 				{
-					for( uint i = 0u; i < mGamePresetContainer.Presets.Length; ++i )
-					{
-						GamePresetListBox.Items.Add( "Slot " + ( i + 1 ).ToString() + ": " + ( mGamePresetContainer[i].ZoneID == 0u ? "Empty" : ( "Zone " + mGamePresetContainer[i].ZoneID.ToString() ) ) );
-					}
+					GamePresetListBox.Items.Add( "Slot " + ( i + 1 ).ToString() + ": " + ( mGamePresetContainer[i].ZoneID == 0u ? "Empty" : ( "Zone " + mGamePresetContainer[i].ZoneID.ToString() ) ) );
+				}
+
+				if( previousSelectedIndex < GamePresetListBox.Items.Count )
+				{
+					GamePresetListBox.SelectedIndex = previousSelectedIndex;
 				}
 			}
 		}
@@ -130,8 +134,9 @@ namespace WaymarkLibrarian
 			}
 		}
 
-		private void CharacterListDropdown_SelectionChangeCommitted( object sender, EventArgs e )
+		private void CharacterListDropdown_SelectedIndexChanged( object sender, EventArgs e )
 		{
+			mGamePresetContainer = mGameDataHandler.ReadGameData( mCharacterFolderList[CharacterListDropdown.SelectedIndex] + '\\' + mSettings.GameDataSettings.WaymarkDataFileName );
 			PopulateGamePresetListBox( CharacterListDropdown.SelectedIndex < 0 );
 		}
 
@@ -146,11 +151,11 @@ namespace WaymarkLibrarian
 
 		private void CopyToGameButton_Click( object sender, EventArgs e )
 		{
-			//	*****TODO: Pop up a context menu for which preset slot to overwrite rather than just using the selected one.*****
+			//	*****TODO: Maybe pop up a context menu for which preset slot to overwrite rather than just using the selected one?*****
 			if( LibraryListBox.SelectedIndex > -1 && LibraryListBox.SelectedIndex < mPresetLibrary.Presets.Count && GamePresetListBox.SelectedIndex > -1 && GamePresetListBox.SelectedIndex < mSettings.GameDataSettings.NumberOfPresets )
 			{
 				mGamePresetContainer.ReplacePreset( (uint)GamePresetListBox.SelectedIndex, mPresetLibrary.Presets[LibraryListBox.SelectedIndex] );
-				//PopulateGamePresetListBox();
+				PopulateGamePresetListBox();
 			}
 		}
 
@@ -161,7 +166,7 @@ namespace WaymarkLibrarian
 
 		private void WriteGameFileButton_Click( object sender, EventArgs e )
 		{
-			//	*****TODO: Prompt user to confirm, also validate file is really selected character.
+			//	*****TODO: Prompt user to confirm, also validate file is really selected character.*****
 			mGameDataHandler.WriteGameData( mCharacterFolderList[CharacterListDropdown.SelectedIndex] + '\\' + mSettings.GameDataSettings.WaymarkDataFileName, mGameDataHandler.ConstructGameData( mGamePresetContainer ) );
 		}
 
@@ -172,6 +177,32 @@ namespace WaymarkLibrarian
 				mSettings.ProgramSettings.DefaultCharacterID = mCharacterFolderList[CharacterListDropdown.SelectedIndex].Split( '\\' ).Last();
 			}
 			mSettings.SaveConfig();
+			mPresetLibrary.SaveConfig();
+		}
+
+		private void ClearGameSlotButton_Click( object sender, EventArgs e )
+		{
+			if( mGamePresetContainer != null && GamePresetListBox.SelectedIndex >= 0 && GamePresetListBox.SelectedIndex < mSettings.GameDataSettings.NumberOfPresets )
+			{
+				mGamePresetContainer.ReplacePreset( (uint)GamePresetListBox.SelectedIndex, new WaymarkPreset() );
+				PopulateGamePresetListBox();
+			}
+		}
+
+		private void SetCharacterAliasButton_Click( object sender, EventArgs e )
+		{
+			int currentCharacterIndex = CharacterListDropdown.SelectedIndex;
+			if( currentCharacterIndex > -1 && currentCharacterIndex < mCharacterFolderList.Length )
+			{
+				string characterFolderName = mCharacterFolderList[CharacterListDropdown.SelectedIndex].Split( '\\' ).Last();
+				string input = Interaction.InputBox( "Input the alias (friendly name) that you wish to use for the character " + characterFolderName, "Set Alias", mSettings.CharacterAliasSettings.GetAlias( characterFolderName ) );
+				if( input.Length > 0 )
+				{
+					mSettings.CharacterAliasSettings.SetAlias( mCharacterFolderList[CharacterListDropdown.SelectedIndex].Split( '\\' ).Last(), input );
+					PopulateCharacterListDropdown();
+					CharacterListDropdown.SelectedIndex = currentCharacterIndex;
+				}
+			}
 		}
 	}
 }

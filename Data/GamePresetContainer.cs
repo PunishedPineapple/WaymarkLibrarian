@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace WaymarkLibrarian
 {
-	class WaymarkPresets
+	class GamePresetContainer : IEnumerable
 	{
-		public WaymarkPresets( uint numPresets )
+		public GamePresetContainer( uint numPresets )
 		{
 			Presets = new WaymarkPreset[numPresets];
 			for( uint i = 0u; i < Presets.Length; ++i )
@@ -17,7 +18,7 @@ namespace WaymarkLibrarian
 			}
 		}
 
-		public WaymarkPresets( WaymarkPresets objToCopy )
+		public GamePresetContainer( GamePresetContainer objToCopy )
 		{
 			Presets = new WaymarkPreset[objToCopy.Presets.Length];
 			for( uint i = 0u; i < Presets.Length; ++i )
@@ -36,17 +37,43 @@ namespace WaymarkLibrarian
 			if( index < Presets.Length ) Presets[index] = preset;
 		}
 
-		public string GetDataString()
+		IEnumerator IEnumerable.GetEnumerator()
 		{
-			string str = "";
-			for( uint i = 0u; i < Presets.Length; ++i )
-			{
-				str += "Slot " + (i+1).ToString() + ":\r\n" + Presets[i].GetPresetDataString() + "\r\n";
-			}
-			return str;
+			return new GamePresetsEnumerator( Presets );
 		}
 
 		//	Members
 		public WaymarkPreset[] Presets { get; protected set; }
+	}
+
+	//	Enumerator class to support IEnumerable.
+	class GamePresetsEnumerator : IEnumerator
+	{
+		public GamePresetsEnumerator( WaymarkPreset[] presets )
+		{
+			mPresets = presets;
+		}
+
+		public bool MoveNext()
+		{
+			++pos;
+			return pos < mPresets.Length;
+		}
+
+		public void Reset()
+		{
+			pos = -1;
+		}
+
+		object IEnumerator.Current
+		{
+			get
+			{
+				return mPresets[pos];
+			}
+		}
+
+		protected int pos = -1;
+		protected WaymarkPreset[] mPresets;
 	}
 }

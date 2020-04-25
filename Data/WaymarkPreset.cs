@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace WaymarkLibrarian
 {
-	class WaymarkPreset
+	class WaymarkPreset : IEnumerable
 	{
 		public WaymarkPreset()
 		{
@@ -18,7 +19,7 @@ namespace WaymarkLibrarian
 			Waymarks		= new Waymark[mWaymarkIDs.Count];
 			for( uint i = 0u; i < Waymarks.Length; ++i )
 			{
-				Waymarks[i] = new Waymark();
+				Waymarks[i] = new Waymark( mWaymarkIDs[(int)i] );
 			}
 		}
 
@@ -52,22 +53,27 @@ namespace WaymarkLibrarian
 
 		public static void SetWaymarkIDOrder( string IDs )
 		{
-			mWaymarkIDs = new List<string>();
+			mWaymarkIDs = new List<char>();
 			foreach( char c in IDs )
 			{
-				mWaymarkIDs.Add( c.ToString() );
+				mWaymarkIDs.Add( c );
 			}
 		}
 
-		public static string GetWaymarkID( uint key )
+		public static char GetWaymarkID( uint key )
 		{
-			if( key >= mWaymarkIDs.Count ) return "Error: Invalid waymark number.";
+			if( key >= mWaymarkIDs.Count ) throw new Exception( "Error in GetWaymarkID: Invalid waymark index passed." );
 			return mWaymarkIDs.ElementAt((int)key);
 		}
 
-		public static int GetWaymarkNumber( string key )
+		public static int GetWaymarkNumber( char key )
 		{
 			return mWaymarkIDs.IndexOf( key );
+		}
+
+		IEnumerator IEnumerable.GetEnumerator()
+		{
+			return new WaymarkEnumerator( Waymarks );
 		}
 
 		//	Members
@@ -75,7 +81,37 @@ namespace WaymarkLibrarian
 		public DateTimeOffset LastModified { get; set; }
 		public UInt16 ZoneID { get; set; }
 		public Waymark[] Waymarks { get; protected set; }
+		protected static List<char> mWaymarkIDs;
+	}
 
-		protected static List<string> mWaymarkIDs;
+	//	Enumerator class to support IEnumerable.
+	class WaymarkEnumerator : IEnumerator
+	{
+		public WaymarkEnumerator( Waymark[] waymarks )
+		{
+			mWaymarks = waymarks;
+		}
+
+		public bool MoveNext()
+		{
+			++pos;
+			return pos < mWaymarks.Length;
+		}
+
+		public void Reset()
+		{
+			pos = -1;
+		}
+
+		object IEnumerator.Current
+		{
+			get
+			{
+				return mWaymarks[pos];
+			}
+		}
+
+		protected int pos = -1;
+		protected Waymark[] mWaymarks;
 	}
 }
