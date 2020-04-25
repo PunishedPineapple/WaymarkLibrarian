@@ -108,7 +108,7 @@
 			this.CharacterListDropdown.Location = new System.Drawing.Point(8, 72);
 			this.CharacterListDropdown.Name = "CharacterListDropdown";
 			this.CharacterListDropdown.Size = new System.Drawing.Size(256, 21);
-			this.CharacterListDropdown.TabIndex = 0;
+			this.CharacterListDropdown.TabIndex = 2;
 			this.CharacterListDropdown.SelectedIndexChanged += new System.EventHandler(this.CharacterListDropdown_SelectedIndexChanged);
 			// 
 			// label1
@@ -125,7 +125,7 @@
 			this.CharacterFolderBrowseButton.Location = new System.Drawing.Point(272, 24);
 			this.CharacterFolderBrowseButton.Name = "CharacterFolderBrowseButton";
 			this.CharacterFolderBrowseButton.Size = new System.Drawing.Size(40, 23);
-			this.CharacterFolderBrowseButton.TabIndex = 2;
+			this.CharacterFolderBrowseButton.TabIndex = 1;
 			this.CharacterFolderBrowseButton.Text = "...";
 			this.CharacterFolderBrowseButton.UseVisualStyleBackColor = true;
 			this.CharacterFolderBrowseButton.Click += new System.EventHandler(this.CharacterFolderBrowseButton_Click);
@@ -136,7 +136,7 @@
 			this.CharacterDataFolderTextBox.Name = "CharacterDataFolderTextBox";
 			this.CharacterDataFolderTextBox.ReadOnly = true;
 			this.CharacterDataFolderTextBox.Size = new System.Drawing.Size(256, 20);
-			this.CharacterDataFolderTextBox.TabIndex = 3;
+			this.CharacterDataFolderTextBox.TabIndex = 0;
 			// 
 			// label2
 			// 
@@ -153,7 +153,7 @@
 			this.GamePresetListBox.Location = new System.Drawing.Point(8, 120);
 			this.GamePresetListBox.Name = "GamePresetListBox";
 			this.GamePresetListBox.Size = new System.Drawing.Size(256, 69);
-			this.GamePresetListBox.TabIndex = 5;
+			this.GamePresetListBox.TabIndex = 4;
 			this.GamePresetListBox.SelectedIndexChanged += new System.EventHandler(this.GamePresetListBox_SelectedIndexChanged);
 			// 
 			// label3
@@ -171,7 +171,7 @@
 			this.LibraryListBox.Location = new System.Drawing.Point(392, 24);
 			this.LibraryListBox.Name = "LibraryListBox";
 			this.LibraryListBox.Size = new System.Drawing.Size(248, 381);
-			this.LibraryListBox.TabIndex = 7;
+			this.LibraryListBox.TabIndex = 10;
 			// 
 			// label4
 			// 
@@ -187,7 +187,7 @@
 			this.button2.Location = new System.Drawing.Point(392, 408);
 			this.button2.Name = "button2";
 			this.button2.Size = new System.Drawing.Size(72, 23);
-			this.button2.TabIndex = 9;
+			this.button2.TabIndex = 11;
 			this.button2.Text = "Add";
 			this.button2.UseVisualStyleBackColor = true;
 			// 
@@ -196,7 +196,7 @@
 			this.button3.Location = new System.Drawing.Point(480, 408);
 			this.button3.Name = "button3";
 			this.button3.Size = new System.Drawing.Size(72, 23);
-			this.button3.TabIndex = 10;
+			this.button3.TabIndex = 12;
 			this.button3.Text = "Remove";
 			this.button3.UseVisualStyleBackColor = true;
 			// 
@@ -208,14 +208,14 @@
 			this.SelectedPresetInfoBox.Name = "SelectedPresetInfoBox";
 			this.SelectedPresetInfoBox.ReadOnly = true;
 			this.SelectedPresetInfoBox.Size = new System.Drawing.Size(256, 176);
-			this.SelectedPresetInfoBox.TabIndex = 12;
+			this.SelectedPresetInfoBox.TabIndex = 8;
 			// 
 			// SetCharacterAliasButton
 			// 
 			this.SetCharacterAliasButton.Location = new System.Drawing.Point(272, 72);
 			this.SetCharacterAliasButton.Name = "SetCharacterAliasButton";
 			this.SetCharacterAliasButton.Size = new System.Drawing.Size(75, 23);
-			this.SetCharacterAliasButton.TabIndex = 13;
+			this.SetCharacterAliasButton.TabIndex = 3;
 			this.SetCharacterAliasButton.Text = "Set Alias";
 			this.SetCharacterAliasButton.UseVisualStyleBackColor = true;
 			this.SetCharacterAliasButton.Click += new System.EventHandler(this.SetCharacterAliasButton_Click);
@@ -225,7 +225,7 @@
 			this.ClearGameSlotButton.Location = new System.Drawing.Point(8, 192);
 			this.ClearGameSlotButton.Name = "ClearGameSlotButton";
 			this.ClearGameSlotButton.Size = new System.Drawing.Size(72, 23);
-			this.ClearGameSlotButton.TabIndex = 14;
+			this.ClearGameSlotButton.TabIndex = 7;
 			this.ClearGameSlotButton.Text = "Clear Slot";
 			this.ClearGameSlotButton.UseVisualStyleBackColor = true;
 			this.ClearGameSlotButton.Click += new System.EventHandler(this.ClearGameSlotButton_Click);
@@ -235,7 +235,7 @@
 			this.CopyToLibraryButton.Location = new System.Drawing.Point(272, 168);
 			this.CopyToLibraryButton.Name = "CopyToLibraryButton";
 			this.CopyToLibraryButton.Size = new System.Drawing.Size(107, 23);
-			this.CopyToLibraryButton.TabIndex = 15;
+			this.CopyToLibraryButton.TabIndex = 6;
 			this.CopyToLibraryButton.Text = "Copy to Library ->";
 			this.CopyToLibraryButton.UseVisualStyleBackColor = true;
 			this.CopyToLibraryButton.Click += new System.EventHandler(this.CopyToLibraryButton_Click);
@@ -245,7 +245,7 @@
 			this.CopyToGameButton.Location = new System.Drawing.Point(272, 120);
 			this.CopyToGameButton.Name = "CopyToGameButton";
 			this.CopyToGameButton.Size = new System.Drawing.Size(107, 23);
-			this.CopyToGameButton.TabIndex = 16;
+			this.CopyToGameButton.TabIndex = 5;
 			this.CopyToGameButton.Text = "<- Copy to Game";
 			this.CopyToGameButton.UseVisualStyleBackColor = true;
 			this.CopyToGameButton.Click += new System.EventHandler(this.CopyToGameButton_Click);
@@ -273,7 +273,7 @@
 			this.textBox3.Location = new System.Drawing.Point(656, 24);
 			this.textBox3.Name = "textBox3";
 			this.textBox3.Size = new System.Drawing.Size(360, 20);
-			this.textBox3.TabIndex = 19;
+			this.textBox3.TabIndex = 13;
 			// 
 			// label7
 			// 
@@ -289,7 +289,7 @@
 			this.dateTimePicker1.Location = new System.Drawing.Point(656, 72);
 			this.dateTimePicker1.Name = "dateTimePicker1";
 			this.dateTimePicker1.Size = new System.Drawing.Size(240, 20);
-			this.dateTimePicker1.TabIndex = 21;
+			this.dateTimePicker1.TabIndex = 14;
 			// 
 			// WriteGameFileButton
 			// 
@@ -299,7 +299,7 @@
 			this.WriteGameFileButton.Location = new System.Drawing.Point(280, 248);
 			this.WriteGameFileButton.Name = "WriteGameFileButton";
 			this.WriteGameFileButton.Size = new System.Drawing.Size(96, 96);
-			this.WriteGameFileButton.TabIndex = 22;
+			this.WriteGameFileButton.TabIndex = 9;
 			this.WriteGameFileButton.Text = "Write Game File";
 			this.WriteGameFileButton.UseVisualStyleBackColor = true;
 			this.WriteGameFileButton.Click += new System.EventHandler(this.WriteGameFileButton_Click);
@@ -310,7 +310,7 @@
 			this.checkBox1.Location = new System.Drawing.Point(656, 184);
 			this.checkBox1.Name = "checkBox1";
 			this.checkBox1.Size = new System.Drawing.Size(15, 14);
-			this.checkBox1.TabIndex = 24;
+			this.checkBox1.TabIndex = 17;
 			this.checkBox1.UseVisualStyleBackColor = true;
 			// 
 			// checkBox2
@@ -319,7 +319,7 @@
 			this.checkBox2.Location = new System.Drawing.Point(656, 216);
 			this.checkBox2.Name = "checkBox2";
 			this.checkBox2.Size = new System.Drawing.Size(15, 14);
-			this.checkBox2.TabIndex = 25;
+			this.checkBox2.TabIndex = 21;
 			this.checkBox2.UseVisualStyleBackColor = true;
 			// 
 			// checkBox3
@@ -328,7 +328,7 @@
 			this.checkBox3.Location = new System.Drawing.Point(656, 248);
 			this.checkBox3.Name = "checkBox3";
 			this.checkBox3.Size = new System.Drawing.Size(15, 14);
-			this.checkBox3.TabIndex = 26;
+			this.checkBox3.TabIndex = 25;
 			this.checkBox3.UseVisualStyleBackColor = true;
 			// 
 			// checkBox4
@@ -337,7 +337,7 @@
 			this.checkBox4.Location = new System.Drawing.Point(656, 280);
 			this.checkBox4.Name = "checkBox4";
 			this.checkBox4.Size = new System.Drawing.Size(15, 14);
-			this.checkBox4.TabIndex = 27;
+			this.checkBox4.TabIndex = 29;
 			this.checkBox4.UseVisualStyleBackColor = true;
 			// 
 			// checkBox5
@@ -346,7 +346,7 @@
 			this.checkBox5.Location = new System.Drawing.Point(656, 312);
 			this.checkBox5.Name = "checkBox5";
 			this.checkBox5.Size = new System.Drawing.Size(15, 14);
-			this.checkBox5.TabIndex = 28;
+			this.checkBox5.TabIndex = 33;
 			this.checkBox5.UseVisualStyleBackColor = true;
 			// 
 			// checkBox6
@@ -355,7 +355,7 @@
 			this.checkBox6.Location = new System.Drawing.Point(656, 344);
 			this.checkBox6.Name = "checkBox6";
 			this.checkBox6.Size = new System.Drawing.Size(15, 14);
-			this.checkBox6.TabIndex = 29;
+			this.checkBox6.TabIndex = 37;
 			this.checkBox6.UseVisualStyleBackColor = true;
 			// 
 			// checkBox7
@@ -364,7 +364,7 @@
 			this.checkBox7.Location = new System.Drawing.Point(656, 376);
 			this.checkBox7.Name = "checkBox7";
 			this.checkBox7.Size = new System.Drawing.Size(15, 14);
-			this.checkBox7.TabIndex = 30;
+			this.checkBox7.TabIndex = 41;
 			this.checkBox7.UseVisualStyleBackColor = true;
 			// 
 			// checkBox8
@@ -373,7 +373,7 @@
 			this.checkBox8.Location = new System.Drawing.Point(656, 408);
 			this.checkBox8.Name = "checkBox8";
 			this.checkBox8.Size = new System.Drawing.Size(15, 14);
-			this.checkBox8.TabIndex = 31;
+			this.checkBox8.TabIndex = 45;
 			this.checkBox8.UseVisualStyleBackColor = true;
 			// 
 			// comboBox2
@@ -383,7 +383,7 @@
 			this.comboBox2.Location = new System.Drawing.Point(656, 120);
 			this.comboBox2.Name = "comboBox2";
 			this.comboBox2.Size = new System.Drawing.Size(360, 21);
-			this.comboBox2.TabIndex = 32;
+			this.comboBox2.TabIndex = 16;
 			// 
 			// label9
 			// 
@@ -471,168 +471,168 @@
 			this.textBox4.Location = new System.Drawing.Point(696, 184);
 			this.textBox4.Name = "textBox4";
 			this.textBox4.Size = new System.Drawing.Size(100, 20);
-			this.textBox4.TabIndex = 42;
+			this.textBox4.TabIndex = 18;
 			// 
 			// textBox5
 			// 
 			this.textBox5.Location = new System.Drawing.Point(808, 184);
 			this.textBox5.Name = "textBox5";
 			this.textBox5.Size = new System.Drawing.Size(100, 20);
-			this.textBox5.TabIndex = 43;
+			this.textBox5.TabIndex = 19;
 			// 
 			// textBox6
 			// 
 			this.textBox6.Location = new System.Drawing.Point(920, 184);
 			this.textBox6.Name = "textBox6";
 			this.textBox6.Size = new System.Drawing.Size(100, 20);
-			this.textBox6.TabIndex = 44;
+			this.textBox6.TabIndex = 20;
 			// 
 			// textBox7
 			// 
 			this.textBox7.Location = new System.Drawing.Point(696, 216);
 			this.textBox7.Name = "textBox7";
 			this.textBox7.Size = new System.Drawing.Size(100, 20);
-			this.textBox7.TabIndex = 45;
+			this.textBox7.TabIndex = 22;
 			// 
 			// textBox8
 			// 
 			this.textBox8.Location = new System.Drawing.Point(808, 216);
 			this.textBox8.Name = "textBox8";
 			this.textBox8.Size = new System.Drawing.Size(100, 20);
-			this.textBox8.TabIndex = 46;
+			this.textBox8.TabIndex = 23;
 			// 
 			// textBox9
 			// 
 			this.textBox9.Location = new System.Drawing.Point(920, 216);
 			this.textBox9.Name = "textBox9";
 			this.textBox9.Size = new System.Drawing.Size(100, 20);
-			this.textBox9.TabIndex = 47;
+			this.textBox9.TabIndex = 24;
 			// 
 			// textBox10
 			// 
 			this.textBox10.Location = new System.Drawing.Point(696, 248);
 			this.textBox10.Name = "textBox10";
 			this.textBox10.Size = new System.Drawing.Size(100, 20);
-			this.textBox10.TabIndex = 48;
+			this.textBox10.TabIndex = 26;
 			// 
 			// textBox11
 			// 
 			this.textBox11.Location = new System.Drawing.Point(808, 248);
 			this.textBox11.Name = "textBox11";
 			this.textBox11.Size = new System.Drawing.Size(100, 20);
-			this.textBox11.TabIndex = 49;
+			this.textBox11.TabIndex = 27;
 			// 
 			// textBox12
 			// 
 			this.textBox12.Location = new System.Drawing.Point(920, 248);
 			this.textBox12.Name = "textBox12";
 			this.textBox12.Size = new System.Drawing.Size(100, 20);
-			this.textBox12.TabIndex = 50;
+			this.textBox12.TabIndex = 28;
 			// 
 			// textBox13
 			// 
 			this.textBox13.Location = new System.Drawing.Point(696, 280);
 			this.textBox13.Name = "textBox13";
 			this.textBox13.Size = new System.Drawing.Size(100, 20);
-			this.textBox13.TabIndex = 51;
+			this.textBox13.TabIndex = 30;
 			// 
 			// textBox14
 			// 
 			this.textBox14.Location = new System.Drawing.Point(808, 280);
 			this.textBox14.Name = "textBox14";
 			this.textBox14.Size = new System.Drawing.Size(100, 20);
-			this.textBox14.TabIndex = 52;
+			this.textBox14.TabIndex = 31;
 			// 
 			// textBox15
 			// 
 			this.textBox15.Location = new System.Drawing.Point(920, 280);
 			this.textBox15.Name = "textBox15";
 			this.textBox15.Size = new System.Drawing.Size(100, 20);
-			this.textBox15.TabIndex = 53;
+			this.textBox15.TabIndex = 32;
 			// 
 			// textBox16
 			// 
 			this.textBox16.Location = new System.Drawing.Point(696, 312);
 			this.textBox16.Name = "textBox16";
 			this.textBox16.Size = new System.Drawing.Size(100, 20);
-			this.textBox16.TabIndex = 54;
+			this.textBox16.TabIndex = 34;
 			// 
 			// textBox17
 			// 
 			this.textBox17.Location = new System.Drawing.Point(808, 312);
 			this.textBox17.Name = "textBox17";
 			this.textBox17.Size = new System.Drawing.Size(100, 20);
-			this.textBox17.TabIndex = 55;
+			this.textBox17.TabIndex = 35;
 			// 
 			// textBox18
 			// 
 			this.textBox18.Location = new System.Drawing.Point(920, 312);
 			this.textBox18.Name = "textBox18";
 			this.textBox18.Size = new System.Drawing.Size(100, 20);
-			this.textBox18.TabIndex = 56;
+			this.textBox18.TabIndex = 36;
 			// 
 			// textBox19
 			// 
 			this.textBox19.Location = new System.Drawing.Point(696, 344);
 			this.textBox19.Name = "textBox19";
 			this.textBox19.Size = new System.Drawing.Size(100, 20);
-			this.textBox19.TabIndex = 57;
+			this.textBox19.TabIndex = 38;
 			// 
 			// textBox20
 			// 
 			this.textBox20.Location = new System.Drawing.Point(808, 344);
 			this.textBox20.Name = "textBox20";
 			this.textBox20.Size = new System.Drawing.Size(100, 20);
-			this.textBox20.TabIndex = 58;
+			this.textBox20.TabIndex = 39;
 			// 
 			// textBox21
 			// 
 			this.textBox21.Location = new System.Drawing.Point(920, 344);
 			this.textBox21.Name = "textBox21";
 			this.textBox21.Size = new System.Drawing.Size(100, 20);
-			this.textBox21.TabIndex = 59;
+			this.textBox21.TabIndex = 40;
 			// 
 			// textBox22
 			// 
 			this.textBox22.Location = new System.Drawing.Point(696, 376);
 			this.textBox22.Name = "textBox22";
 			this.textBox22.Size = new System.Drawing.Size(100, 20);
-			this.textBox22.TabIndex = 60;
+			this.textBox22.TabIndex = 42;
 			// 
 			// textBox23
 			// 
 			this.textBox23.Location = new System.Drawing.Point(808, 376);
 			this.textBox23.Name = "textBox23";
 			this.textBox23.Size = new System.Drawing.Size(100, 20);
-			this.textBox23.TabIndex = 61;
+			this.textBox23.TabIndex = 43;
 			// 
 			// textBox24
 			// 
 			this.textBox24.Location = new System.Drawing.Point(920, 376);
 			this.textBox24.Name = "textBox24";
 			this.textBox24.Size = new System.Drawing.Size(100, 20);
-			this.textBox24.TabIndex = 62;
+			this.textBox24.TabIndex = 44;
 			// 
 			// textBox25
 			// 
 			this.textBox25.Location = new System.Drawing.Point(696, 408);
 			this.textBox25.Name = "textBox25";
 			this.textBox25.Size = new System.Drawing.Size(100, 20);
-			this.textBox25.TabIndex = 63;
+			this.textBox25.TabIndex = 46;
 			// 
 			// textBox26
 			// 
 			this.textBox26.Location = new System.Drawing.Point(808, 408);
 			this.textBox26.Name = "textBox26";
 			this.textBox26.Size = new System.Drawing.Size(100, 20);
-			this.textBox26.TabIndex = 64;
+			this.textBox26.TabIndex = 47;
 			// 
 			// textBox27
 			// 
 			this.textBox27.Location = new System.Drawing.Point(920, 408);
 			this.textBox27.Name = "textBox27";
 			this.textBox27.Size = new System.Drawing.Size(100, 20);
-			this.textBox27.TabIndex = 65;
+			this.textBox27.TabIndex = 48;
 			// 
 			// label19
 			// 
@@ -666,14 +666,14 @@
 			this.textBox28.Location = new System.Drawing.Point(904, 72);
 			this.textBox28.Name = "textBox28";
 			this.textBox28.Size = new System.Drawing.Size(112, 20);
-			this.textBox28.TabIndex = 70;
+			this.textBox28.TabIndex = 15;
 			// 
 			// button9
 			// 
 			this.button9.Location = new System.Drawing.Point(568, 408);
 			this.button9.Name = "button9";
 			this.button9.Size = new System.Drawing.Size(72, 23);
-			this.button9.TabIndex = 71;
+			this.button9.TabIndex = 49;
 			this.button9.Text = "Update";
 			this.button9.UseVisualStyleBackColor = true;
 			// 
