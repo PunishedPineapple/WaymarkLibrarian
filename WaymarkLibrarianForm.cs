@@ -37,10 +37,10 @@ namespace WaymarkLibrarian
 			//	Set up the object that handles interfacing with the game save files.
 			mGameDataHandler = new GameDataHandler( mSettings.GameDataSettings );
 
-			//	Load zone ID dictionary data.
+			//	*****TODO: Load zone ID dictionary data.*****
 
 			//	Load waymark library.
-			mPresetLibrary = new PresetLibrary( Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ) + "\\WaymarkLibrarian\\WaymarkLibrary.xml" );
+			mPresetLibrary = new PresetLibrary( mSettings.ConfigFolderPath + "\\WaymarkLibrary.xml" );
 			PopulateLibraryListBox();
 
 			//	Initialize the game settings folder, character list, and game preset list.
@@ -55,8 +55,6 @@ namespace WaymarkLibrarian
 						if( mCharacterFolderList[i].Split( '\\' ).Last() == mSettings.ProgramSettings.DefaultCharacterID )
 						{
 							CharacterListDropdown.SelectedIndex = i;
-							mGamePresetContainer = mGameDataHandler.ReadGameData( mCharacterFolderList[CharacterListDropdown.SelectedIndex] + '\\' + mSettings.GameDataSettings.WaymarkDataFileName );
-							PopulateGamePresetListBox();
 							break;
 						}
 					}
@@ -299,21 +297,40 @@ namespace WaymarkLibrarian
 
 		private void CharacterListDropdown_SelectedIndexChanged( object sender, EventArgs e )
 		{
-			mGamePresetContainer = mGameDataHandler.ReadGameData( mCharacterFolderList[CharacterListDropdown.SelectedIndex] + '\\' + mSettings.GameDataSettings.WaymarkDataFileName );
-			PopulateGamePresetListBox( CharacterListDropdown.SelectedIndex < 0 );
+			if( CharacterListDropdown.SelectedIndex > -1 && CharacterListDropdown.SelectedIndex < mCharacterFolderList.Length )
+			{
+				try
+				{
+					mGamePresetContainer = mGameDataHandler.ReadGameData( mCharacterFolderList[CharacterListDropdown.SelectedIndex] + '\\' + mSettings.GameDataSettings.WaymarkDataFileName );
+					PopulateGamePresetListBox();
+				}
+				catch( Exception exception )
+				{
+					MessageBox.Show( "An error has occured while reading the file for character \"" + mSettings.CharacterAliasSettings.GetAlias( mCharacterFolderList[CharacterListDropdown.SelectedIndex].Split( '\\' ).Last() ) + "\": " + exception.Message, "Failure!" );
+					PopulateGamePresetListBox( true );
+				}
+			}
+			else
+			{
+				PopulateGamePresetListBox( true );
+			}
 		}
 
 		private void CopyToLibraryButton_Click( object sender, EventArgs e )
 		{
-			if( GamePresetListBox.SelectedIndex > -1 || GamePresetListBox.SelectedIndex < mSettings.GameDataSettings.NumberOfPresets )
+			if( GamePresetListBox.SelectedIndex > -1 && GamePresetListBox.SelectedIndex < mSettings.GameDataSettings.NumberOfPresets &&
+				CharacterListDropdown.SelectedIndex > -1 && CharacterListDropdown.SelectedIndex < mCharacterFolderList.Length )
 			{
-				mPresetLibrary.AddPreset( mGamePresetContainer.Presets[GamePresetListBox.SelectedIndex] );
+				WaymarkPreset newPreset = new WaymarkPreset( mGamePresetContainer.Presets[GamePresetListBox.SelectedIndex] );
+				newPreset.Name = mSettings.CharacterAliasSettings.GetAlias( mCharacterFolderList[CharacterListDropdown.SelectedIndex].Split( '\\' ).Last() ) + " Slot " + ( GamePresetListBox.SelectedIndex + 1 ).ToString();
+				mPresetLibrary.AddPreset( newPreset );
 				PopulateLibraryListBox();
 			}
 		}
 
 		private void CopyToGameButton_Click( object sender, EventArgs e )
 		{
+			//	*****TODO: Don't let a preset with an invalid Zone ID (0 or not in the dictionary) be copied to the game.*****
 			//	*****TODO: Maybe pop up a context menu for which preset slot to overwrite rather than just using the selected one?*****
 			if( LibraryListBox.SelectedIndex > -1 && LibraryListBox.SelectedIndex < mPresetLibrary.Presets.Count && GamePresetListBox.SelectedIndex > -1 && GamePresetListBox.SelectedIndex < mSettings.GameDataSettings.NumberOfPresets )
 			{
@@ -329,8 +346,22 @@ namespace WaymarkLibrarian
 
 		private void WriteGameFileButton_Click( object sender, EventArgs e )
 		{
-			//	*****TODO: Prompt user to confirm, also validate file is really selected character.*****
-			mGameDataHandler.WriteGameData( mCharacterFolderList[CharacterListDropdown.SelectedIndex] + '\\' + mSettings.GameDataSettings.WaymarkDataFileName, mGameDataHandler.ConstructGameData( mGamePresetContainer ) );
+			//	Might be overkill, but really validate that we're writing to the character folder that we think we are, and then prompt the user to confirm as well.
+			if( CharacterListDropdown.SelectedIndex > -1 &&
+				CharacterListDropdown.SelectedIndex < mCharacterFolderList.Length &&
+				mSettings.CharacterAliasSettings.GetAlias( mCharacterFolderList[CharacterListDropdown.SelectedIndex].Split( '\\' ).Last() ) == CharacterListDropdown.SelectedItem.ToString() &&
+				MessageBox.Show( "Are you certain that you wish to write these presets to the game file for the character \"" + mSettings.CharacterAliasSettings.GetAlias( mCharacterFolderList[CharacterListDropdown.SelectedIndex].Split( '\\' ).Last() ) + "\"?  This cannot be undone.", "Confirm Game File Write", MessageBoxButtons.OKCancel ) == DialogResult.OK )
+			{
+				try
+				{
+					mGameDataHandler.WriteGameData( mCharacterFolderList[CharacterListDropdown.SelectedIndex] + '\\' + mSettings.GameDataSettings.WaymarkDataFileName, mGameDataHandler.ConstructGameData( mGamePresetContainer ) );
+					MessageBox.Show( "The game file has been written.", "Success!" );
+				}
+				catch( Exception exception )
+				{
+					MessageBox.Show( "An error has occured while writing the data: " + exception.Message, "Failure!" );
+				}
+			}
 		}
 
 		private void WaymarkLibrarianForm_FormClosed( object sender, FormClosedEventArgs e )

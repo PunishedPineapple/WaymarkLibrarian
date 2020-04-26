@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace WaymarkLibrarian
 {
 	class GameDataConfig
 	{
 		//	Construction
-		public GameDataConfig()
+		public GameDataConfig( string configFilePath )
 		{
+			ConfigFilePath = configFilePath;
 			SetDefaultConfig();
 			ReadSavedConfig();
 
@@ -34,7 +36,21 @@ namespace WaymarkLibrarian
 
 		protected void ReadSavedConfig()
 		{
-			//	*****TODO*****
+			if( File.Exists( ConfigFilePath ) )
+			{
+				List<string> lines = File.ReadLines( ConfigFilePath ).ToList();
+				foreach( string line in lines )
+				{
+					if( line.Split( '=' ).First().Trim().Equals( "WaymarkDataFileName" ) ) WaymarkDataFileName = line.Split( '=' ).Last().Trim();
+					if( line.Split( '=' ).First().Trim().Equals( "ExpectedFileLength_Bytes" ) ) ExpectedFileLength_Bytes = uint.Parse( line.Split( '=' ).Last().Trim() );
+					if( line.Split( '=' ).First().Trim().Equals( "WaymarkDataOffset" ) ) WaymarkDataOffset = uint.Parse( line.Split( '=' ).Last().Trim() );
+					if( line.Split( '=' ).First().Trim().Equals( "NumberOfPresets" ) ) NumberOfPresets = uint.Parse( line.Split( '=' ).Last().Trim() );
+					if( line.Split( '=' ).First().Trim().Equals( "WaymarkIDOrder" ) ) WaymarkIDOrder = line.Split( '=' ).Last().Trim();
+					if( line.Split( '=' ).First().Trim().Equals( "BytesPerWaymark" ) ) BytesPerWaymark = uint.Parse( line.Split( '=' ).Last().Trim() );
+					if( line.Split( '=' ).First().Trim().Equals( "ConfigBytesPerPreset" ) ) ConfigBytesPerPreset = uint.Parse( line.Split( '=' ).Last().Trim() );
+					if( line.Split( '=' ).First().Trim().Equals( "ConfigFileMagicNumber" ) ) ConfigFileMagicNumber = byte.Parse( line.Split( '=' ).Last().Trim() );
+				}
+			}
 		}
 
 		//	Data Members
@@ -47,5 +63,6 @@ namespace WaymarkLibrarian
 		public uint ConfigBytesPerPreset { get; protected set; }
 		public byte ConfigFileMagicNumber { get; protected set; }
 		public string WaymarkIDOrder { get; protected set; }
+		protected string ConfigFilePath { get; set; }
 	}
 }

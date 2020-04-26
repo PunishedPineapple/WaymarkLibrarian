@@ -12,25 +12,32 @@ namespace WaymarkLibrarian
 	{
 		public Config()
 		{
-			//Get the path to the settings folder.
-			ConfigFolderPath = Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ) + "\\WaymarkLibrarian\\";
+			//	Get the path to the settings folder.
+			ConfigFolderPath = Environment.GetFolderPath( Environment.SpecialFolder.ApplicationData ) + "\\PunishedPineapple\\WaymarkLibrarian\\";
 
-			//	Instantiate members.
+			//	Create our children to handle the specific settings.
 			ProgramSettings = new ProgramConfig( ConfigFolderPath + "Options.cfg" );
-			GameDataSettings = new GameDataConfig();
-			CharacterAliasSettings = new CharacterAliasConfig( ConfigFolderPath + "CharacterAliases.cfg" );
+			GameDataSettings = new GameDataConfig( ConfigFolderPath + "GameData.cfg" );
+			
+			//	The alias file lives one directory up since we may want to share it with other programs in the future.
+			CharacterAliasSettings = new CharacterAliasConfig( Directory.GetParent( ConfigFolderPath ).Parent.FullName + "\\CharacterAliases.cfg" );
 		}
 
 		public void SaveConfig()
 		{
+			//	Create the directories that hold the config files if they don't exist.
+			Directory.CreateDirectory( ConfigFolderPath );
+
+			//	*****TODO: Copy old files for backup first.*****
+
+			//	Ask our children to save themselves.  The game data config should never be written, only read.
 			ProgramSettings.SaveConfig();
 			CharacterAliasSettings.SaveConfig();
-			//	*****TODO: Copy old files for backup first.*****
 		}
 
 		public ProgramConfig ProgramSettings{ get; protected set; }
 		public GameDataConfig GameDataSettings{ get; protected set; }
 		public CharacterAliasConfig CharacterAliasSettings { get; protected set; }
-		protected string ConfigFolderPath { get; set; }
+		public string ConfigFolderPath { get; protected set; }
 	}
 }

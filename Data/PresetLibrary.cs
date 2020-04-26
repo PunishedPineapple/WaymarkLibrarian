@@ -76,63 +76,60 @@ namespace WaymarkLibrarian
 
 		public void SaveConfig()
 		{
-			if( Directory.Exists( Path.GetDirectoryName( ConfigFilePath ) ) )
-			{
-				XmlDocument xmldoc = new XmlDocument();
-				XmlNode libraryNode = xmldoc.CreateElement( "Library" );
-				XmlNode presetsNode = xmldoc.CreateElement( "Presets" );
+			//	Create the directories that hold the config file if they don't exist.
+			Directory.CreateDirectory( Path.GetDirectoryName( ConfigFilePath ) );
+
+			//	Construct the XML from our data, and save it to disk.
+			XmlDocument xmldoc = new XmlDocument();
+			XmlNode libraryNode = xmldoc.CreateElement( "Library" );
+			XmlNode presetsNode = xmldoc.CreateElement( "Presets" );
 				
-				foreach( WaymarkPreset preset in Presets )
-				{
-					XmlNode presetNode = xmldoc.CreateElement( "Preset" );
-					XmlAttribute attr = xmldoc.CreateAttribute( "Name" );
-					attr.Value = preset.Name;
-					presetNode.Attributes.Append( attr );
-					attr = xmldoc.CreateAttribute( "ZoneID" );
-					attr.Value = preset.ZoneID.ToString();
-					presetNode.Attributes.Append( attr );
-					attr = xmldoc.CreateAttribute( "Time" );
-					attr.Value = preset.LastModified.ToString( "u" );
-					presetNode.Attributes.Append( attr );
-					XmlNode waymarksNode = xmldoc.CreateElement( "Waymarks" );
+			foreach( WaymarkPreset preset in Presets )
+			{
+				XmlNode presetNode = xmldoc.CreateElement( "Preset" );
+				XmlAttribute attr = xmldoc.CreateAttribute( "Name" );
+				attr.Value = preset.Name;
+				presetNode.Attributes.Append( attr );
+				attr = xmldoc.CreateAttribute( "ZoneID" );
+				attr.Value = preset.ZoneID.ToString();
+				presetNode.Attributes.Append( attr );
+				attr = xmldoc.CreateAttribute( "Time" );
+				attr.Value = preset.LastModified.ToString( "u" );
+				presetNode.Attributes.Append( attr );
+				XmlNode waymarksNode = xmldoc.CreateElement( "Waymarks" );
 					
-					foreach( Waymark waymark in preset )
-					{
-						XmlNode waymarkNode = xmldoc.CreateElement( "Waymark" );
-						attr = xmldoc.CreateAttribute( "ID" );
-						attr.Value = waymark.ID.ToString();
-						waymarkNode.Attributes.Append( attr );
-						attr = xmldoc.CreateAttribute( "Active" );
-						attr.Value = waymark.IsEnabled.ToString();
-						waymarkNode.Attributes.Append( attr );
+				foreach( Waymark waymark in preset )
+				{
+					XmlNode waymarkNode = xmldoc.CreateElement( "Waymark" );
+					attr = xmldoc.CreateAttribute( "ID" );
+					attr.Value = waymark.ID.ToString();
+					waymarkNode.Attributes.Append( attr );
+					attr = xmldoc.CreateAttribute( "Active" );
+					attr.Value = waymark.IsEnabled.ToString();
+					waymarkNode.Attributes.Append( attr );
 
-						XmlNode coordsNode = xmldoc.CreateElement( "Coordinates" );
-						attr = xmldoc.CreateAttribute( "X" );
-						attr.Value = waymark.Pos.X.ToString();
-						coordsNode.Attributes.Append( attr );
-						attr = xmldoc.CreateAttribute( "Y" );
-						attr.Value = waymark.Pos.Y.ToString();
-						coordsNode.Attributes.Append( attr );
-						attr = xmldoc.CreateAttribute( "Z" );
-						attr.Value = waymark.Pos.Z.ToString();
-						coordsNode.Attributes.Append( attr );
+					XmlNode coordsNode = xmldoc.CreateElement( "Coordinates" );
+					attr = xmldoc.CreateAttribute( "X" );
+					attr.Value = waymark.Pos.X.ToString();
+					coordsNode.Attributes.Append( attr );
+					attr = xmldoc.CreateAttribute( "Y" );
+					attr.Value = waymark.Pos.Y.ToString();
+					coordsNode.Attributes.Append( attr );
+					attr = xmldoc.CreateAttribute( "Z" );
+					attr.Value = waymark.Pos.Z.ToString();
+					coordsNode.Attributes.Append( attr );
 
-						waymarkNode.AppendChild( coordsNode );
-						waymarksNode.AppendChild( waymarkNode );
-					}
-
-					presetNode.AppendChild( waymarksNode );
-					presetsNode.AppendChild( presetNode );
+					waymarkNode.AppendChild( coordsNode );
+					waymarksNode.AppendChild( waymarkNode );
 				}
 
-				libraryNode.AppendChild( presetsNode );
-				xmldoc.AppendChild( libraryNode );
-				xmldoc.Save( ConfigFilePath );
+				presetNode.AppendChild( waymarksNode );
+				presetsNode.AppendChild( presetNode );
 			}
-			else
-			{
-				throw new Exception( "Error while writing preset library data: Specified folder does not exist." );
-			}
+
+			libraryNode.AppendChild( presetsNode );
+			xmldoc.AppendChild( libraryNode );
+			xmldoc.Save( ConfigFilePath );
 		}
 
 		protected int PresetSortCompare( WaymarkPreset a, WaymarkPreset b )
