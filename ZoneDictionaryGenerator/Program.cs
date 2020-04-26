@@ -10,15 +10,11 @@ namespace ZoneDictionaryGenerator
 		static void Main( string[] args )
 		{
 			//	Get the file path to read and validate it.
-			string inFile = "";
-			if( args.Length == 1 )
-			{
-				inFile = args[0];
-			}
+			Console.WriteLine( "Please enter the path to the territory info file to process:" );
+			string inFile = Console.ReadLine();
 			while( !File.Exists( inFile ) )
 			{
-				Console.WriteLine( "Invalid File: " + inFile );
-				Console.WriteLine( "Please enter the path to the EXD file to process:" );
+				Console.WriteLine( "Invalid File: \"" + inFile + "\".  Please enter the path to the territory info file to process:" );
 				inFile = Console.ReadLine();
 			}
 
@@ -31,7 +27,7 @@ namespace ZoneDictionaryGenerator
 			lines.RemoveAt( 0 );
 			lines.RemoveAt( 0 );
 
-			//	Find the columns that we want (PlaceName, ExclusiveType, and The blank column with the actual Territory ID).  Maybe just make them magic nubmers for now?
+			//	Find the columns that we want (PlaceName, ExclusiveType, and The blank column with the actual Territory ID).  Just use magic numbers for now.
 			uint zoneIDColNum = 11u;
 			uint zoneTypeColNum = 9u;
 			uint zoneNameColNum = 6u;
@@ -40,7 +36,7 @@ namespace ZoneDictionaryGenerator
 			uint linesProcessed = 0u;
 			uint validZones = 0u;
 			uint duplicateZones = 0u;
-			Dictionary<UInt16, string> zoneDictionary = new Dictionary<ushort, string>();
+			SortedDictionary<UInt16, string> zoneDictionary = new SortedDictionary<ushort, string>();
 			foreach( string line in lines )
 			{
 				++linesProcessed;
@@ -48,14 +44,23 @@ namespace ZoneDictionaryGenerator
 				if( byte.Parse( entries[zoneTypeColNum].Trim() ) == 2 )
 				{
 					++validZones;
-					if( !zoneDictionary.TryAdd( UInt16.Parse( entries[zoneIDColNum].Trim() ), entries[zoneNameColNum].Trim() ) )
+					if( !zoneDictionary.TryAdd( UInt16.Parse( entries[zoneIDColNum].Trim() ), entries[zoneNameColNum].Trim().Trim( '\"' ) ) )
 					{
 						++duplicateZones;
 					}
 				}
 			}
 
-			//	*****TODO: Export to file.*****
+			//	Zone ID 0 probably isn't valid for any waymarks, so remove that entry (it's likely been overwritten with duplicates anyway).
+			zoneDictionary.Remove( 0 );
+
+			//	Write the dictionary out to file.
+			string outString = "";
+			foreach( KeyValuePair<UInt16, string> entry in zoneDictionary )
+			{
+				outString += entry.Key + " = " + entry.Value + "\r\n";
+			}
+			File.WriteAllText( "ZoneDictionary.dat", outString );
 
 			//	Tell the user what happened.
 			Console.WriteLine( "Processed " + linesProcessed + " Zones with " + validZones + " valid entries (" + duplicateZones + " duplicates)." );
