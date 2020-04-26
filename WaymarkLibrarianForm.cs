@@ -162,7 +162,7 @@ namespace WaymarkLibrarian
 				mPresetLibrary.SortPresets();
 				foreach( WaymarkPreset preset in mPresetLibrary.Presets )
 				{
-					LibraryListBox.Items.Add( preset.Name + " (" + preset.ZoneID.ToString() + ") (" + preset.LastModified.ToLocalTime().ToString( "g" ) + ")" );
+					LibraryListBox.Items.Add( preset.Name /*+ " (" + preset.ZoneID.ToString() + ") (" + preset.LastModified.ToLocalTime().ToString( "g" ) + ")"*/ );
 				}
 
 				//	*****TODO: It would be nice to set the selection back on the updated preset, but that's kind of hard if we're sorting after updating.
@@ -648,8 +648,11 @@ namespace WaymarkLibrarian
 			//	Enable the text box if "Custom" is selected.
 			PresetZoneTextBox.Enabled = PresetZoneDropdown.SelectedIndex == 0;
 
-			//	Set the text in the text box regardless.  Remember that the indices will be off by one since we have custom as a zone ID option at the top of the list.
-			PresetZoneTextBox.Text = PresetZoneDropdown.SelectedIndex > 0 ? mSettings.ZoneInfoSettings.GetKeyFromIndex( PresetZoneDropdown.SelectedIndex - 1 ).ToString() : "0";
+			//	Set the text in the text box if a valid zone is selected in the dropdown.  Remember that the indices will be off by one since we have custom as a zone ID option at the top of the list.
+			if( PresetZoneDropdown.SelectedIndex > 0 )
+			{
+				PresetZoneTextBox.Text = mSettings.ZoneInfoSettings.GetKeyFromIndex( PresetZoneDropdown.SelectedIndex - 1 ).ToString();
+			}
 		}
 		#endregion
 	}
