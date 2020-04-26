@@ -100,6 +100,7 @@
 			this.label8 = new System.Windows.Forms.Label();
 			this.PresetTimePicker = new System.Windows.Forms.DateTimePicker();
 			this.LibraryPresetExportButton = new System.Windows.Forms.Button();
+			this.PresetZoneTextBox = new System.Windows.Forms.TextBox();
 			this.SuspendLayout();
 			// 
 			// CharacterListDropdown
@@ -294,7 +295,7 @@
 			this.PresetDatePicker.Location = new System.Drawing.Point(656, 72);
 			this.PresetDatePicker.MinDate = new System.DateTime(2020, 2, 18, 0, 0, 0, 0);
 			this.PresetDatePicker.Name = "PresetDatePicker";
-			this.PresetDatePicker.Size = new System.Drawing.Size(240, 20);
+			this.PresetDatePicker.Size = new System.Drawing.Size(256, 20);
 			this.PresetDatePicker.TabIndex = 14;
 			// 
 			// WriteGameFileButton
@@ -384,12 +385,13 @@
 			// 
 			// PresetZoneDropdown
 			// 
-			this.PresetZoneDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.Simple;
+			this.PresetZoneDropdown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
 			this.PresetZoneDropdown.FormattingEnabled = true;
 			this.PresetZoneDropdown.Location = new System.Drawing.Point(656, 120);
 			this.PresetZoneDropdown.Name = "PresetZoneDropdown";
-			this.PresetZoneDropdown.Size = new System.Drawing.Size(360, 21);
+			this.PresetZoneDropdown.Size = new System.Drawing.Size(256, 21);
 			this.PresetZoneDropdown.TabIndex = 16;
+			this.PresetZoneDropdown.SelectedIndexChanged += new System.EventHandler(this.PresetZoneDropdown_SelectedIndexChanged);
 			// 
 			// label9
 			// 
@@ -490,7 +492,7 @@
 			// 
 			this.WaymarkATextBox_Z.Location = new System.Drawing.Point(920, 184);
 			this.WaymarkATextBox_Z.Name = "WaymarkATextBox_Z";
-			this.WaymarkATextBox_Z.Size = new System.Drawing.Size(104, 20);
+			this.WaymarkATextBox_Z.Size = new System.Drawing.Size(96, 20);
 			this.WaymarkATextBox_Z.TabIndex = 20;
 			// 
 			// WaymarkBTextBox_X
@@ -511,7 +513,7 @@
 			// 
 			this.WaymarkBTextBox_Z.Location = new System.Drawing.Point(920, 216);
 			this.WaymarkBTextBox_Z.Name = "WaymarkBTextBox_Z";
-			this.WaymarkBTextBox_Z.Size = new System.Drawing.Size(104, 20);
+			this.WaymarkBTextBox_Z.Size = new System.Drawing.Size(96, 20);
 			this.WaymarkBTextBox_Z.TabIndex = 24;
 			// 
 			// WaymarkCTextBox_X
@@ -532,7 +534,7 @@
 			// 
 			this.WaymarkCTextBox_Z.Location = new System.Drawing.Point(920, 248);
 			this.WaymarkCTextBox_Z.Name = "WaymarkCTextBox_Z";
-			this.WaymarkCTextBox_Z.Size = new System.Drawing.Size(104, 20);
+			this.WaymarkCTextBox_Z.Size = new System.Drawing.Size(96, 20);
 			this.WaymarkCTextBox_Z.TabIndex = 28;
 			// 
 			// WaymarkDTextBox_X
@@ -553,7 +555,7 @@
 			// 
 			this.WaymarkDTextBox_Z.Location = new System.Drawing.Point(920, 280);
 			this.WaymarkDTextBox_Z.Name = "WaymarkDTextBox_Z";
-			this.WaymarkDTextBox_Z.Size = new System.Drawing.Size(104, 20);
+			this.WaymarkDTextBox_Z.Size = new System.Drawing.Size(96, 20);
 			this.WaymarkDTextBox_Z.TabIndex = 32;
 			// 
 			// Waymark1TextBox_X
@@ -574,7 +576,7 @@
 			// 
 			this.Waymark1TextBox_Z.Location = new System.Drawing.Point(920, 312);
 			this.Waymark1TextBox_Z.Name = "Waymark1TextBox_Z";
-			this.Waymark1TextBox_Z.Size = new System.Drawing.Size(104, 20);
+			this.Waymark1TextBox_Z.Size = new System.Drawing.Size(96, 20);
 			this.Waymark1TextBox_Z.TabIndex = 36;
 			// 
 			// Waymark2TextBox_X
@@ -595,7 +597,7 @@
 			// 
 			this.Waymark2TextBox_Z.Location = new System.Drawing.Point(920, 344);
 			this.Waymark2TextBox_Z.Name = "Waymark2TextBox_Z";
-			this.Waymark2TextBox_Z.Size = new System.Drawing.Size(104, 20);
+			this.Waymark2TextBox_Z.Size = new System.Drawing.Size(96, 20);
 			this.Waymark2TextBox_Z.TabIndex = 40;
 			// 
 			// Waymark3TextBox_X
@@ -616,7 +618,7 @@
 			// 
 			this.Waymark3TextBox_Z.Location = new System.Drawing.Point(920, 376);
 			this.Waymark3TextBox_Z.Name = "Waymark3TextBox_Z";
-			this.Waymark3TextBox_Z.Size = new System.Drawing.Size(104, 20);
+			this.Waymark3TextBox_Z.Size = new System.Drawing.Size(96, 20);
 			this.Waymark3TextBox_Z.TabIndex = 44;
 			// 
 			// Waymark4TextBox_X
@@ -637,7 +639,7 @@
 			// 
 			this.Waymark4TextBox_Z.Location = new System.Drawing.Point(920, 408);
 			this.Waymark4TextBox_Z.Name = "Waymark4TextBox_Z";
-			this.Waymark4TextBox_Z.Size = new System.Drawing.Size(104, 20);
+			this.Waymark4TextBox_Z.Size = new System.Drawing.Size(96, 20);
 			this.Waymark4TextBox_Z.TabIndex = 48;
 			// 
 			// label19
@@ -671,7 +673,7 @@
 			// 
 			this.LibraryPresetUpdateButton.Location = new System.Drawing.Point(696, 440);
 			this.LibraryPresetUpdateButton.Name = "LibraryPresetUpdateButton";
-			this.LibraryPresetUpdateButton.Size = new System.Drawing.Size(328, 24);
+			this.LibraryPresetUpdateButton.Size = new System.Drawing.Size(320, 24);
 			this.LibraryPresetUpdateButton.TabIndex = 49;
 			this.LibraryPresetUpdateButton.Text = "Update";
 			this.LibraryPresetUpdateButton.UseVisualStyleBackColor = true;
@@ -694,9 +696,9 @@
 			// PresetTimePicker
 			// 
 			this.PresetTimePicker.CustomFormat = "";
-			this.PresetTimePicker.Location = new System.Drawing.Point(904, 72);
+			this.PresetTimePicker.Location = new System.Drawing.Point(920, 72);
 			this.PresetTimePicker.Name = "PresetTimePicker";
-			this.PresetTimePicker.Size = new System.Drawing.Size(112, 20);
+			this.PresetTimePicker.Size = new System.Drawing.Size(96, 20);
 			this.PresetTimePicker.TabIndex = 15;
 			// 
 			// LibraryPresetExportButton
@@ -709,11 +711,19 @@
 			this.LibraryPresetExportButton.UseVisualStyleBackColor = true;
 			this.LibraryPresetExportButton.Click += new System.EventHandler(this.LibraryPresetExportButton_Click);
 			// 
+			// PresetZoneTextBox
+			// 
+			this.PresetZoneTextBox.Location = new System.Drawing.Point(920, 120);
+			this.PresetZoneTextBox.Name = "PresetZoneTextBox";
+			this.PresetZoneTextBox.Size = new System.Drawing.Size(96, 20);
+			this.PresetZoneTextBox.TabIndex = 73;
+			// 
 			// WaymarkLibrarianForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1034, 476);
+			this.Controls.Add(this.PresetZoneTextBox);
 			this.Controls.Add(this.LibraryPresetExportButton);
 			this.Controls.Add(this.PresetTimePicker);
 			this.Controls.Add(this.label8);
@@ -867,6 +877,7 @@
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.DateTimePicker PresetTimePicker;
 		private System.Windows.Forms.Button LibraryPresetExportButton;
+		private System.Windows.Forms.TextBox PresetZoneTextBox;
 	}
 }
 

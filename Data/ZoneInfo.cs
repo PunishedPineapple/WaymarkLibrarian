@@ -3,64 +3,72 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace WaymarkLibrarian
 {
 	class ZoneInfo
 	{
-		//	TODO: Construct with file info from zone dictionary file.
-		public ZoneInfo()
+		public ZoneInfo( string configFilePath )
 		{
-			//todo: populate mIDToNameDict
-
-			//	Populate reverse dictionary.
-			mNameToIDDict = mIDToNameDict.ToDictionary( (i) => i.Value, (i) => i.Key );
+			ConfigFilePath = configFilePath;
+			SetDefaultConfig();
+			ReadSavedConfig();
 		}
 
-		//	Safe zone ID to zone name conversion.
-		public bool GetZoneName( UInt16 zoneID, out string rZoneName )
+		protected void SetDefaultConfig()
 		{
-			if( mIDToNameDict.TryGetValue( zoneID, out rZoneName ) )
+			//	No default config for the zone dictionary.
+		}
+
+		protected void ReadSavedConfig()
+		{
+			if( File.Exists( ConfigFilePath ) )
 			{
-				return true;
-			}
-			else
-			{
-				return false;
+				List<string> lines = File.ReadLines( ConfigFilePath ).ToList();
+				foreach( string line in lines )
+				{
+					mIDToNameDict.Add( UInt16.Parse( line.Split( '=' ).First().Trim() ),  line.Split( '=' ).Last().Trim() );
+				}
 			}
 		}
 
-		//	Unsafe zone ID to zone name conversion.
 		public string GetZoneName( UInt16 zoneID )
 		{
 			string zoneName;
-			if( !GetZoneName( zoneID, out zoneName ) ) zoneName = "Unknown";
+			if( !mIDToNameDict.TryGetValue( zoneID, out zoneName ) ) zoneName = "Unknown Zone (" + zoneID.ToString() + ")";
 			return zoneName;
 		}
 
-		//	Safe zone name to Zone ID conversion.
-		public bool GetZoneID( string zoneName, out UInt16 rZoneID )
+		public bool ZoneDataExists( UInt16 zoneID )
 		{
-			if( mNameToIDDict.TryGetValue( zoneName, out rZoneID ) )
-			{
-				return true;
-			}
-			else
-			{
-				return false;
-			}
+			return mIDToNameDict.ContainsKey(zoneID);
 		}
 
-		//	Unsafe zone name to Zone ID conversion.
-		public UInt16 GetZoneName( string zoneName )
+		public bool ZoneDataIndexExists( int index )
 		{
-			UInt16 zoneID;
-			if( !GetZoneID( zoneName, out zoneID ) ) zoneID = 0;
-			return zoneID;
+			return index >= 0 && mIDToNameDict.Count > index;
+		}
+
+		public int GetIndex( UInt16 zoneID )
+		{
+			return mIDToNameDict.Keys.ToList().IndexOf( zoneID );
+		}
+
+		public UInt16 GetKeyFromIndex( int index )
+		{
+			return mIDToNameDict.Keys.ToList()[index];
+		}
+
+		public string GetValueFromIndex( int index )
+		{
+			return mIDToNameDict[mIDToNameDict.Keys.ToList()[index]];
 		}
 
 		//	Members
+		protected string ConfigFilePath { get; set; }
+
+		//	*****TODO: Dictionary is a most likely poor choice for the underlying data structure since we want to be able to access by index as well.  Probably keep two lists and manage them ourselves.*****
 		protected Dictionary<UInt16, string> mIDToNameDict = new Dictionary<UInt16, string>();
-		protected Dictionary<string, UInt16> mNameToIDDict = new Dictionary<string, UInt16>();
 	}
 }

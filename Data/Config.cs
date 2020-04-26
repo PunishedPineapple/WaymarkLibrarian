@@ -18,6 +18,7 @@ namespace WaymarkLibrarian
 			//	Create our children to handle the specific settings.
 			ProgramSettings = new ProgramConfig( ConfigFolderPath + "Options.cfg" );
 			GameDataSettings = new GameDataConfig( ConfigFolderPath + "GameData.cfg" );
+			ZoneInfoSettings = new ZoneInfo( ConfigFolderPath + "ZoneDictionary.dat" );
 			
 			//	The alias file lives one directory up since we may want to share it with other programs in the future.
 			CharacterAliasSettings = new CharacterAliasConfig( Directory.GetParent( ConfigFolderPath ).Parent.FullName + "\\CharacterAliases.cfg" );
@@ -30,13 +31,14 @@ namespace WaymarkLibrarian
 
 			//	*****TODO: Copy old files for backup first.*****
 
-			//	Ask our children to save themselves.  The game data config should never be written, only read.
+			//	Ask our children to save themselves.  The game data config should never be written, only read.  The same applies to the zone dictionary.
 			ProgramSettings.SaveConfig();
 			CharacterAliasSettings.SaveConfig();
 		}
 
-		public ProgramConfig ProgramSettings{ get; protected set; }
-		public GameDataConfig GameDataSettings{ get; protected set; }
+		public ProgramConfig ProgramSettings { get; protected set; }
+		public GameDataConfig GameDataSettings { get; protected set; }
+		public ZoneInfo ZoneInfoSettings { get; protected set; }
 		public CharacterAliasConfig CharacterAliasSettings { get; protected set; }
 		public string ConfigFolderPath { get; protected set; }
 	}

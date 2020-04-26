@@ -40,14 +40,14 @@ namespace WaymarkLibrarian
 			get { return Waymarks[(int)key]; }
 		}
 
-		public string GetPresetDataString()
+		public string GetPresetDataString( ZoneInfo zoneInfo )
 		{
 			string str = "";
 			for( uint i = 0u; i < Waymarks.Length; ++i )
 			{
 				str += GetWaymarkID( i ) + ": " + Waymarks[i].GetWaymarkDataString() + "\r\n";
 			}
-			str += "\r\nZone ID: " + ZoneID.ToString() + "\r\nLast Modified: " + LastModified.ToLocalTime().ToString( "G" );
+			str += "\r\nZone ID: " + ZoneID.ToString() + " (" +zoneInfo.GetZoneName( ZoneID ) + ")\r\nLast Modified: " + LastModified.ToLocalTime().ToString( "G" );
 			return str;
 		}
 

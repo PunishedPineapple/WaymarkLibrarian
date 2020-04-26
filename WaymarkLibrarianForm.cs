@@ -37,7 +37,8 @@ namespace WaymarkLibrarian
 			//	Set up the object that handles interfacing with the game save files.
 			mGameDataHandler = new GameDataHandler( mSettings.GameDataSettings );
 
-			//	*****TODO: Load zone ID dictionary data.*****
+			//	Set up the zone data controls.
+			PopulatePresetZoneDropdown();
 
 			//	Load waymark library.
 			mPresetLibrary = new PresetLibrary( mSettings.ConfigFolderPath + "\\WaymarkLibrary.xml" );
@@ -128,7 +129,7 @@ namespace WaymarkLibrarian
 			{
 				for( uint i = 0u; i < mGamePresetContainer.Presets.Length; ++i )
 				{
-					GamePresetListBox.Items.Add( "Slot " + ( i + 1 ).ToString() + ": " + ( mGamePresetContainer[i].ZoneID == 0u ? "Empty" : ( "Zone " + mGamePresetContainer[i].ZoneID.ToString() ) ) );
+					GamePresetListBox.Items.Add( "Slot " + ( i + 1 ).ToString() + ": " + ( mGamePresetContainer[i].ZoneID == 0u ? "Empty" : mSettings.ZoneInfoSettings.GetZoneName( mGamePresetContainer[i].ZoneID ) ) );
 				}
 
 				if( previousSelectedIndex < GamePresetListBox.Items.Count )
@@ -142,7 +143,7 @@ namespace WaymarkLibrarian
 		{
 			if( mGamePresetContainer != null && GamePresetListBox.SelectedIndex >= 0 && GamePresetListBox.SelectedIndex < mSettings.GameDataSettings.NumberOfPresets )
 			{
-				SelectedPresetInfoBox.Text = mGamePresetContainer[(uint)GamePresetListBox.SelectedIndex].GetPresetDataString();
+				SelectedPresetInfoBox.Text = mGamePresetContainer[(uint)GamePresetListBox.SelectedIndex].GetPresetDataString( mSettings.ZoneInfoSettings );
 			}
 			else
 			{
@@ -172,6 +173,17 @@ namespace WaymarkLibrarian
 			}
 		}
 
+		private void PopulatePresetZoneDropdown()
+		{
+			//	Remember that the indices will be off by one since we have custom as a zone ID option at the top of the list.
+			PresetZoneDropdown.Items.Clear();
+			PresetZoneDropdown.Items.Add( "Custom" );
+			for( int i = 0; mSettings.ZoneInfoSettings.ZoneDataIndexExists( i ); ++i )
+			{
+				PresetZoneDropdown.Items.Add( mSettings.ZoneInfoSettings.GetValueFromIndex( i ).ToString() + " (" + mSettings.ZoneInfoSettings.GetKeyFromIndex( i ).ToString() + ")" );
+			}
+		}
+
 		private void PopulatePresetEditor( bool clear = false )
 		{
 			if( !clear && LibraryListBox.SelectedIndex > -1 && LibraryListBox.SelectedIndex < mPresetLibrary.Presets.Count )
@@ -180,8 +192,11 @@ namespace WaymarkLibrarian
 				PresetDatePicker.Value = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].LastModified.LocalDateTime.Date;
 				PresetTimePicker.Value = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].LastModified.LocalDateTime;
 
-				//	*****TODO: Make this the actual dropdown once the zone dictionary is implemented.*****
-				PresetZoneDropdown.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].ZoneID.ToString();
+				//	Set the zone in the dropdown if recognized; otherwise set custom and enable the text box for manual entry.  Remember that the indices will be off by one since we have custom as a zone ID option at the top of the list.
+				bool isKnownZone = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].ZoneID != 0 && mSettings.ZoneInfoSettings.ZoneDataExists( mPresetLibrary.Presets[LibraryListBox.SelectedIndex].ZoneID );
+				PresetZoneDropdown.SelectedIndex = isKnownZone ? mSettings.ZoneInfoSettings.GetIndex( mPresetLibrary.Presets[LibraryListBox.SelectedIndex].ZoneID ) + 1 : 0;
+				PresetZoneTextBox.Enabled = !isKnownZone;
+				PresetZoneTextBox.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].ZoneID.ToString();
 
 				WaymarkACheckbox.Checked = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].IsEnabled;
 				WaymarkATextBox_X.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.X.ToString();
@@ -229,8 +244,8 @@ namespace WaymarkLibrarian
 				PresetDatePicker.Value = DateTime.Now;
 				PresetTimePicker.Value = DateTime.Now;
 
-				//	*****TODO: Set dropdown index instead once zone dictionary is implemented.*****
-				PresetZoneDropdown.Text = "";
+				PresetZoneDropdown.SelectedIndex = 0;
+				PresetZoneTextBox.Text = "";
 
 				WaymarkACheckbox.Checked = false;
 				WaymarkATextBox_X.Text = "";
@@ -411,9 +426,9 @@ namespace WaymarkLibrarian
 				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Name = PresetNameTextBox.Text;
 				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].LastModified = ( PresetDatePicker.Value.Date + PresetTimePicker.Value.TimeOfDay ).ToUniversalTime();
 
-				//	*****TODO: Make this use the actual dropdown once the zone dictionary is implemented.*****
+				//	The Zone ID will always come from the text box because the dropdown will populate that in the event that the user cannot edit it.
 				UInt16 tempShort;
-				if( UInt16.TryParse( PresetZoneDropdown.Text, out tempShort ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].ZoneID = tempShort;
+				if( UInt16.TryParse( PresetZoneTextBox.Text, out tempShort ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].ZoneID = tempShort;
 
 				double tempDouble;
 				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].IsEnabled = WaymarkACheckbox.Checked;
@@ -626,6 +641,15 @@ namespace WaymarkLibrarian
 				string objString = JsonConvert.SerializeObject( exportObj );
 				Interaction.InputBox( "Copy the JSON export string below:", "Preset Export", objString );
 			}
+		}
+
+		private void PresetZoneDropdown_SelectedIndexChanged( object sender, EventArgs e )
+		{
+			//	Enable the text box if "Custom" is selected.
+			PresetZoneTextBox.Enabled = PresetZoneDropdown.SelectedIndex == 0;
+
+			//	Set the text in the text box regardless.  Remember that the indices will be off by one since we have custom as a zone ID option at the top of the list.
+			PresetZoneTextBox.Text = PresetZoneDropdown.SelectedIndex > 0 ? mSettings.ZoneInfoSettings.GetKeyFromIndex( PresetZoneDropdown.SelectedIndex - 1 ).ToString() : "0";
 		}
 		#endregion
 	}
