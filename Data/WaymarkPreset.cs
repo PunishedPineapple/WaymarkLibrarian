@@ -47,7 +47,7 @@ namespace WaymarkLibrarian
 			{
 				str += GetWaymarkID( i ) + ": " + Waymarks[i].GetWaymarkDataString() + "\r\n";
 			}
-			str += "\r\nZone ID: " + ZoneID.ToString() + "\r\nLast Modified: " + LastModified.ToLocalTime().ToString( "g" );
+			str += "\r\nZone ID: " + ZoneID.ToString() + "\r\nLast Modified: " + LastModified.ToLocalTime().ToString( "G" );
 			return str;
 		}
 

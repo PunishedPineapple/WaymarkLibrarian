@@ -37,7 +37,7 @@
 			this.label3 = new System.Windows.Forms.Label();
 			this.LibraryListBox = new System.Windows.Forms.ListBox();
 			this.label4 = new System.Windows.Forms.Label();
-			this.LibraryPresetAddButton = new System.Windows.Forms.Button();
+			this.LibraryPresetImportButton = new System.Windows.Forms.Button();
 			this.LibraryPresetRemoveButton = new System.Windows.Forms.Button();
 			this.SelectedPresetInfoBox = new System.Windows.Forms.TextBox();
 			this.SetCharacterAliasButton = new System.Windows.Forms.Button();
@@ -99,6 +99,7 @@
 			this.CharacterDataFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
 			this.label8 = new System.Windows.Forms.Label();
 			this.PresetTimePicker = new System.Windows.Forms.DateTimePicker();
+			this.LibraryPresetExportButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// CharacterListDropdown
@@ -170,7 +171,7 @@
 			this.LibraryListBox.FormattingEnabled = true;
 			this.LibraryListBox.Location = new System.Drawing.Point(392, 24);
 			this.LibraryListBox.Name = "LibraryListBox";
-			this.LibraryListBox.Size = new System.Drawing.Size(248, 381);
+			this.LibraryListBox.Size = new System.Drawing.Size(248, 407);
 			this.LibraryListBox.TabIndex = 10;
 			this.LibraryListBox.SelectedIndexChanged += new System.EventHandler(this.LibraryListBox_SelectedIndexChanged);
 			// 
@@ -183,23 +184,25 @@
 			this.label4.TabIndex = 8;
 			this.label4.Text = "Preset Library:";
 			// 
-			// LibraryPresetAddButton
+			// LibraryPresetImportButton
 			// 
-			this.LibraryPresetAddButton.Location = new System.Drawing.Point(392, 408);
-			this.LibraryPresetAddButton.Name = "LibraryPresetAddButton";
-			this.LibraryPresetAddButton.Size = new System.Drawing.Size(72, 23);
-			this.LibraryPresetAddButton.TabIndex = 11;
-			this.LibraryPresetAddButton.Text = "Add";
-			this.LibraryPresetAddButton.UseVisualStyleBackColor = true;
+			this.LibraryPresetImportButton.Location = new System.Drawing.Point(392, 440);
+			this.LibraryPresetImportButton.Name = "LibraryPresetImportButton";
+			this.LibraryPresetImportButton.Size = new System.Drawing.Size(80, 24);
+			this.LibraryPresetImportButton.TabIndex = 11;
+			this.LibraryPresetImportButton.Text = "Import/New";
+			this.LibraryPresetImportButton.UseVisualStyleBackColor = true;
+			this.LibraryPresetImportButton.Click += new System.EventHandler(this.LibraryPresetImportButton_Click);
 			// 
 			// LibraryPresetRemoveButton
 			// 
-			this.LibraryPresetRemoveButton.Location = new System.Drawing.Point(480, 408);
+			this.LibraryPresetRemoveButton.Location = new System.Drawing.Point(568, 440);
 			this.LibraryPresetRemoveButton.Name = "LibraryPresetRemoveButton";
-			this.LibraryPresetRemoveButton.Size = new System.Drawing.Size(72, 23);
-			this.LibraryPresetRemoveButton.TabIndex = 12;
+			this.LibraryPresetRemoveButton.Size = new System.Drawing.Size(72, 24);
+			this.LibraryPresetRemoveButton.TabIndex = 13;
 			this.LibraryPresetRemoveButton.Text = "Remove";
 			this.LibraryPresetRemoveButton.UseVisualStyleBackColor = true;
+			this.LibraryPresetRemoveButton.Click += new System.EventHandler(this.LibraryPresetRemoveButton_Click);
 			// 
 			// SelectedPresetInfoBox
 			// 
@@ -487,7 +490,7 @@
 			// 
 			this.WaymarkATextBox_Z.Location = new System.Drawing.Point(920, 184);
 			this.WaymarkATextBox_Z.Name = "WaymarkATextBox_Z";
-			this.WaymarkATextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkATextBox_Z.Size = new System.Drawing.Size(104, 20);
 			this.WaymarkATextBox_Z.TabIndex = 20;
 			// 
 			// WaymarkBTextBox_X
@@ -508,7 +511,7 @@
 			// 
 			this.WaymarkBTextBox_Z.Location = new System.Drawing.Point(920, 216);
 			this.WaymarkBTextBox_Z.Name = "WaymarkBTextBox_Z";
-			this.WaymarkBTextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkBTextBox_Z.Size = new System.Drawing.Size(104, 20);
 			this.WaymarkBTextBox_Z.TabIndex = 24;
 			// 
 			// WaymarkCTextBox_X
@@ -529,7 +532,7 @@
 			// 
 			this.WaymarkCTextBox_Z.Location = new System.Drawing.Point(920, 248);
 			this.WaymarkCTextBox_Z.Name = "WaymarkCTextBox_Z";
-			this.WaymarkCTextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkCTextBox_Z.Size = new System.Drawing.Size(104, 20);
 			this.WaymarkCTextBox_Z.TabIndex = 28;
 			// 
 			// WaymarkDTextBox_X
@@ -550,7 +553,7 @@
 			// 
 			this.WaymarkDTextBox_Z.Location = new System.Drawing.Point(920, 280);
 			this.WaymarkDTextBox_Z.Name = "WaymarkDTextBox_Z";
-			this.WaymarkDTextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.WaymarkDTextBox_Z.Size = new System.Drawing.Size(104, 20);
 			this.WaymarkDTextBox_Z.TabIndex = 32;
 			// 
 			// Waymark1TextBox_X
@@ -571,7 +574,7 @@
 			// 
 			this.Waymark1TextBox_Z.Location = new System.Drawing.Point(920, 312);
 			this.Waymark1TextBox_Z.Name = "Waymark1TextBox_Z";
-			this.Waymark1TextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.Waymark1TextBox_Z.Size = new System.Drawing.Size(104, 20);
 			this.Waymark1TextBox_Z.TabIndex = 36;
 			// 
 			// Waymark2TextBox_X
@@ -592,7 +595,7 @@
 			// 
 			this.Waymark2TextBox_Z.Location = new System.Drawing.Point(920, 344);
 			this.Waymark2TextBox_Z.Name = "Waymark2TextBox_Z";
-			this.Waymark2TextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.Waymark2TextBox_Z.Size = new System.Drawing.Size(104, 20);
 			this.Waymark2TextBox_Z.TabIndex = 40;
 			// 
 			// Waymark3TextBox_X
@@ -613,7 +616,7 @@
 			// 
 			this.Waymark3TextBox_Z.Location = new System.Drawing.Point(920, 376);
 			this.Waymark3TextBox_Z.Name = "Waymark3TextBox_Z";
-			this.Waymark3TextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.Waymark3TextBox_Z.Size = new System.Drawing.Size(104, 20);
 			this.Waymark3TextBox_Z.TabIndex = 44;
 			// 
 			// Waymark4TextBox_X
@@ -634,7 +637,7 @@
 			// 
 			this.Waymark4TextBox_Z.Location = new System.Drawing.Point(920, 408);
 			this.Waymark4TextBox_Z.Name = "Waymark4TextBox_Z";
-			this.Waymark4TextBox_Z.Size = new System.Drawing.Size(100, 20);
+			this.Waymark4TextBox_Z.Size = new System.Drawing.Size(104, 20);
 			this.Waymark4TextBox_Z.TabIndex = 48;
 			// 
 			// label19
@@ -666,9 +669,9 @@
 			// 
 			// LibraryPresetUpdateButton
 			// 
-			this.LibraryPresetUpdateButton.Location = new System.Drawing.Point(568, 408);
+			this.LibraryPresetUpdateButton.Location = new System.Drawing.Point(696, 440);
 			this.LibraryPresetUpdateButton.Name = "LibraryPresetUpdateButton";
-			this.LibraryPresetUpdateButton.Size = new System.Drawing.Size(72, 23);
+			this.LibraryPresetUpdateButton.Size = new System.Drawing.Size(328, 24);
 			this.LibraryPresetUpdateButton.TabIndex = 49;
 			this.LibraryPresetUpdateButton.Text = "Update";
 			this.LibraryPresetUpdateButton.UseVisualStyleBackColor = true;
@@ -696,11 +699,22 @@
 			this.PresetTimePicker.Size = new System.Drawing.Size(112, 20);
 			this.PresetTimePicker.TabIndex = 15;
 			// 
+			// LibraryPresetExportButton
+			// 
+			this.LibraryPresetExportButton.Location = new System.Drawing.Point(480, 440);
+			this.LibraryPresetExportButton.Name = "LibraryPresetExportButton";
+			this.LibraryPresetExportButton.Size = new System.Drawing.Size(80, 24);
+			this.LibraryPresetExportButton.TabIndex = 12;
+			this.LibraryPresetExportButton.Text = "Export";
+			this.LibraryPresetExportButton.UseVisualStyleBackColor = true;
+			this.LibraryPresetExportButton.Click += new System.EventHandler(this.LibraryPresetExportButton_Click);
+			// 
 			// WaymarkLibrarianForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1034, 444);
+			this.ClientSize = new System.Drawing.Size(1034, 476);
+			this.Controls.Add(this.LibraryPresetExportButton);
 			this.Controls.Add(this.PresetTimePicker);
 			this.Controls.Add(this.label8);
 			this.Controls.Add(this.LibraryPresetUpdateButton);
@@ -761,7 +775,7 @@
 			this.Controls.Add(this.SetCharacterAliasButton);
 			this.Controls.Add(this.SelectedPresetInfoBox);
 			this.Controls.Add(this.LibraryPresetRemoveButton);
-			this.Controls.Add(this.LibraryPresetAddButton);
+			this.Controls.Add(this.LibraryPresetImportButton);
 			this.Controls.Add(this.label4);
 			this.Controls.Add(this.LibraryListBox);
 			this.Controls.Add(this.label3);
@@ -790,7 +804,7 @@
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.ListBox LibraryListBox;
 		private System.Windows.Forms.Label label4;
-		private System.Windows.Forms.Button LibraryPresetAddButton;
+		private System.Windows.Forms.Button LibraryPresetImportButton;
 		private System.Windows.Forms.Button LibraryPresetRemoveButton;
 		private System.Windows.Forms.TextBox SelectedPresetInfoBox;
 		private System.Windows.Forms.Button SetCharacterAliasButton;
@@ -852,6 +866,7 @@
 		private System.Windows.Forms.FolderBrowserDialog CharacterDataFolderDialog;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.DateTimePicker PresetTimePicker;
+		private System.Windows.Forms.Button LibraryPresetExportButton;
 	}
 }
 

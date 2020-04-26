@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using Newtonsoft.Json;
 
 //	Use for InputBox rather than rolling our own trivial input dialog.
 using Microsoft.VisualBasic;
@@ -16,14 +17,12 @@ namespace WaymarkLibrarian
 {
 	public partial class WaymarkLibrarianForm : Form
 	{
+		//	Construction
 		public WaymarkLibrarianForm()
 		{
 			//	***** TODO LIST: *****
-			//		Make import button bring up a context menu with both import and empty new options (work in pp format import too).
-			//		Make copy to game bring up a context menu of which slot to use.
-			//		Restrict date dropdown to not allow before 5.2 patch.  Have date in zone dictionary with release date for each zone?
-			//		Add a button for default character setting?
-			//		Add expected file size to game data settings and check that before doing anything.  Refuse to load if it doesn't match the expected size.
+			//		Maybe have copy to game bring up a context menu of which slot to use?
+			//		Have date in zone dictionary with release date for each zone and restrict to that?
 
 			//	WinForms Stuff
 			InitializeComponent();
@@ -65,12 +64,52 @@ namespace WaymarkLibrarian
 			}
 		}
 
+		//	Data Members
 		private GamePresetContainer mGamePresetContainer;
 		private GameDataHandler mGameDataHandler;
 		private PresetLibrary mPresetLibrary;
 		private string[] mCharacterFolderList;
 		private Config mSettings;
 
+		//	Class Functions
+		#region General Helper Functions
+		//	Trivial class to aid with JSON serialiazing.  I *hate* serializing objects instead of using an actual config format, but this is probably the best thing to have presets be transferrable between this program and Paisley Park.  At least having a buffer object lets us keep the JSON stuff isolated, even if it results in more work for us.
+		//	Some of these fields may be meaningless for this program in order to (maybe) allow Paisley import of our exports.
+		class PresetExportObject
+		{
+			public class WaymarkExportObject
+			{
+				public double X { get; set; } = 0.0;
+				public double Y { get; set; } = 0.0;
+				public double Z { get; set; } = 0.0;
+				public int ID { get; set; } = 0;
+				public bool Active { get; set; } = false;
+			}
+			public string Name { get; set; } = "Unknown Name";
+			public UInt16 ZoneID { get; set; } = (UInt16)0u;
+			public DateTimeOffset Time { get; set; } = new DateTimeOffset( DateTimeOffset.Now.UtcDateTime );
+			public WaymarkExportObject A { get; set; } = new WaymarkExportObject();
+			public WaymarkExportObject B { get; set; } = new WaymarkExportObject();
+			public WaymarkExportObject C { get; set; } = new WaymarkExportObject();
+			public WaymarkExportObject D { get; set; } = new WaymarkExportObject();
+			public WaymarkExportObject One { get; set; } = new WaymarkExportObject();
+			public WaymarkExportObject Two { get; set; } = new WaymarkExportObject();
+			public WaymarkExportObject Three { get; set; } = new WaymarkExportObject();
+			public WaymarkExportObject Four { get; set; } = new WaymarkExportObject();
+
+		}
+		#endregion
+
+		//	Member Functions
+		#region Event Helper Functions
+		public static bool DynamicObjectPropertyExists( dynamic obj, string name )
+		{
+			//	Didn't write; came from https://stackoverflow.com/a/48752086;
+			if( obj == null ) return false;
+			if( obj is IDictionary<string, object> dict ) return dict.ContainsKey( name );
+			if( obj is Newtonsoft.Json.Linq.JObject ) return ( (Newtonsoft.Json.Linq.JObject)obj ).ContainsKey( name );
+			return obj.GetType().GetProperty( name ) != null;
+		}
 		private void PopulateCharacterListDropdown()
 		{
 			CharacterListDropdown.Items.Clear();
@@ -121,15 +160,17 @@ namespace WaymarkLibrarian
 
 			if( !clear )
 			{
+				mPresetLibrary.SortPresets();
 				foreach( WaymarkPreset preset in mPresetLibrary.Presets )
 				{
 					LibraryListBox.Items.Add( preset.Name + " (" + preset.ZoneID.ToString() + ") (" + preset.LastModified.ToLocalTime().ToString( "g" ) + ")" );
 				}
 
-				if( previousSelectedIndex < LibraryListBox.Items.Count )
+				//	*****TODO: It would be nice to set the selection back on the updated preset, but that's kind of hard if we're sorting after updating.
+				/*if( previousSelectedIndex < LibraryListBox.Items.Count )
 				{
 					LibraryListBox.SelectedIndex = previousSelectedIndex;
-				}
+				}*/
 			}
 		}
 
@@ -241,7 +282,10 @@ namespace WaymarkLibrarian
 				Waymark4TextBox_Z.Text = "";
 			}
 		}
+		#endregion
 
+		//	Event Handlers
+		#region Event Handlers
 		private void CharacterFolderBrowseButton_Click( object sender, EventArgs e )
 		{
 			CharacterDataFolderDialog.ShowDialog();
@@ -384,5 +428,174 @@ namespace WaymarkLibrarian
 				PopulateLibraryListBox();
 			}
 		}
+
+		private void LibraryPresetImportButton_Click( object sender, EventArgs e )
+		{
+			string input = Interaction.InputBox( "Paste the JSON (*barf*) for the preset that you wish to import, or leave blank for a new blank preset.  Accepts Paisley Park exports as well, but you'll have to manually set the zone ID for them.", "Import Preset" );
+			if( input.Length > 0 )
+			{
+				WaymarkPreset newPreset = new WaymarkPreset();
+
+				try
+				{
+					dynamic importObj = JsonConvert.DeserializeObject( input );
+
+					newPreset.Name = importObj.Name;
+					if( DynamicObjectPropertyExists( importObj, "ZoneID" ) )
+					{
+						newPreset.ZoneID = importObj.ZoneID;
+					}
+					if( DynamicObjectPropertyExists( importObj, "Time" ) )
+					{
+						newPreset.LastModified = importObj.Time;
+					}
+					if( DynamicObjectPropertyExists( importObj, "A" ) )
+					{
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].IsEnabled = importObj.A.Active;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.X = importObj.A.X;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.Y = importObj.A.Y;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.Z = importObj.A.Z;
+					}
+					if( DynamicObjectPropertyExists( importObj, "B" ) )
+					{
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].IsEnabled = importObj.B.Active;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.X = importObj.B.X;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.Y = importObj.B.Y;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.Z = importObj.B.Z;
+					}
+					if( DynamicObjectPropertyExists( importObj, "C" ) )
+					{
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].IsEnabled = importObj.C.Active;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.X = importObj.C.X;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.Y = importObj.C.Y;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.Z = importObj.C.Z;
+					}
+					if( DynamicObjectPropertyExists( importObj, "D" ) )
+					{
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].IsEnabled = importObj.D.Active;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.X = importObj.D.X;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.Y = importObj.D.Y;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.Z = importObj.D.Z;
+					}
+					if( DynamicObjectPropertyExists( importObj, "One" ) )
+					{
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].IsEnabled = importObj.One.Active;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.X = importObj.One.X;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.Y = importObj.One.Y;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.Z = importObj.One.Z;
+					}
+					if( DynamicObjectPropertyExists( importObj, "Two" ) )
+					{
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].IsEnabled = importObj.Two.Active;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.X = importObj.Two.X;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.Y = importObj.Two.Y;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.Z = importObj.Two.Z;
+					}
+					if( DynamicObjectPropertyExists( importObj, "Three" ) )
+					{
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].IsEnabled = importObj.Three.Active;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.X = importObj.Three.X;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.Y = importObj.Three.Y;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.Z = importObj.Three.Z;
+					}
+					if( DynamicObjectPropertyExists( importObj, "Four" ) )
+					{
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].IsEnabled = importObj.Four.Active;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.X = importObj.Four.X;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.Y = importObj.Four.Y;
+						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.Z = importObj.Four.Z;
+					}
+				}
+				catch
+				{
+					MessageBox.Show( "Unable to import the provided data.  This is probably due to improperly-formed JSON or missing fields.", "Import Failed!" );
+				}
+
+				mPresetLibrary.AddPreset( newPreset );
+			}
+			else
+			{
+				WaymarkPreset newPreset = new WaymarkPreset();
+				newPreset.Name = "New Preset";
+				mPresetLibrary.AddPreset( newPreset );
+			}
+
+			PopulateLibraryListBox();
+		}
+
+		private void LibraryPresetRemoveButton_Click( object sender, EventArgs e )
+		{
+			if( LibraryListBox.SelectedIndex > -1 &&
+				LibraryListBox.SelectedIndex < mPresetLibrary.Presets.Count &&
+				MessageBox.Show( "Are you certain that you wish to delete the preset \"" + mPresetLibrary.Presets[LibraryListBox.SelectedIndex] + "\"?  This is permanent.", "Confirm Preset Deletion", MessageBoxButtons.OKCancel ) == DialogResult.OK )
+			{
+				mPresetLibrary.RemovePreset( LibraryListBox.SelectedIndex );
+				PopulateLibraryListBox();
+			}
+		}
+
+		private void LibraryPresetExportButton_Click( object sender, EventArgs e )
+		{
+			if( LibraryListBox.SelectedIndex > -1 &&
+				LibraryListBox.SelectedIndex < mPresetLibrary.Presets.Count )
+			{
+				PresetExportObject exportObj = new PresetExportObject();
+				exportObj.Name = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Name;
+				exportObj.ZoneID = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].ZoneID;
+				exportObj.Time = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].LastModified;
+
+				exportObj.A.X = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.X;
+				exportObj.A.Y = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.Y;
+				exportObj.A.Z = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.Z;
+				exportObj.A.ID = WaymarkPreset.GetWaymarkNumber( 'A' );
+				exportObj.A.Active = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].IsEnabled;
+
+				exportObj.B.X = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.X;
+				exportObj.B.Y = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.Y;
+				exportObj.B.Z = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.Z;
+				exportObj.B.ID = WaymarkPreset.GetWaymarkNumber( 'B' );
+				exportObj.B.Active = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].IsEnabled;
+
+				exportObj.C.X = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.X;
+				exportObj.C.Y = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.Y;
+				exportObj.C.Z = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.Z;
+				exportObj.C.ID = WaymarkPreset.GetWaymarkNumber( 'C' );
+				exportObj.C.Active = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].IsEnabled;
+
+				exportObj.D.X = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.X;
+				exportObj.D.Y = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.Y;
+				exportObj.D.Z = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.Z;
+				exportObj.D.ID = WaymarkPreset.GetWaymarkNumber( 'D' );
+				exportObj.D.Active = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].IsEnabled;
+
+				exportObj.One.X = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.X;
+				exportObj.One.Y = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.Y;
+				exportObj.One.Z = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.Z;
+				exportObj.One.ID = WaymarkPreset.GetWaymarkNumber( '1' );
+				exportObj.One.Active = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].IsEnabled;
+
+				exportObj.Two.X = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.X;
+				exportObj.Two.Y = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.Y;
+				exportObj.Two.Z = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.Z;
+				exportObj.Two.ID = WaymarkPreset.GetWaymarkNumber( '2' );
+				exportObj.Two.Active = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].IsEnabled;
+
+				exportObj.Three.X = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.X;
+				exportObj.Three.Y = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.Y;
+				exportObj.Three.Z = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.Z;
+				exportObj.Three.ID = WaymarkPreset.GetWaymarkNumber( '3' );
+				exportObj.Three.Active = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].IsEnabled;
+
+				exportObj.Four.X = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.X;
+				exportObj.Four.Y = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.Y;
+				exportObj.Four.Z = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.Z;
+				exportObj.Four.ID = WaymarkPreset.GetWaymarkNumber( '4' );
+				exportObj.Four.Active = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].IsEnabled;
+
+				string objString = JsonConvert.SerializeObject( exportObj );
+				Interaction.InputBox( "Copy the JSON export string below:", "Preset Export", objString );
+			}
+		}
+		#endregion
 	}
 }

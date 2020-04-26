@@ -20,10 +20,20 @@ namespace WaymarkLibrarian
 		public bool AddPreset( WaymarkPreset preset )
 		{
 			Presets.Add( preset );
-			Presets.Sort( PresetSortCompare );
+			SortPresets();
 			return true;
 			//	*****TODO: Probably check for identical presets and don't add if one already exists.  Return true if added, false if not added due to being duplicate.*****
 			//return false;
+		}
+		public void RemovePreset( int index )
+		{
+			Presets.RemoveAt( index );
+			SortPresets();
+		}
+
+		public void SortPresets()
+		{
+			Presets.Sort( PresetSortCompare );
 		}
 
 		protected void SetDefaultConfig()
@@ -45,7 +55,7 @@ namespace WaymarkLibrarian
 					//	Create preset object, then assign Name, Territory, etc.
 					Presets.Add( new WaymarkPreset() );
 					Presets.Last().Name = presetNode.Attributes.GetNamedItem( "Name" ).Value;
-					Presets.Last().ZoneID = UInt16.Parse( presetNode.Attributes.GetNamedItem( "TerritoryID" ).Value );
+					Presets.Last().ZoneID = UInt16.Parse( presetNode.Attributes.GetNamedItem( "ZoneID" ).Value );
 					Presets.Last().LastModified = DateTimeOffset.Parse( presetNode.Attributes.GetNamedItem( "Time" ).Value );
 					XmlNodeList waymarkNodes = presetNode.SelectNodes( "Waymarks/Waymark" );
 
@@ -78,7 +88,7 @@ namespace WaymarkLibrarian
 					XmlAttribute attr = xmldoc.CreateAttribute( "Name" );
 					attr.Value = preset.Name;
 					presetNode.Attributes.Append( attr );
-					attr = xmldoc.CreateAttribute( "TerritoryID" );
+					attr = xmldoc.CreateAttribute( "ZoneID" );
 					attr.Value = preset.ZoneID.ToString();
 					presetNode.Attributes.Append( attr );
 					attr = xmldoc.CreateAttribute( "Time" );
