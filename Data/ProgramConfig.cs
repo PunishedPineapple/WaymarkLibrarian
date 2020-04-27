@@ -44,6 +44,7 @@ namespace WaymarkLibrarian
 				cfgString += "CharacterDataFolderPath" + " = " + CharacterDataFolderPath + "\r\n";
 				cfgString += "DefaultCharacterID" + " = " + DefaultCharacterID + "\r\n";
 
+				if( File.Exists( ConfigFilePath ) ) File.Copy( ConfigFilePath, ConfigFilePath + ".bak", true );
 				File.WriteAllText( ConfigFilePath, cfgString );
 			}
 		}

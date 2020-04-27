@@ -41,6 +41,7 @@ namespace WaymarkLibrarian
 				{
 					cfgString += entry.Key + " = " + entry.Value + "\r\n";
 				}
+				if( File.Exists( ConfigFilePath ) ) File.Copy( ConfigFilePath, ConfigFilePath + ".bak", true );
 				File.WriteAllText( ConfigFilePath, cfgString );
 			}
 		}

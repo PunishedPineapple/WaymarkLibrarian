@@ -129,6 +129,7 @@ namespace WaymarkLibrarian
 
 			libraryNode.AppendChild( presetsNode );
 			xmldoc.AppendChild( libraryNode );
+			if( File.Exists( ConfigFilePath ) ) File.Copy( ConfigFilePath, ConfigFilePath + ".bak", true );
 			xmldoc.Save( ConfigFilePath );
 		}
 
