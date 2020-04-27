@@ -1,5 +1,5 @@
 # WaymarkLibrarian
-![Screenshot](WaymarkLibrarianScreenshot.png)
+[![Screenshot](WaymarkLibrarianScreenshot_Small.png)](WaymarkLibrarianScreenshot.png?raw=true)
 
 ## Purpose
 This is a tool for swapping an unlimited number of waymark presets into and out of the extremely limited number of slots that the game provides.  While I've tried to make everything function correctly (I wrote this for myself to use, after all), use of this program is at your own risk (please read the [IMPORTANT](#important) section below).
