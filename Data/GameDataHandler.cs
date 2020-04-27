@@ -76,7 +76,8 @@ namespace WaymarkLibrarian
 
 			//	Write the data to the file.  Create a backup first.
 			if( !File.Exists( fileName ) ) throw new Exception( "File does not exist (" + fileName + ")" );
-			File.Copy( fileName, fileName + ".bak", true );
+			//Copying to a backup has occasionally changed the timestamps on the containing folder, so don't do it for now.  Maybe place it somewhere else too so there's less evidence of messing around in the configuration folders.
+			//File.Copy( fileName, fileName + ".bak", true );
 			FileStream fs = File.OpenWrite( fileName );
 			if( fs.Length != mGameDataConfig.ExpectedFileLength_Bytes ) throw new Exception( "Error while preparing to write game data file: Unexpected file size." );
 			fs.Seek( (int)mGameDataConfig.WaymarkDataOffset, SeekOrigin.Begin );
