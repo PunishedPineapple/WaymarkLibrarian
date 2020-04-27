@@ -79,8 +79,6 @@ namespace WaymarkLibrarian
 		//	Members
 		public string ConfigFilePath { get; protected set; }
 		public string GameVersion { get; protected set; }
-
-		//	*****TODO: Dictionary is a most likely poor choice for the underlying data structure since we want to be able to access by index as well.  Probably keep two lists and manage them ourselves.*****
 		protected Dictionary<UInt16, string> mIDToNameDict = new Dictionary<UInt16, string>();
 	}
 }

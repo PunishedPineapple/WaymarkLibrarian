@@ -20,11 +20,6 @@ namespace WaymarkLibrarian
 		//	Construction
 		public WaymarkLibrarianForm()
 		{
-			//	***** TODO LIST: *****
-			//		Maybe have copy to game bring up a context menu of which slot to use?
-			//		Have date in zone dictionary with release date for each zone and restrict to that?
-			//		It feels super janky having web stuff and especially popup dialogs in the config classes.  See about making that stuff less of a mess.
-
 			//	WinForms Stuff
 			InitializeComponent();
 
@@ -61,6 +56,13 @@ namespace WaymarkLibrarian
 						}
 					}
 				}
+			}
+
+			//	Show a warning about backing up character data if this is the first time that the program has been used.
+			if( mSettings.ProgramSettings.ShowInitialWarning )
+			{
+				MessageBox.Show( "Please back up your character configuration data before using this program.  This can be done either through the configuration options in the FFXIV launcher, or on the character selection screen in-game.", "Warning" );
+				mSettings.ProgramSettings.ShowInitialWarning = false;
 			}
 		}
 
@@ -168,7 +170,7 @@ namespace WaymarkLibrarian
 					LibraryListBox.Items.Add( preset.Name /*+ " (" + preset.ZoneID.ToString() + ") (" + preset.LastModified.ToLocalTime().ToString( "g" ) + ")"*/ );
 				}
 
-				//	*****TODO: It would be nice to set the selection back on the updated preset, but that's kind of hard if we're sorting after updating.
+				//	Won't work well if we're sorting.
 				/*if( previousSelectedIndex < LibraryListBox.Items.Count )
 				{
 					LibraryListBox.SelectedIndex = previousSelectedIndex;
@@ -446,8 +448,6 @@ namespace WaymarkLibrarian
 
 		private void CopyToGameButton_Click( object sender, EventArgs e )
 		{
-			//	*****TODO: Don't let a preset with an invalid Zone ID (0 or not in the dictionary) be copied to the game.*****
-			//	*****TODO: Maybe pop up a context menu for which preset slot to overwrite rather than just using the selected one?*****
 			if( LibraryListBox.SelectedIndex > -1 && LibraryListBox.SelectedIndex < mPresetLibrary.Presets.Count &&
 				GamePresetListBox.SelectedIndex > -1 && GamePresetListBox.SelectedIndex < mSettings.GameDataSettings.NumberOfPresets )
 			{

@@ -22,6 +22,7 @@ namespace WaymarkLibrarian
 			DefaultCharacterID = "";
 			UpdateCheckFrequency_Days = 1.0;
 			LastUpdateCheck = DateTimeOffset.FromUnixTimeSeconds( 0 );
+			ShowInitialWarning = true;
 		}
 
 		protected void ReadSavedConfig()
@@ -36,6 +37,7 @@ namespace WaymarkLibrarian
 					if( line.Split( '=' ).First().Trim().Equals( "DefaultCharacterID" ) )			DefaultCharacterID = line.Split( '=' ).Last().Trim();
 					if( line.Split( '=' ).First().Trim().Equals( "UpdateCheckFrequency_Days" ) )	UpdateCheckFrequency_Days = double.Parse( line.Split( '=' ).Last().Trim() );
 					if( line.Split( '=' ).First().Trim().Equals( "LastUpdateCheck" ) )				LastUpdateCheck = DateTimeOffset.Parse( line.Split( '=' ).Last().Trim() );
+					if( line.Split( '=' ).First().Trim().Equals( "ShowInitialWarning" ) )			ShowInitialWarning = bool.Parse( line.Split( '=' ).Last().Trim() );
 				}
 			}
 		}
@@ -49,6 +51,7 @@ namespace WaymarkLibrarian
 				cfgString += "DefaultCharacterID" + " = " + DefaultCharacterID + "\r\n";
 				cfgString += "UpdateCheckFrequency_Days" + " = " + UpdateCheckFrequency_Days.ToString() + "\r\n";
 				cfgString += "LastUpdateCheck" + " = " + LastUpdateCheck.ToString( "u" ) + "\r\n";
+				cfgString += "ShowInitialWarning" + " = " + ShowInitialWarning.ToString() + "\r\n";
 
 				if( File.Exists( ConfigFilePath ) ) File.Copy( ConfigFilePath, ConfigFilePath + ".bak", true );
 				File.WriteAllText( ConfigFilePath, cfgString );
@@ -59,6 +62,7 @@ namespace WaymarkLibrarian
 		public string DefaultCharacterID { get; set; }
 		public DateTimeOffset LastUpdateCheck { get; set; }
 		public double UpdateCheckFrequency_Days { get; protected set; }
+		public bool ShowInitialWarning { get; set; }
 		protected string ConfigFilePath { get; set; }
 	}
 }

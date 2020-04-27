@@ -22,8 +22,6 @@ namespace WaymarkLibrarian
 			Presets.Add( preset );
 			SortPresets();
 			return true;
-			//	*****TODO: Probably check for identical presets and don't add if one already exists.  Return true if added, false if not added due to being duplicate.*****
-			//return false;
 		}
 		public void RemovePreset( int index )
 		{

@@ -1,0 +1,28 @@
+﻿***** TODO LIST *****
+
+High Priority:
+
+- Why are character directory last modified times being updated, but then only sometimes?  May be related to copying a backup of the UISAVE?
+- Try to see if the UISAVE.DAT header contains a file format version that can be used instead of hoping that file length is good enough.
+- Dictionary is a most likely poor choice for the underlying data structure in the zone dictionary since we want to be able to access by index as well.  Probably keep two lists and manage them ourselves.
+
+
+Low Priority / Cleanup:
+
+- It feels super janky having web stuff and especially popup dialogs in the config classes.  See about making that stuff less of a mess.
+- Clean up code formatting as much as reasonably possible.
+- Keep looking for ways to get character name from configuration data.
+- See if there is a good way to get duty names from zone names so that the zone dictionary looks a bit better.
+- Fix any wonky tab indices.  Maybe leave space between groups of indices for future expansion.
+- Handle big-endian architectures in the ReadBytes and WriteBytes function.
+- Maybe check for identical presets in the library when adding a new one, but maybe not.
+- It would be nice to set the selection back on the updated preset in the library, but that's kind of hard if we're sorting after updating.  See what we can do.
+
+
+Very Low Priority / Potential New Features:
+
+- Maybe have copy to game bring up a context menu of which slot to use instead of relying on having a slot selected?  Maybe just make a copy to slot context menu in the library list instead?
+- Have date in zone dictionary with release date for each zone and restrict to that?
+- Prompt user before switching character or closing program if there are unwritten changes?
+- Possibly add a quick waymark generator that takes an arena center and adds evenly spaced x number of waymarks at a given radius.
+- Add a "Sync to Library" button that overwrites only the coordinates/active flags in the library with the ones from the game (if the zones match).
