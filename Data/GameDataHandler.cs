@@ -74,9 +74,9 @@ namespace WaymarkLibrarian
 			//	XOR the data as expected by the game.
 			byte[] correctedData = CorrectData( data );
 
-			//	Write the data to the file.
-			//	*****TODO: Verify very carefully that the file is the expected size, etc. before writing.*****
+			//	Write the data to the file.  Create a backup first.
 			if( !File.Exists( fileName ) ) throw new Exception( "File does not exist (" + fileName + ")" );
+			File.Copy( fileName, fileName + ".bak", true );
 			FileStream fs = File.OpenWrite( fileName );
 			if( fs.Length != mGameDataConfig.ExpectedFileLength_Bytes ) throw new Exception( "Error while preparing to write game data file: Unexpected file size." );
 			fs.Seek( (int)mGameDataConfig.WaymarkDataOffset, SeekOrigin.Begin );
