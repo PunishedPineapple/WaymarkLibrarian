@@ -23,6 +23,7 @@ namespace WaymarkLibrarian
 			//	***** TODO LIST: *****
 			//		Maybe have copy to game bring up a context menu of which slot to use?
 			//		Have date in zone dictionary with release date for each zone and restrict to that?
+			//		It feels super janky having web stuff and especially popup dialogs in the config classes.  See about making that stuff less of a mess.
 
 			//	WinForms Stuff
 			InitializeComponent();

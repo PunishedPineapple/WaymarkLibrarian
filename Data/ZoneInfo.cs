@@ -13,12 +13,17 @@ namespace WaymarkLibrarian
 		{
 			ConfigFilePath = configFilePath;
 			SetDefaultConfig();
+			Reload();
+		}
+
+		public void Reload()
+		{
 			ReadSavedConfig();
 		}
 
 		protected void SetDefaultConfig()
 		{
-			//	No default config for the zone dictionary.
+			GameVersion = "UNKNOWN";
 		}
 
 		protected void ReadSavedConfig()
@@ -26,6 +31,12 @@ namespace WaymarkLibrarian
 			if( File.Exists( ConfigFilePath ) )
 			{
 				List<string> lines = File.ReadLines( ConfigFilePath ).ToList();
+				if( lines.Count > 0 && lines[0].Split( '=' ).First().Trim() == "GameVersion" )
+				{
+					GameVersion = lines[0].Split( '=' ).Last().Trim();
+					lines.RemoveAt( 0 );
+				}
+				mIDToNameDict.Clear();
 				foreach( string line in lines )
 				{
 					mIDToNameDict.Add( UInt16.Parse( line.Split( '=' ).First().Trim() ),  line.Split( '=' ).Last().Trim() );
@@ -66,7 +77,8 @@ namespace WaymarkLibrarian
 		}
 
 		//	Members
-		protected string ConfigFilePath { get; set; }
+		public string ConfigFilePath { get; protected set; }
+		public string GameVersion { get; protected set; }
 
 		//	*****TODO: Dictionary is a most likely poor choice for the underlying data structure since we want to be able to access by index as well.  Probably keep two lists and manage them ourselves.*****
 		protected Dictionary<UInt16, string> mIDToNameDict = new Dictionary<UInt16, string>();

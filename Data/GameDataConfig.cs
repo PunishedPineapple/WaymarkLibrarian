@@ -14,16 +14,21 @@ namespace WaymarkLibrarian
 		{
 			ConfigFilePath = configFilePath;
 			SetDefaultConfig();
-			ReadSavedConfig();
-
-			WaymarkPreset.SetWaymarkIDOrder( WaymarkIDOrder );
+			Reload();
 		}
 
 		//	Member Functions
 		public uint BytesPerPreset() { return NumberOfWaymarks() * BytesPerWaymark + ConfigBytesPerPreset; }
 
+		public void Reload()
+		{
+			ReadSavedConfig();
+			WaymarkPreset.SetWaymarkIDOrder( WaymarkIDOrder );
+		}
+
 		protected void SetDefaultConfig()
 		{
+			GameVersion = "2020.02.26.0000.0001";
 			WaymarkDataFileName = "UISAVE.DAT";
 			ExpectedFileLength_Bytes = 0x7420;
 			WaymarkDataOffset = 0x6C97;
@@ -41,6 +46,7 @@ namespace WaymarkLibrarian
 				List<string> lines = File.ReadLines( ConfigFilePath ).ToList();
 				foreach( string line in lines )
 				{
+					if( line.Split( '=' ).First().Trim().Equals( "GameVersion" ) ) GameVersion = line.Split( '=' ).Last().Trim();
 					if( line.Split( '=' ).First().Trim().Equals( "WaymarkDataFileName" ) ) WaymarkDataFileName = line.Split( '=' ).Last().Trim();
 					if( line.Split( '=' ).First().Trim().Equals( "ExpectedFileLength_Bytes" ) ) ExpectedFileLength_Bytes = uint.Parse( line.Split( '=' ).Last().Trim() );
 					if( line.Split( '=' ).First().Trim().Equals( "WaymarkDataOffset" ) ) WaymarkDataOffset = uint.Parse( line.Split( '=' ).Last().Trim() );
@@ -54,6 +60,7 @@ namespace WaymarkLibrarian
 		}
 
 		//	Data Members
+		public string GameVersion { get; protected set; }
 		public string WaymarkDataFileName { get; protected set; }
 		public uint ExpectedFileLength_Bytes { get; protected set; }
 		public uint WaymarkDataOffset { get; protected set; }
@@ -63,6 +70,6 @@ namespace WaymarkLibrarian
 		public uint ConfigBytesPerPreset { get; protected set; }
 		public byte ConfigFileMagicNumber { get; protected set; }
 		public string WaymarkIDOrder { get; protected set; }
-		protected string ConfigFilePath { get; set; }
+		public string ConfigFilePath { get; protected set; }
 	}
 }
