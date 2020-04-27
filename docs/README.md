@@ -41,4 +41,4 @@ The five waymark presets that the game provides are saved by the game per-charac
   * Four bytes containing the Unix timestamp of when the preset was created.
 
 ## License
-Code and executable are covered under the [MIT License](LICENSE).  Final Fantasy XIV (and any associated data used by this program) is copyright Square Enix.
+Code and executable are covered under the [MIT License](../LICENSE).  Final Fantasy XIV (and any associated data used by this program) is copyright Square Enix.
