@@ -156,6 +156,8 @@ namespace WaymarkLibrarian
 			int previousSelectedIndex = LibraryListBox.SelectedIndex;
 			LibraryListBox.SelectedIndex = -1;
 			LibraryListBox.Items.Clear();
+			PopulatePresetEditor( true );
+
 
 			if( !clear )
 			{
@@ -188,6 +190,55 @@ namespace WaymarkLibrarian
 		{
 			if( !clear && LibraryListBox.SelectedIndex > -1 && LibraryListBox.SelectedIndex < mPresetLibrary.Presets.Count )
 			{
+				PresetNameTextBox.Enabled = true;
+				PresetDatePicker.Enabled = true;
+				PresetTimePicker.Enabled = true;
+
+				PresetZoneDropdown.Enabled = true;
+				PresetZoneTextBox.Enabled = true;
+
+				WaymarkACheckbox.Enabled = true;
+				WaymarkATextBox_X.Enabled = true;
+				WaymarkATextBox_Y.Enabled = true;
+				WaymarkATextBox_Z.Enabled = true;
+
+				WaymarkBCheckbox.Enabled = true;
+				WaymarkBTextBox_X.Enabled = true;
+				WaymarkBTextBox_Y.Enabled = true;
+				WaymarkBTextBox_Z.Enabled = true;
+
+				WaymarkCCheckbox.Enabled = true;
+				WaymarkCTextBox_X.Enabled = true;
+				WaymarkCTextBox_Y.Enabled = true;
+				WaymarkCTextBox_Z.Enabled = true;
+
+				WaymarkDCheckbox.Enabled = true;
+				WaymarkDTextBox_X.Enabled = true;
+				WaymarkDTextBox_Y.Enabled = true;
+				WaymarkDTextBox_Z.Enabled = true;
+
+				Waymark1Checkbox.Enabled = true;
+				Waymark1TextBox_X.Enabled = true;
+				Waymark1TextBox_Y.Enabled = true;
+				Waymark1TextBox_Z.Enabled = true;
+
+				Waymark2Checkbox.Enabled = true;
+				Waymark2TextBox_X.Enabled = true;
+				Waymark2TextBox_Y.Enabled = true;
+				Waymark2TextBox_Z.Enabled = true;
+
+				Waymark3Checkbox.Enabled = true;
+				Waymark3TextBox_X.Enabled = true;
+				Waymark3TextBox_Y.Enabled = true;
+				Waymark3TextBox_Z.Enabled = true;
+
+				Waymark4Checkbox.Enabled = true;
+				Waymark4TextBox_X.Enabled = true;
+				Waymark4TextBox_Y.Enabled = true;
+				Waymark4TextBox_Z.Enabled = true;
+
+				LibraryPresetUpdateButton.Enabled = true;
+
 				PresetNameTextBox.Text = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Name;
 				PresetDatePicker.Value = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].LastModified.LocalDateTime.Date;
 				PresetTimePicker.Value = mPresetLibrary.Presets[LibraryListBox.SelectedIndex].LastModified.LocalDateTime;
@@ -240,6 +291,55 @@ namespace WaymarkLibrarian
 			}
 			else
 			{
+				PresetNameTextBox.Enabled = false;
+				PresetDatePicker.Enabled = false;
+				PresetTimePicker.Enabled = false;
+
+				PresetZoneDropdown.Enabled = false;
+				PresetZoneTextBox.Enabled = false;
+
+				WaymarkACheckbox.Enabled = false;
+				WaymarkATextBox_X.Enabled = false;
+				WaymarkATextBox_Y.Enabled = false;
+				WaymarkATextBox_Z.Enabled = false;
+
+				WaymarkBCheckbox.Enabled = false;
+				WaymarkBTextBox_X.Enabled = false;
+				WaymarkBTextBox_Y.Enabled = false;
+				WaymarkBTextBox_Z.Enabled = false;
+
+				WaymarkCCheckbox.Enabled = false;
+				WaymarkCTextBox_X.Enabled = false;
+				WaymarkCTextBox_Y.Enabled = false;
+				WaymarkCTextBox_Z.Enabled = false;
+
+				WaymarkDCheckbox.Enabled = false;
+				WaymarkDTextBox_X.Enabled = false;
+				WaymarkDTextBox_Y.Enabled = false;
+				WaymarkDTextBox_Z.Enabled = false;
+
+				Waymark1Checkbox.Enabled = false;
+				Waymark1TextBox_X.Enabled = false;
+				Waymark1TextBox_Y.Enabled = false;
+				Waymark1TextBox_Z.Enabled = false;
+
+				Waymark2Checkbox.Enabled = false;
+				Waymark2TextBox_X.Enabled = false;
+				Waymark2TextBox_Y.Enabled = false;
+				Waymark2TextBox_Z.Enabled = false;
+
+				Waymark3Checkbox.Enabled = false;
+				Waymark3TextBox_X.Enabled = false;
+				Waymark3TextBox_Y.Enabled = false;
+				Waymark3TextBox_Z.Enabled = false;
+
+				Waymark4Checkbox.Enabled = false;
+				Waymark4TextBox_X.Enabled = false;
+				Waymark4TextBox_Y.Enabled = false;
+				Waymark4TextBox_Z.Enabled = false;
+
+				LibraryPresetUpdateButton.Enabled = false;
+
 				PresetNameTextBox.Text = "";
 				PresetDatePicker.Value = DateTime.Now;
 				PresetTimePicker.Value = DateTime.Now;
@@ -347,9 +447,26 @@ namespace WaymarkLibrarian
 		{
 			//	*****TODO: Don't let a preset with an invalid Zone ID (0 or not in the dictionary) be copied to the game.*****
 			//	*****TODO: Maybe pop up a context menu for which preset slot to overwrite rather than just using the selected one?*****
-			if( LibraryListBox.SelectedIndex > -1 && LibraryListBox.SelectedIndex < mPresetLibrary.Presets.Count && GamePresetListBox.SelectedIndex > -1 && GamePresetListBox.SelectedIndex < mSettings.GameDataSettings.NumberOfPresets )
+			if( LibraryListBox.SelectedIndex > -1 && LibraryListBox.SelectedIndex < mPresetLibrary.Presets.Count &&
+				GamePresetListBox.SelectedIndex > -1 && GamePresetListBox.SelectedIndex < mSettings.GameDataSettings.NumberOfPresets )
 			{
-				mGamePresetContainer.ReplacePreset( (uint)GamePresetListBox.SelectedIndex, mPresetLibrary.Presets[LibraryListBox.SelectedIndex] );
+				bool actuallyCopyPreset = true;
+
+				if( mPresetLibrary.Presets[LibraryListBox.SelectedIndex].ZoneID == 0 )
+				{
+					MessageBox.Show( "This preset has a ZoneID of zero.  It cannot be copied to the game without a proper ZoneID.", "Invalid Zone ID" );
+					actuallyCopyPreset = false;
+				}
+				else if( !mSettings.ZoneInfoSettings.ZoneDataExists( mPresetLibrary.Presets[LibraryListBox.SelectedIndex].ZoneID ) )
+				{
+					if( MessageBox.Show( "This preset has an unrecognized zone ID.  This may mean that the zone dictionary is out of date, but it could also mean that the ID is invalid.  It is unknown how the game will respond to an invalid zone ID.  Are you sure that you wish to continue?", "Unrecognized Zone ID", MessageBoxButtons.OKCancel ) == DialogResult.Cancel ) actuallyCopyPreset = false;
+				}
+
+				if( actuallyCopyPreset )
+				{
+					mGamePresetContainer.ReplacePreset( (uint)GamePresetListBox.SelectedIndex, mPresetLibrary.Presets[LibraryListBox.SelectedIndex] );
+				}
+
 				PopulateGamePresetListBox();
 			}
 		}
@@ -365,7 +482,7 @@ namespace WaymarkLibrarian
 			if( CharacterListDropdown.SelectedIndex > -1 &&
 				CharacterListDropdown.SelectedIndex < mCharacterFolderList.Length &&
 				mSettings.CharacterAliasSettings.GetAlias( mCharacterFolderList[CharacterListDropdown.SelectedIndex].Split( '\\' ).Last() ) == CharacterListDropdown.SelectedItem.ToString() &&
-				MessageBox.Show( "Are you certain that you wish to write these presets to the game file for the character \"" + mSettings.CharacterAliasSettings.GetAlias( mCharacterFolderList[CharacterListDropdown.SelectedIndex].Split( '\\' ).Last() ) + "\"?  This cannot be undone.", "Confirm Game File Write", MessageBoxButtons.OKCancel ) == DialogResult.OK )
+				MessageBox.Show( "Are you certain that you wish to write these presets to the game file for the character \"" + mSettings.CharacterAliasSettings.GetAlias( mCharacterFolderList[CharacterListDropdown.SelectedIndex].Split( '\\' ).Last() ) + "\"?  This cannot be undone.  Ensure that you are logged out of this character before continuing.", "Confirm Game File Write", MessageBoxButtons.OKCancel ) == DialogResult.OK )
 			{
 				try
 				{
@@ -475,95 +592,96 @@ namespace WaymarkLibrarian
 			}
 		}
 
+		private void LibraryPresetNewButton_Click( object sender, EventArgs e )
+		{
+			WaymarkPreset newPreset = new WaymarkPreset();
+			newPreset.Name = "New Preset";
+			mPresetLibrary.AddPreset( newPreset );
+
+			PopulateLibraryListBox();
+		}
+
 		private void LibraryPresetImportButton_Click( object sender, EventArgs e )
 		{
-			string input = Interaction.InputBox( "Paste the JSON (*barf*) for the preset that you wish to import, or leave blank for a new blank preset.  Accepts Paisley Park exports as well, but you'll have to manually set the zone ID for them.", "Import Preset" );
-			if( input.Length > 0 )
+			string input = Interaction.InputBox( "Paste the JSON (*barf*) for the preset that you wish to import.  Accepts Paisley Park exports as well, but you'll have to manually set the zone ID for them.", "Import Preset" );
+
+			try
 			{
 				WaymarkPreset newPreset = new WaymarkPreset();
 
-				try
-				{
-					dynamic importObj = JsonConvert.DeserializeObject( input );
+				dynamic importObj = JsonConvert.DeserializeObject( input );
 
-					newPreset.Name = importObj.Name;
-					if( DynamicObjectPropertyExists( importObj, "ZoneID" ) )
-					{
-						newPreset.ZoneID = importObj.ZoneID;
-					}
-					if( DynamicObjectPropertyExists( importObj, "Time" ) )
-					{
-						newPreset.LastModified = importObj.Time;
-					}
-					if( DynamicObjectPropertyExists( importObj, "A" ) )
-					{
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].IsEnabled = importObj.A.Active;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.X = importObj.A.X;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.Y = importObj.A.Y;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.Z = importObj.A.Z;
-					}
-					if( DynamicObjectPropertyExists( importObj, "B" ) )
-					{
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].IsEnabled = importObj.B.Active;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.X = importObj.B.X;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.Y = importObj.B.Y;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.Z = importObj.B.Z;
-					}
-					if( DynamicObjectPropertyExists( importObj, "C" ) )
-					{
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].IsEnabled = importObj.C.Active;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.X = importObj.C.X;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.Y = importObj.C.Y;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.Z = importObj.C.Z;
-					}
-					if( DynamicObjectPropertyExists( importObj, "D" ) )
-					{
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].IsEnabled = importObj.D.Active;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.X = importObj.D.X;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.Y = importObj.D.Y;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.Z = importObj.D.Z;
-					}
-					if( DynamicObjectPropertyExists( importObj, "One" ) )
-					{
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].IsEnabled = importObj.One.Active;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.X = importObj.One.X;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.Y = importObj.One.Y;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.Z = importObj.One.Z;
-					}
-					if( DynamicObjectPropertyExists( importObj, "Two" ) )
-					{
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].IsEnabled = importObj.Two.Active;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.X = importObj.Two.X;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.Y = importObj.Two.Y;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.Z = importObj.Two.Z;
-					}
-					if( DynamicObjectPropertyExists( importObj, "Three" ) )
-					{
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].IsEnabled = importObj.Three.Active;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.X = importObj.Three.X;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.Y = importObj.Three.Y;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.Z = importObj.Three.Z;
-					}
-					if( DynamicObjectPropertyExists( importObj, "Four" ) )
-					{
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].IsEnabled = importObj.Four.Active;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.X = importObj.Four.X;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.Y = importObj.Four.Y;
-						newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.Z = importObj.Four.Z;
-					}
-				}
-				catch
+				newPreset.Name = importObj.Name;
+				if( DynamicObjectPropertyExists( importObj, "ZoneID" ) )
 				{
-					MessageBox.Show( "Unable to import the provided data.  This is probably due to improperly-formed JSON or missing fields.", "Import Failed!" );
+					newPreset.ZoneID = importObj.ZoneID;
+				}
+				if( DynamicObjectPropertyExists( importObj, "Time" ) )
+				{
+					newPreset.LastModified = importObj.Time;
+				}
+				if( DynamicObjectPropertyExists( importObj, "A" ) )
+				{
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].IsEnabled = importObj.A.Active;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.X = importObj.A.X;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.Y = importObj.A.Y;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.Z = importObj.A.Z;
+				}
+				if( DynamicObjectPropertyExists( importObj, "B" ) )
+				{
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].IsEnabled = importObj.B.Active;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.X = importObj.B.X;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.Y = importObj.B.Y;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.Z = importObj.B.Z;
+				}
+				if( DynamicObjectPropertyExists( importObj, "C" ) )
+				{
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].IsEnabled = importObj.C.Active;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.X = importObj.C.X;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.Y = importObj.C.Y;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'C' )].Pos.Z = importObj.C.Z;
+				}
+				if( DynamicObjectPropertyExists( importObj, "D" ) )
+				{
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].IsEnabled = importObj.D.Active;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.X = importObj.D.X;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.Y = importObj.D.Y;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( 'D' )].Pos.Z = importObj.D.Z;
+				}
+				if( DynamicObjectPropertyExists( importObj, "One" ) )
+				{
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].IsEnabled = importObj.One.Active;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.X = importObj.One.X;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.Y = importObj.One.Y;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '1' )].Pos.Z = importObj.One.Z;
+				}
+				if( DynamicObjectPropertyExists( importObj, "Two" ) )
+				{
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].IsEnabled = importObj.Two.Active;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.X = importObj.Two.X;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.Y = importObj.Two.Y;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '2' )].Pos.Z = importObj.Two.Z;
+				}
+				if( DynamicObjectPropertyExists( importObj, "Three" ) )
+				{
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].IsEnabled = importObj.Three.Active;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.X = importObj.Three.X;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.Y = importObj.Three.Y;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '3' )].Pos.Z = importObj.Three.Z;
+				}
+				if( DynamicObjectPropertyExists( importObj, "Four" ) )
+				{
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].IsEnabled = importObj.Four.Active;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.X = importObj.Four.X;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.Y = importObj.Four.Y;
+					newPreset.Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.Z = importObj.Four.Z;
 				}
 
 				mPresetLibrary.AddPreset( newPreset );
 			}
-			else
+			catch
 			{
-				WaymarkPreset newPreset = new WaymarkPreset();
-				newPreset.Name = "New Preset";
-				mPresetLibrary.AddPreset( newPreset );
+				MessageBox.Show( "Unable to import the provided data.  This is probably due to improperly-formed JSON or missing fields.", "Import Failed!" );
 			}
 
 			PopulateLibraryListBox();

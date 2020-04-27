@@ -28,6 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			this.components = new System.ComponentModel.Container();
 			this.CharacterListDropdown = new System.Windows.Forms.ComboBox();
 			this.label1 = new System.Windows.Forms.Label();
 			this.CharacterFolderBrowseButton = new System.Windows.Forms.Button();
@@ -101,6 +102,9 @@
 			this.PresetTimePicker = new System.Windows.Forms.DateTimePicker();
 			this.LibraryPresetExportButton = new System.Windows.Forms.Button();
 			this.PresetZoneTextBox = new System.Windows.Forms.TextBox();
+			this.MainFormToolTip = new System.Windows.Forms.ToolTip(this.components);
+			this.label18 = new System.Windows.Forms.Label();
+			this.LibraryPresetNewButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// CharacterListDropdown
@@ -129,6 +133,8 @@
 			this.CharacterFolderBrowseButton.Size = new System.Drawing.Size(40, 23);
 			this.CharacterFolderBrowseButton.TabIndex = 1;
 			this.CharacterFolderBrowseButton.Text = "...";
+			this.MainFormToolTip.SetToolTip(this.CharacterFolderBrowseButton, "Select the folder that contains the FFXIV character configuration data for all ch" +
+        "aracters.");
 			this.CharacterFolderBrowseButton.UseVisualStyleBackColor = true;
 			this.CharacterFolderBrowseButton.Click += new System.EventHandler(this.CharacterFolderBrowseButton_Click);
 			// 
@@ -187,21 +193,23 @@
 			// 
 			// LibraryPresetImportButton
 			// 
-			this.LibraryPresetImportButton.Location = new System.Drawing.Point(392, 440);
+			this.LibraryPresetImportButton.Location = new System.Drawing.Point(456, 440);
 			this.LibraryPresetImportButton.Name = "LibraryPresetImportButton";
-			this.LibraryPresetImportButton.Size = new System.Drawing.Size(80, 24);
+			this.LibraryPresetImportButton.Size = new System.Drawing.Size(56, 24);
 			this.LibraryPresetImportButton.TabIndex = 11;
-			this.LibraryPresetImportButton.Text = "Import/New";
+			this.LibraryPresetImportButton.Text = "Import";
+			this.MainFormToolTip.SetToolTip(this.LibraryPresetImportButton, "Import a shared preset, or create a new one from scratch.");
 			this.LibraryPresetImportButton.UseVisualStyleBackColor = true;
 			this.LibraryPresetImportButton.Click += new System.EventHandler(this.LibraryPresetImportButton_Click);
 			// 
 			// LibraryPresetRemoveButton
 			// 
-			this.LibraryPresetRemoveButton.Location = new System.Drawing.Point(568, 440);
+			this.LibraryPresetRemoveButton.Location = new System.Drawing.Point(584, 440);
 			this.LibraryPresetRemoveButton.Name = "LibraryPresetRemoveButton";
-			this.LibraryPresetRemoveButton.Size = new System.Drawing.Size(72, 24);
+			this.LibraryPresetRemoveButton.Size = new System.Drawing.Size(56, 24);
 			this.LibraryPresetRemoveButton.TabIndex = 13;
 			this.LibraryPresetRemoveButton.Text = "Remove";
+			this.MainFormToolTip.SetToolTip(this.LibraryPresetRemoveButton, "Delete the selected preset from the library.");
 			this.LibraryPresetRemoveButton.UseVisualStyleBackColor = true;
 			this.LibraryPresetRemoveButton.Click += new System.EventHandler(this.LibraryPresetRemoveButton_Click);
 			// 
@@ -222,6 +230,7 @@
 			this.SetCharacterAliasButton.Size = new System.Drawing.Size(75, 23);
 			this.SetCharacterAliasButton.TabIndex = 3;
 			this.SetCharacterAliasButton.Text = "Set Alias";
+			this.MainFormToolTip.SetToolTip(this.SetCharacterAliasButton, "Set a friendly name for the currently selected character.");
 			this.SetCharacterAliasButton.UseVisualStyleBackColor = true;
 			this.SetCharacterAliasButton.Click += new System.EventHandler(this.SetCharacterAliasButton_Click);
 			// 
@@ -232,6 +241,7 @@
 			this.ClearGameSlotButton.Size = new System.Drawing.Size(72, 23);
 			this.ClearGameSlotButton.TabIndex = 7;
 			this.ClearGameSlotButton.Text = "Clear Slot";
+			this.MainFormToolTip.SetToolTip(this.ClearGameSlotButton, "Remove the preset from the selected game slot.");
 			this.ClearGameSlotButton.UseVisualStyleBackColor = true;
 			this.ClearGameSlotButton.Click += new System.EventHandler(this.ClearGameSlotButton_Click);
 			// 
@@ -242,6 +252,7 @@
 			this.CopyToLibraryButton.Size = new System.Drawing.Size(107, 23);
 			this.CopyToLibraryButton.TabIndex = 6;
 			this.CopyToLibraryButton.Text = "Copy to Library ->";
+			this.MainFormToolTip.SetToolTip(this.CopyToLibraryButton, "Copy the selected game slot into a new preset in the library.");
 			this.CopyToLibraryButton.UseVisualStyleBackColor = true;
 			this.CopyToLibraryButton.Click += new System.EventHandler(this.CopyToLibraryButton_Click);
 			// 
@@ -252,6 +263,7 @@
 			this.CopyToGameButton.Size = new System.Drawing.Size(107, 23);
 			this.CopyToGameButton.TabIndex = 5;
 			this.CopyToGameButton.Text = "<- Copy to Game";
+			this.MainFormToolTip.SetToolTip(this.CopyToGameButton, "Copy the selected preset from the libray to the selected game slot.");
 			this.CopyToGameButton.UseVisualStyleBackColor = true;
 			this.CopyToGameButton.Click += new System.EventHandler(this.CopyToGameButton_Click);
 			// 
@@ -308,6 +320,7 @@
 			this.WriteGameFileButton.Size = new System.Drawing.Size(96, 96);
 			this.WriteGameFileButton.TabIndex = 9;
 			this.WriteGameFileButton.Text = "Write Game File";
+			this.MainFormToolTip.SetToolTip(this.WriteGameFileButton, "Write the current presets to the configuration for the selected character.");
 			this.WriteGameFileButton.UseVisualStyleBackColor = true;
 			this.WriteGameFileButton.Click += new System.EventHandler(this.WriteGameFileButton_Click);
 			// 
@@ -671,11 +684,14 @@
 			// 
 			// LibraryPresetUpdateButton
 			// 
+			this.LibraryPresetUpdateButton.AccessibleDescription = "";
+			this.LibraryPresetUpdateButton.AccessibleName = "";
 			this.LibraryPresetUpdateButton.Location = new System.Drawing.Point(696, 440);
 			this.LibraryPresetUpdateButton.Name = "LibraryPresetUpdateButton";
 			this.LibraryPresetUpdateButton.Size = new System.Drawing.Size(320, 24);
 			this.LibraryPresetUpdateButton.TabIndex = 49;
 			this.LibraryPresetUpdateButton.Text = "Update";
+			this.MainFormToolTip.SetToolTip(this.LibraryPresetUpdateButton, "Update the selected preset with the values above.");
 			this.LibraryPresetUpdateButton.UseVisualStyleBackColor = true;
 			this.LibraryPresetUpdateButton.Click += new System.EventHandler(this.LibraryPresetUpdateButton_Click);
 			// 
@@ -703,11 +719,12 @@
 			// 
 			// LibraryPresetExportButton
 			// 
-			this.LibraryPresetExportButton.Location = new System.Drawing.Point(480, 440);
+			this.LibraryPresetExportButton.Location = new System.Drawing.Point(520, 440);
 			this.LibraryPresetExportButton.Name = "LibraryPresetExportButton";
-			this.LibraryPresetExportButton.Size = new System.Drawing.Size(80, 24);
+			this.LibraryPresetExportButton.Size = new System.Drawing.Size(56, 24);
 			this.LibraryPresetExportButton.TabIndex = 12;
 			this.LibraryPresetExportButton.Text = "Export";
+			this.MainFormToolTip.SetToolTip(this.LibraryPresetExportButton, "Generate text to share the selected preset.");
 			this.LibraryPresetExportButton.UseVisualStyleBackColor = true;
 			this.LibraryPresetExportButton.Click += new System.EventHandler(this.LibraryPresetExportButton_Click);
 			// 
@@ -718,11 +735,32 @@
 			this.PresetZoneTextBox.Size = new System.Drawing.Size(96, 20);
 			this.PresetZoneTextBox.TabIndex = 73;
 			// 
+			// label18
+			// 
+			this.label18.AutoSize = true;
+			this.label18.Location = new System.Drawing.Point(920, 104);
+			this.label18.Name = "label18";
+			this.label18.Size = new System.Drawing.Size(49, 13);
+			this.label18.TabIndex = 74;
+			this.label18.Text = "Zone ID:";
+			// 
+			// LibraryPresetNewButton
+			// 
+			this.LibraryPresetNewButton.Location = new System.Drawing.Point(392, 440);
+			this.LibraryPresetNewButton.Name = "LibraryPresetNewButton";
+			this.LibraryPresetNewButton.Size = new System.Drawing.Size(56, 23);
+			this.LibraryPresetNewButton.TabIndex = 75;
+			this.LibraryPresetNewButton.Text = "New";
+			this.LibraryPresetNewButton.UseVisualStyleBackColor = true;
+			this.LibraryPresetNewButton.Click += new System.EventHandler(this.LibraryPresetNewButton_Click);
+			// 
 			// WaymarkLibrarianForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1034, 476);
+			this.Controls.Add(this.LibraryPresetNewButton);
+			this.Controls.Add(this.label18);
 			this.Controls.Add(this.PresetZoneTextBox);
 			this.Controls.Add(this.LibraryPresetExportButton);
 			this.Controls.Add(this.PresetTimePicker);
@@ -878,6 +916,9 @@
 		private System.Windows.Forms.DateTimePicker PresetTimePicker;
 		private System.Windows.Forms.Button LibraryPresetExportButton;
 		private System.Windows.Forms.TextBox PresetZoneTextBox;
+		private System.Windows.Forms.ToolTip MainFormToolTip;
+		private System.Windows.Forms.Label label18;
+		private System.Windows.Forms.Button LibraryPresetNewButton;
 	}
 }
 
