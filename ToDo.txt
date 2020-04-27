@@ -17,6 +17,7 @@ Low Priority / Cleanup:
 - Handle big-endian architectures in the ReadBytes and WriteBytes function.
 - Maybe check for identical presets in the library when adding a new one, but maybe not.
 - It would be nice to set the selection back on the updated preset in the library, but that's kind of hard if we're sorting after updating.  See what we can do.
+- Can the Newtonsoft JSON dll be packaged in with the executable easily?
 
 
 Very Low Priority / Potential New Features:
