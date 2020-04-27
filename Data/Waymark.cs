@@ -46,6 +46,7 @@ namespace WaymarkLibrarian
 		{
 			IsEnabled = oldObj.IsEnabled;
 			Pos = new Point3D( oldObj.Pos );
+			ID = oldObj.ID;
 		}
 		public string GetWaymarkDataString()
 		{
