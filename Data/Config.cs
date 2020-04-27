@@ -7,6 +7,7 @@ using System.IO;
 using System.Xml;
 using System.Net;
 using System.Windows.Forms;
+using System.Diagnostics;
 
 namespace WaymarkLibrarian
 {
@@ -61,48 +62,61 @@ namespace WaymarkLibrarian
 			//	Read the config if we have it.
 			if( File.Exists( currentVersionsFilePath ) )
 			{
+				string programVer = "";
 				string gameDataCfgVer = "";
 				string zoneDictionaryDatVer = "";
 				List<string> lines = File.ReadLines( currentVersionsFilePath ).ToList();
 				foreach( string line in lines )
 				{
+					if( line.Split( '=' ).First().Trim().Equals( "Program" ) ) programVer = line.Split( '=' ).Last().Trim();
 					if( line.Split( '=' ).First().Trim().Equals( "GameData.cfg" ) ) gameDataCfgVer = line.Split( '=' ).Last().Trim();
 					if( line.Split( '=' ).First().Trim().Equals( "ZoneDictionary.dat" ) ) zoneDictionaryDatVer = line.Split( '=' ).Last().Trim();
 				}
 
-				//	Update game data config.
-				if( gameDataCfgVer.Length > 0 &&
+				//	Notify the user if a new version of the program is available.
+				if( programVer.Length > 0 &&
+					programVer != FileVersionInfo.GetVersionInfo( System.Reflection.Assembly.GetExecutingAssembly().Location ).FileVersion )
+				{
+					MessageBox.Show( "A new version of this program is available.  Go to https://github.com/PunishedPineapple/WaymarkLibrarian/releases to download the latest version.", "New Version" );
+				}
+				//	Only check for configuration updates if the program is up to date (since file formats could conceivably change).
+				else
+				{
+					//	Update game data config.
+					if( gameDataCfgVer.Length > 0 &&
 					gameDataCfgVer != GameDataSettings.GameVersion &&
 					MessageBox.Show( "A new version of the game data configuration file was found.  Update now?", "Update?", MessageBoxButtons.YesNo ) == DialogResult.Yes )
-				{
-					try
 					{
-						webClient.DownloadFile( "https://punishedpineapple.github.io/WaymarkLibrarian/Support/GameData.cfg", updateFolderPath + "\\GameData.cfg" );
-						File.Copy( updateFolderPath + "\\GameData.cfg", GameDataSettings.ConfigFilePath, true );
+						try
+						{
+							webClient.DownloadFile( "https://punishedpineapple.github.io/WaymarkLibrarian/Support/GameData.cfg", updateFolderPath + "\\GameData.cfg" );
+							File.Copy( updateFolderPath + "\\GameData.cfg", GameDataSettings.ConfigFilePath, true );
+						}
+						catch
+						{
+							MessageBox.Show( "Update failed!", "Failure!" );
+						}
 					}
-					catch
-					{
-						MessageBox.Show( "Update failed!", "Failure!" );
-					}
-				}
 
-				//	Update zone dictionary.
-				if( zoneDictionaryDatVer.Length > 0 &&
-					zoneDictionaryDatVer != ZoneInfoSettings.GameVersion &&
-					MessageBox.Show( "A new version of the zone dictionary file was found.  Update now?", "Update?", MessageBoxButtons.YesNo ) == DialogResult.Yes )
-				{
-					try
+					//	Update zone dictionary.
+					if( zoneDictionaryDatVer.Length > 0 &&
+						zoneDictionaryDatVer != ZoneInfoSettings.GameVersion &&
+						MessageBox.Show( "A new version of the zone dictionary file was found.  Update now?", "Update?", MessageBoxButtons.YesNo ) == DialogResult.Yes )
 					{
-						webClient.DownloadFile( "https://punishedpineapple.github.io/WaymarkLibrarian/Support/ZoneDictionary.dat", updateFolderPath + "\\ZoneDictionary.dat" );
-						File.Copy( updateFolderPath + "\\ZoneDictionary.dat", ZoneInfoSettings.ConfigFilePath, true );
-					}
-					catch
-					{
-						MessageBox.Show( "Update failed!", "Failure!" );
+						try
+						{
+							webClient.DownloadFile( "https://punishedpineapple.github.io/WaymarkLibrarian/Support/ZoneDictionary.dat", updateFolderPath + "\\ZoneDictionary.dat" );
+							File.Copy( updateFolderPath + "\\ZoneDictionary.dat", ZoneInfoSettings.ConfigFilePath, true );
+						}
+						catch
+						{
+							MessageBox.Show( "Update failed!", "Failure!" );
+						}
 					}
 				}
 			}
 
+			//	Clean up the update files.
 			Directory.Delete( updateFolderPath, true );
 		}
 

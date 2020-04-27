@@ -3,13 +3,14 @@
 High Priority:
 
 - Why are character directory last modified times being updated, but then only sometimes?  May be related to copying a backup of the UISAVE?
-- Try to see if the UISAVE.DAT header contains a file format version that can be used instead of hoping that file length is good enough.
-- Dictionary is a most likely poor choice for the underlying data structure in the zone dictionary since we want to be able to access by index as well.  Probably keep two lists and manage them ourselves.
+- Try to see if the UISAVE.DAT header contains a file format version that can be used instead of hoping that file length is a good enough discriminator.
+- Dictionary is a most likely poor choice for the underlying data structure in the zone dictionary since we want to be able to access by index as well.  Maybe keep two lists and manage them ourselves?
 
 
 Low Priority / Cleanup:
 
 - It feels super janky having web stuff and especially popup dialogs in the config classes.  See about making that stuff less of a mess.
+- Config classes are kind of a mess overall.
 - Clean up code formatting as much as reasonably possible.
 - Keep looking for ways to get character name from configuration data.
 - See if there is a good way to get duty names from zone names so that the zone dictionary looks a bit better.
@@ -18,6 +19,7 @@ Low Priority / Cleanup:
 - Maybe check for identical presets in the library when adding a new one, but maybe not.
 - It would be nice to set the selection back on the updated preset in the library, but that's kind of hard if we're sorting after updating.  See what we can do.
 - Can the Newtonsoft JSON dll be packaged in with the executable easily?
+- Make the waymark and preset get string methods be ToString.
 
 
 Very Low Priority / Potential New Features:

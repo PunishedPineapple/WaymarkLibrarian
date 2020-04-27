@@ -28,7 +28,7 @@ namespace WaymarkLibrarian
 
 		protected void SetDefaultConfig()
 		{
-			GameVersion = "2020.02.26.0000.0001";
+			GameVersion = "2020.03.27.0000.0000";
 			WaymarkDataFileName = "UISAVE.DAT";
 			ExpectedFileLength_Bytes = 0x7420;
 			WaymarkDataOffset = 0x6C97;

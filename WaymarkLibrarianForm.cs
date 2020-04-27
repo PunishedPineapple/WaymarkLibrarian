@@ -23,7 +23,7 @@ namespace WaymarkLibrarian
 			//	WinForms Stuff
 			InitializeComponent();
 
-			//	Control setup.
+			//	Set up controls.
 			PresetTimePicker.Format = DateTimePickerFormat.Time;
 			PresetTimePicker.ShowUpDown = true;
 
@@ -40,12 +40,12 @@ namespace WaymarkLibrarian
 			mPresetLibrary = new PresetLibrary( mSettings.ConfigFolderPath + "\\WaymarkLibrary.xml" );
 			PopulateLibraryListBox();
 
-			//	Initialize the game settings folder, character list, and game preset list.
+			//	Populate the controls for the character config folder, character list, and game preset list based on the saved settings.
 			if( Directory.Exists( mSettings.ProgramSettings.CharacterDataFolderPath ) )
 			{
 				CharacterDataFolderTextBox.Text = mSettings.ProgramSettings.CharacterDataFolderPath;
 				PopulateCharacterListDropdown();
-				if( ( mSettings.ProgramSettings.DefaultCharacterID.Length > 0 ) && File.Exists( mSettings.ProgramSettings.CharacterDataFolderPath + '\\' + mSettings.ProgramSettings.DefaultCharacterID + '\\' + mSettings.GameDataSettings.WaymarkDataFileName ) )
+				if( mSettings.ProgramSettings.DefaultCharacterID.Length > 0 && File.Exists( mSettings.ProgramSettings.CharacterDataFolderPath + '\\' + mSettings.ProgramSettings.DefaultCharacterID + '\\' + mSettings.GameDataSettings.WaymarkDataFileName ) )
 				{
 					for( int i = 0; i < CharacterListDropdown.Items.Count; ++i )
 					{
@@ -73,8 +73,8 @@ namespace WaymarkLibrarian
 		private string[] mCharacterFolderList;
 		private Config mSettings;
 
-		//	Class Functions
-		#region General Helper Functions
+		//	Types
+		#region Types
 		//	Trivial class to aid with JSON serialiazing.  I *hate* serializing objects instead of using an actual config format, but this is probably the best thing to have presets be transferrable between this program and Paisley Park.  At least having a buffer object lets us keep the JSON stuff isolated, even if it results in more work for us.
 		//	Some of these fields may be meaningless for this program in order to (maybe) allow Paisley import of our exports.
 		class PresetExportObject
@@ -102,8 +102,8 @@ namespace WaymarkLibrarian
 		}
 		#endregion
 
-		//	Member Functions
-		#region Event Helper Functions
+		//	Class Functions
+		#region General Helper Functions
 		public static bool DynamicObjectPropertyExists( dynamic obj, string name )
 		{
 			//	Didn't write; came from https://stackoverflow.com/a/48752086;
@@ -112,6 +112,10 @@ namespace WaymarkLibrarian
 			if( obj is Newtonsoft.Json.Linq.JObject ) return ( (Newtonsoft.Json.Linq.JObject)obj ).ContainsKey( name );
 			return obj.GetType().GetProperty( name ) != null;
 		}
+		#endregion
+
+		//	Member Functions
+		#region Event Helper Functions
 		private void PopulateCharacterListDropdown()
 		{
 			CharacterListDropdown.Items.Clear();

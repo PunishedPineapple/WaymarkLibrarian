@@ -18,6 +18,10 @@ namespace ZoneDictionaryGenerator
 				inFile = Console.ReadLine();
 			}
 
+			//	Ask for the game version too.
+			Console.WriteLine( "Specify the game's version corresponding to this territory info:" );
+			string gameVersion = Console.ReadLine();
+
 			//	Read the file in as lines.
 			List<string> lines = File.ReadLines( inFile ).ToList();
 
@@ -54,8 +58,8 @@ namespace ZoneDictionaryGenerator
 			//	Zone ID 0 probably isn't valid for any waymarks, so remove that entry (it's likely been overwritten with duplicates anyway).
 			zoneDictionary.Remove( 0 );
 
-			//	Write the dictionary out to file.
-			string outString = "";
+			//	Write the dictionary out to file.  Put the version at the top.
+			string outString = "GameVersion = " + gameVersion + "\r\n";
 			foreach( KeyValuePair<UInt16, string> entry in zoneDictionary )
 			{
 				outString += entry.Key + " = " + entry.Value + "\r\n";
