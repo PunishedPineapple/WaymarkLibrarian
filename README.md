@@ -1,7 +1,7 @@
 # WaymarkLibrarian
 
 ## Purpose
-This is a tool for swapping an unlimited number of waymark presets into and out of the extremely limited number of slots that the game provides.
+This is a tool for swapping an unlimited number of waymark presets into and out of the extremely limited number of slots that the game provides.  While I've tried to make everything function correctly (I wrote this for myself to use, after all), use of this program is at your own risk (please read the [IMPORTANT](#important) section below).
 
 ## Basic Use
 1. Select the folder in which FFXIV stores user configuration files.  The program assumes "...\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn" for the current user when it first starts up, but this can be changed by clicking the "..." button if it is incorrect (or if you have another folder that you would like to use (i.e., a copy made for testing)).
