@@ -1,11 +1,12 @@
 # WaymarkLibrarian
+![Screenshot](WaymarkLibrarianScreenshot.png)
 
 ## Purpose
 This is a tool for swapping an unlimited number of waymark presets into and out of the extremely limited number of slots that the game provides.  While I've tried to make everything function correctly (I wrote this for myself to use, after all), use of this program is at your own risk (please read the [IMPORTANT](#important) section below).
 
 ## Basic Use
 1. Select the folder in which FFXIV stores user configuration files.  The program assumes "...\Documents\My Games\FINAL FANTASY XIV - A Realm Reborn" for the current user when it first starts up, but this can be changed by clicking the "..." button if it is incorrect (or if you have another folder that you would like to use (i.e., a copy made for testing)).
-2. Select the character for which you would like to view/edit presets.  See the "Aliases" section below for more information on character names.  Also note that if the character character hasn't been logged into recently, the program will pop up a message that it can't read the waymark presets.  Just log in and back out on that character in order to have a file that the program can read.
+2. Select the character for which you would like to view/edit presets.  See the [Aliases](#aliases) section below for more information on character names.  Also note that if the character character hasn't been logged into recently, the program will pop up a message that it can't read the waymark presets.  Just log in and back out on that character in order to have a file that the program can read.
 3. You can now select any of the five preset slots for that character in the list on the left and view the preset info, delete it, or copy it to the library.
 4. The library is completely separate from the game.  You can store an unlimited number of waymark presets in it, and those presets can have descriptive names (i.e., e7s PUG Strats, e7s Static Strats, e7s Uptime, UCoB Inverted, UCoB Upright, etc.).  The library is stored completely separately from the game in your user's application data folder.
 5. After you have presets in your library, you can copy them to the selected character using the "<- Copy to Game" button.  This will copy the selected preset from the library to the selected game slot.  Please note that this will not yet affect the game.
