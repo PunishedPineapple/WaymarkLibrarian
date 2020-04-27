@@ -573,7 +573,7 @@ namespace WaymarkLibrarian
 		{
 			if( LibraryListBox.SelectedIndex > -1 &&
 				LibraryListBox.SelectedIndex < mPresetLibrary.Presets.Count &&
-				MessageBox.Show( "Are you certain that you wish to delete the preset \"" + mPresetLibrary.Presets[LibraryListBox.SelectedIndex] + "\"?  This is permanent.", "Confirm Preset Deletion", MessageBoxButtons.OKCancel ) == DialogResult.OK )
+				MessageBox.Show( "Are you certain that you wish to delete the preset \"" + mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Name + "\"?  This is permanent.", "Confirm Preset Deletion", MessageBoxButtons.OKCancel ) == DialogResult.OK )
 			{
 				mPresetLibrary.RemovePreset( LibraryListBox.SelectedIndex );
 				PopulateLibraryListBox();
