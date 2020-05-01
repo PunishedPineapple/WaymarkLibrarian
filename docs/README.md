@@ -20,7 +20,7 @@ The program allows you to import presets that other people have created, as well
 You can also edit the name, zone, and waymark positions of any preset in your library.  To do this, select the desired preset in the library, enter/edit the fields on the righthand side of the program, and click the "Update" button at the bottom.
 
 ## IMPORTANT
-This program should be considered as being in beta.  It's only been tested with a handful of characters so far, and since the waymark format was reverse-engineered, there's no way to know that it is being written flawlessly and undetectably.  That being said, the format of the data that the game uses is very simple, so there's not much that could be incorrect.
+This program should be considered as being in beta.  It's only been tested with a handful of characters so far, and since the waymark format was reverse-engineered, there's no way to be 100% certain that it is being written flawlessly and undetectably.  That being said, the format of the data that the game uses is very simple, so there's not much that could be incorrect.
 Additionally, while this program does not affect the game executable, memory, etc., it is technically possible that SE could detect the use of this program in one of two ways:
 1) They could audit where your character was at the time that the waymark preset says it was saved, and see that you were not in the corresponding zone then.
 2) They could be saving a parallel server-side preset for each slot on your character and checking it against the client-side preset saved in your user configuration.
@@ -30,7 +30,7 @@ Both of these seem unlikely though, as they would give false positives for anyon
 ## Aliases
 By default, character names will be an unfriendly string of numbers and letters, such as "FFIXV_CHR...".  Clicking "Set Alias" and entering something that you will easily remember (i.e. "Character Name (Server)" will make a friendly name appear in the list for that character instead.  Unfortunately, you will have to determine which folder corresponds to which character manually, as it appears to be something that cannot be determined directly without hooking the game.  The simplest way to determine which folder belongs to a character is to log in to that character, change your item order in your inventory, change a user macro, a hotbar, etc., log back out, and then find which folder contains a file modified at the time you logged out.
 
-## Updating
+## Updates
 By default, the program checks for availabe updates up to once a day.  These update checks consist of program version number, config file sizes/offsets, and the zone ID list.  These currently come from the following files in a subfolder of [my GitHub page](https://punishedpineapple.github.io)
 * [Version Info](https://punishedpineapple.github.io/WaymarkLibrarian/Support/CurrentVersions.dat)
 * [Offsets](https://punishedpineapple.github.io/WaymarkLibrarian/Support/GameData.cfg)
