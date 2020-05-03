@@ -20,6 +20,7 @@ namespace WaymarkLibrarian
 		{
 			CharacterDataFolderPath = Environment.GetFolderPath( Environment.SpecialFolder.MyDocuments ) + "\\My Games\\FINAL FANTASY XIV - A Realm Reborn\\";
 			DefaultCharacterID = "";
+			UpdateRequestTimeout_Sec = 20;
 			UpdateCheckFrequency_Days = 1.0;
 			LastUpdateCheck = DateTimeOffset.FromUnixTimeSeconds( 0 );
 			ShowInitialWarning = true;
@@ -35,6 +36,7 @@ namespace WaymarkLibrarian
 				{
 					if( line.Split( '=' ).First().Trim().Equals( "CharacterDataFolderPath" ) )		CharacterDataFolderPath = line.Split( '=' ).Last().Trim();
 					if( line.Split( '=' ).First().Trim().Equals( "DefaultCharacterID" ) )			DefaultCharacterID = line.Split( '=' ).Last().Trim();
+					if( line.Split( '=' ).First().Trim().Equals( "UpdateRequestTimeout_Sec" ) )		UpdateRequestTimeout_Sec = int.Parse( line.Split( '=' ).Last().Trim() );
 					if( line.Split( '=' ).First().Trim().Equals( "UpdateCheckFrequency_Days" ) )	UpdateCheckFrequency_Days = double.Parse( line.Split( '=' ).Last().Trim() );
 					if( line.Split( '=' ).First().Trim().Equals( "LastUpdateCheck" ) )				LastUpdateCheck = DateTimeOffset.Parse( line.Split( '=' ).Last().Trim() );
 					if( line.Split( '=' ).First().Trim().Equals( "ShowInitialWarning" ) )			ShowInitialWarning = bool.Parse( line.Split( '=' ).Last().Trim() );
@@ -49,6 +51,7 @@ namespace WaymarkLibrarian
 				string cfgString = "";
 				cfgString += "CharacterDataFolderPath" + " = " + CharacterDataFolderPath + "\r\n";
 				cfgString += "DefaultCharacterID" + " = " + DefaultCharacterID + "\r\n";
+				cfgString += "UpdateRequestTimeout_Sec" + " = " + UpdateRequestTimeout_Sec.ToString() + "\r\n";
 				cfgString += "UpdateCheckFrequency_Days" + " = " + UpdateCheckFrequency_Days.ToString() + "\r\n";
 				cfgString += "LastUpdateCheck" + " = " + LastUpdateCheck.ToString( "u" ) + "\r\n";
 				cfgString += "ShowInitialWarning" + " = " + ShowInitialWarning.ToString() + "\r\n";
@@ -61,6 +64,7 @@ namespace WaymarkLibrarian
 		public string CharacterDataFolderPath { get; set; }
 		public string DefaultCharacterID { get; set; }
 		public DateTimeOffset LastUpdateCheck { get; set; }
+		public int UpdateRequestTimeout_Sec { get; protected set; }
 		public double UpdateCheckFrequency_Days { get; protected set; }
 		public bool ShowInitialWarning { get; set; }
 		protected string ConfigFilePath { get; set; }

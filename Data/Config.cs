@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using System.Xml;
-using System.Net;
+using System.Net.Http;
 using System.Windows.Forms;
 using System.Diagnostics;
 
@@ -48,34 +48,58 @@ namespace WaymarkLibrarian
 
 		protected void CheckForUpdates()
 		{
-			//	Make a temporary directory to hold update info.
-			string updateFolderPath = ConfigFolderPath + "\\updates.temp";
-			Directory.CreateDirectory( updateFolderPath );
+			//	Set up a simple splash screen so the user knows what's going on.
+			Form waitForm = new Form();
+			waitForm.ControlBox = false;
+			waitForm.MaximizeBox = false;
+			waitForm.MinimizeBox = false;
+			waitForm.ShowIcon = false;
+			waitForm.StartPosition = FormStartPosition.CenterScreen;
+			waitForm.MinimumSize = waitForm.Size;
+			waitForm.MaximumSize = waitForm.Size;
+			Label statusLabel = new Label();
+			statusLabel.Size = waitForm.Size;
+			statusLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			statusLabel.Text = "Checking for updates.";
+			waitForm.Controls.Add( statusLabel );
+			waitForm.Show();
 
-			string currentVersionsFilePath = updateFolderPath + "\\CurrentVersions.dat";
-			WebClient webClient = new WebClient();
-			webClient.DownloadFile( "https://punishedpineapple.github.io/WaymarkLibrarian/Support/CurrentVersions.dat", currentVersionsFilePath );
-
-			//	Set the last updated time to now.
+			//	Set the last updated time to now.  Do this regardless of whether we succeeded, as there's no point in spamming the user with update prompts if we can't get the current versions for some reason.
 			ProgramSettings.LastUpdateCheck = DateTimeOffset.UtcNow;
 
-			//	Read the config if we have it.
-			if( File.Exists( currentVersionsFilePath ) )
+			using( HttpClient httpClient = new HttpClient() )
 			{
+				//	Set the request timeout.  The default is unreasonable for how little data we are dealing with (under 10 KiB total).
+				httpClient.Timeout = TimeSpan.FromSeconds( ProgramSettings.UpdateRequestTimeout_Sec );
+
+				//	Empty version strings until we can fill them.
 				string programVer = "";
 				string gameDataCfgVer = "";
 				string zoneDictionaryDatVer = "";
-				List<string> lines = File.ReadLines( currentVersionsFilePath ).ToList();
-				foreach( string line in lines )
+
+				//	Try to grab the current versions of things.
+				try
 				{
-					if( line.Split( '=' ).First().Trim().Equals( "Program" ) ) programVer = line.Split( '=' ).Last().Trim();
-					if( line.Split( '=' ).First().Trim().Equals( "GameData.cfg" ) ) gameDataCfgVer = line.Split( '=' ).Last().Trim();
-					if( line.Split( '=' ).First().Trim().Equals( "ZoneDictionary.dat" ) ) zoneDictionaryDatVer = line.Split( '=' ).Last().Trim();
+					//	Perform the http request.
+					string currentVersionsRawData = httpClient.GetStringAsync( "https://punishedpineapple.github.io/WaymarkLibrarian/Support/CurrentVersions.dat" ).Result;
+
+					//	Process what we got back.
+					string[] currentVersionsLines = currentVersionsRawData.Split( new char[] { '\r', '\n' } );
+					foreach( string line in currentVersionsLines )
+					{
+						if( line.Split( '=' ).First().Trim().Equals( "Program" ) ) programVer = line.Split( '=' ).Last().Trim();
+						if( line.Split( '=' ).First().Trim().Equals( "GameData.cfg" ) ) gameDataCfgVer = line.Split( '=' ).Last().Trim();
+						if( line.Split( '=' ).First().Trim().Equals( "ZoneDictionary.dat" ) ) zoneDictionaryDatVer = line.Split( '=' ).Last().Trim();
+					}
+				}
+				catch( HttpRequestException exception )
+				{
+					MessageBox.Show( "Unable to retrieve current version information: " + exception.ToString() + "\r\n\r\nThis is likely due to lack of internet access or DNS lookup failure.", "Failure!" );
 				}
 
 				//	Notify the user if a new version of the program is available.
 				if( programVer.Length > 0 &&
-					programVer != FileVersionInfo.GetVersionInfo( System.Reflection.Assembly.GetExecutingAssembly().Location ).FileVersion )
+					VersionInfoHelper.Parse( programVer ) > VersionInfoHelper.Parse( FileVersionInfo.GetVersionInfo( System.Reflection.Assembly.GetExecutingAssembly().Location ) ) )
 				{
 					MessageBox.Show( "A new version of this program is available.  Go to https://github.com/PunishedPineapple/WaymarkLibrarian/releases to download the latest version.", "New Version" );
 				}
@@ -83,41 +107,41 @@ namespace WaymarkLibrarian
 				else
 				{
 					//	Update game data config.
-					if( gameDataCfgVer.Length > 0 &&
-					gameDataCfgVer != GameDataSettings.GameVersion &&
+					if(	gameDataCfgVer.Length > 0 &&
+						gameDataCfgVer != GameDataSettings.GameVersion &&
 					MessageBox.Show( "A new version of the game data configuration file was found.  Update now?", "Update?", MessageBoxButtons.YesNo ) == DialogResult.Yes )
 					{
 						try
 						{
-							webClient.DownloadFile( "https://punishedpineapple.github.io/WaymarkLibrarian/Support/GameData.cfg", updateFolderPath + "\\GameData.cfg" );
-							File.Copy( updateFolderPath + "\\GameData.cfg", GameDataSettings.ConfigFilePath, true );
+							byte[] rawData = httpClient.GetByteArrayAsync( "https://punishedpineapple.github.io/WaymarkLibrarian/Support/GameData.cfg" ).Result;
+							File.WriteAllBytes( GameDataSettings.ConfigFilePath, rawData );
 						}
-						catch
+						catch( Exception exception )
 						{
-							MessageBox.Show( "Update failed!", "Failure!" );
+							MessageBox.Show( "Offsets update failed: " + exception.ToString(), "Failure!" );
 						}
 					}
 
 					//	Update zone dictionary.
-					if( zoneDictionaryDatVer.Length > 0 &&
+					if(	zoneDictionaryDatVer.Length > 0 &&
 						zoneDictionaryDatVer != ZoneInfoSettings.GameVersion &&
 						MessageBox.Show( "A new version of the zone dictionary file was found.  Update now?", "Update?", MessageBoxButtons.YesNo ) == DialogResult.Yes )
 					{
 						try
 						{
-							webClient.DownloadFile( "https://punishedpineapple.github.io/WaymarkLibrarian/Support/ZoneDictionary.dat", updateFolderPath + "\\ZoneDictionary.dat" );
-							File.Copy( updateFolderPath + "\\ZoneDictionary.dat", ZoneInfoSettings.ConfigFilePath, true );
+							byte[] rawData = httpClient.GetByteArrayAsync( "https://punishedpineapple.github.io/WaymarkLibrarian/Support/ZoneDictionary.dat" ).Result;
+							File.WriteAllBytes( ZoneInfoSettings.ConfigFilePath, rawData );
 						}
-						catch
+						catch( Exception exception )
 						{
-							MessageBox.Show( "Update failed!", "Failure!" );
+							MessageBox.Show( "Zone info update failed: " + exception.ToString(), "Failure!" );
 						}
 					}
 				}
 			}
 
-			//	Clean up the update files.
-			Directory.Delete( updateFolderPath, true );
+			//	Close the splash screen now that we're done.
+			waitForm.Close();
 		}
 
 		public ProgramConfig ProgramSettings { get; protected set; }

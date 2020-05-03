@@ -12,7 +12,6 @@ Low Priority / Cleanup:
 - Have some kind of simple first-run tutorial?  Explain basic functionality (including how character should be logged out before reading/saving).
 - Use zone name as preset name when copying to library instead of character name and slot (maybe have character name in parentheses after it?).
 - It feels super janky having web stuff and especially popup dialogs in the config classes.  See about making that stuff less of a mess.
-- Switch to HttpClient instead of WebClient for update stuff probably.  Also be sure to dispose properly.
 - Config classes are kind of a mess overall.
 - Clean up code formatting as much as reasonably possible.
 - Keep looking for ways to get character name from configuration data.
