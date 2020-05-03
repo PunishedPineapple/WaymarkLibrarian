@@ -9,7 +9,10 @@ High Priority:
 
 Low Priority / Cleanup:
 
+- Have some kind of simple first-run tutorial?  Explain basic functionality (including how character should be logged out before reading/saving).
+- Use zone name as preset name when copying to library instead of character name and slot (maybe have character name in parentheses after it?).
 - It feels super janky having web stuff and especially popup dialogs in the config classes.  See about making that stuff less of a mess.
+- Switch to HttpClient instead of WebClient for update stuff probably.  Also be sure to dispose properly.
 - Config classes are kind of a mess overall.
 - Clean up code formatting as much as reasonably possible.
 - Keep looking for ways to get character name from configuration data.
@@ -18,8 +21,8 @@ Low Priority / Cleanup:
 - Handle big-endian architectures in the ReadBytes and WriteBytes function.
 - Maybe check for identical presets in the library when adding a new one, but maybe not.
 - It would be nice to set the selection back on the updated preset in the library, but that's kind of hard if we're sorting after updating.  See what we can do.
-- Can the Newtonsoft JSON dll be packaged in with the executable easily?
-- Make the waymark and preset get string methods be ToString.
+- Can the Newtonsoft JSON dll be packaged in with the executable easily?  Probably need to wait until the .net core WinForms designer is added.  ILMerge seems like a bad idea, and Costura (Fody) seems a bit sketchy with being supported.
+- Make the waymark and preset get string methods be ToString.  Actually maybe not; does all that formatted information make sense as a simple "ToString" call?  Maybe it does for the individual waymark, since that's a one-line thing.
 
 
 Very Low Priority / Potential New Features:
