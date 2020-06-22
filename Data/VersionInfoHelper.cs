@@ -22,6 +22,14 @@ namespace WaymarkLibrarian
 		{
 		}
 
+		public VersionInfoHelper( VersionInfoHelper objToCopy )
+		{
+			Major = objToCopy.Major;
+			Minor = objToCopy.Minor;
+			Build = objToCopy.Build;
+			Revision = objToCopy.Revision;
+		}
+
 		public static VersionInfoHelper Parse( string str )
 		{
 			return new VersionInfoHelper( str );
@@ -47,31 +55,46 @@ namespace WaymarkLibrarian
 
 		public static bool operator <=( VersionInfoHelper lhs, VersionInfoHelper rhs )
 		{
-			if( lhs.Major > rhs.Major ) return false;
-			else if( lhs.Minor > rhs.Minor ) return false;
-			else if( lhs.Build > rhs.Build ) return false;
-			else if( lhs.Revision > rhs.Revision ) return false;
-			else return true;
+			return lhs < rhs || lhs == rhs;
 		}
 
 		public static bool operator >=( VersionInfoHelper lhs, VersionInfoHelper rhs )
 		{
-
-			if( lhs.Major < rhs.Major ) return false;
-			else if( lhs.Minor < rhs.Minor ) return false;
-			else if( lhs.Build < rhs.Build ) return false;
-			else if( lhs.Revision < rhs.Revision ) return false;
-			else return true;
+			return lhs > rhs || lhs == rhs;
 		}
 
 		public static bool operator <( VersionInfoHelper lhs, VersionInfoHelper rhs )
 		{
-			return lhs <= rhs && lhs != rhs;
+			     if( lhs.Major > rhs.Major ) return false;
+			else if( lhs.Major < rhs.Major ) return true;
+
+			else if( lhs.Minor > rhs.Minor ) return false;
+			else if( lhs.Minor < rhs.Minor ) return true;
+
+			else if( lhs.Build > rhs.Build ) return false;
+			else if( lhs.Build < rhs.Build ) return true;
+
+			else if( lhs.Revision > rhs.Revision ) return false;
+			else if( lhs.Revision < rhs.Revision ) return true;
+
+			else return false;
 		}
 
 		public static bool operator >( VersionInfoHelper lhs, VersionInfoHelper rhs )
 		{
-			return lhs >= rhs && lhs != rhs;
+			     if( lhs.Major < rhs.Major ) return false;
+			else if( lhs.Major > rhs.Major ) return true;
+
+			else if( lhs.Minor < rhs.Minor ) return false;
+			else if( lhs.Minor > rhs.Minor ) return true;
+
+			else if( lhs.Build < rhs.Build ) return false;
+			else if( lhs.Build > rhs.Build ) return true;
+
+			else if( lhs.Revision < rhs.Revision ) return false;
+			else if( lhs.Revision > rhs.Revision ) return true;
+
+			else return false;
 		}
 
 		public override bool Equals( Object other )
@@ -97,7 +120,12 @@ namespace WaymarkLibrarian
 			return ( Major, Minor, Build, Revision ).GetHashCode();
 		}
 
-		public int Major { get; protected set; } = 0;
+        public override string ToString()
+        {
+            return Major.ToString() + '.' + Minor.ToString() + '.' + Build.ToString() + '.' + Revision.ToString();
+        }
+
+        public int Major { get; protected set; } = 0;
 		public int Minor { get; protected set; } = 0;
 		public int Build { get; protected set; } = 0;
 		public int Revision { get; protected set; } = 0;
