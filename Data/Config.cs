@@ -78,6 +78,7 @@ namespace WaymarkLibrarian
 				string programVer = "";
 				string gameDataCfgVer = "";
 				string zoneDictionaryDatVer = "";
+				bool versionInfoValid = false;
 
 				//	Try to grab the current versions of things.
 				try
@@ -94,6 +95,9 @@ namespace WaymarkLibrarian
 						if( line.Split( '=' ).First().Trim().Equals( "ZoneDictionary.dat" ) ) zoneDictionaryDatVer = line.Split( '=' ).Last().Trim();
 					}
 
+					//	Verify that we got the bits that we need.  This isn't the best validity check, but it's probably good enough.
+					versionInfoValid = programVer.Length > 0 && gameDataCfgVer.Length > 0 && zoneDictionaryDatVer.Length > 0;
+
 					//	Mark that we checked for *program* updates.
 					ProgramSettings.LastUpdateCheck = DateTimeOffset.UtcNow;
 				}
@@ -104,52 +108,55 @@ namespace WaymarkLibrarian
 					ProgramSettings.LastUpdateCheck = DateTimeOffset.UtcNow;
 					ProgramSettings.LastConfigUpdateCheck = DateTimeOffset.UtcNow;
 				}
-				
-				//	See if a newer version of the program is available than what we've seen.
-				if( programVer.Length > 0 && VersionInfoHelper.Parse( programVer ) > ProgramSettings.LastProgramUpdateVersionSeen )
+
+				//	If we have valid version info, proceed with the rest of it.
+				if( versionInfoValid )
 				{
-					MessageBox.Show( "A new version of this program is available.  Click on the update link in the main window or go to https://github.com/PunishedPineapple/WaymarkLibrarian/releases to download the latest version.", "New Version" );
-					ProgramSettings.LastProgramUpdateVersionSeen = VersionInfoHelper.Parse( programVer );
-				}
-				//	Only handle configuration updates if the program itself is up to date (since file formats could conceivably change).
-				else if( VersionInfoHelper.Parse( FileVersionInfo.GetVersionInfo( System.Reflection.Assembly.GetExecutingAssembly().Location ) ) == ProgramSettings.LastProgramUpdateVersionSeen )
-				{
-					//	Update game data config.
-					if(	gameDataCfgVer.Length > 0 &&
-						gameDataCfgVer != GameDataSettings.GameVersion &&
-					MessageBox.Show( "A new version of the game data configuration file was found.  Update now?", "Update?", MessageBoxButtons.YesNo ) == DialogResult.Yes )
+					//	See if a newer version of the program is available than what we've seen.
+					if( VersionInfoHelper.Parse( programVer ) > ProgramSettings.LastProgramUpdateVersionSeen )
 					{
-						try
-						{
-							if( File.Exists( GameDataSettings.ConfigFilePath ) && Directory.Exists( backupFolderPath ) ) File.Copy( GameDataSettings.ConfigFilePath, backupFolderPath + "\\GameData.cfg." + DateTime.Now.ToString( "yyyy-MM-dd-HH-mm-ss" ) + ".bak", true );
-							byte[] rawData = httpClient.GetByteArrayAsync( "https://punishedpineapple.github.io/WaymarkLibrarian/Support/GameData.cfg" ).Result;
-							File.WriteAllBytes( GameDataSettings.ConfigFilePath, rawData );
-						}
-						catch( Exception exception )
-						{
-							MessageBox.Show( "Offsets update failed: " + exception.ToString(), "Failure!" );
-						}
+						MessageBox.Show( "A new version of this program is available.  Click on the update link in the main window or go to https://github.com/PunishedPineapple/WaymarkLibrarian/releases to download the latest version.", "New Version" );
+						ProgramSettings.LastProgramUpdateVersionSeen = VersionInfoHelper.Parse( programVer );
 					}
 
-					//	Update zone dictionary.
-					if(	zoneDictionaryDatVer.Length > 0 &&
-						zoneDictionaryDatVer != ZoneInfoSettings.GameVersion &&
-						MessageBox.Show( "A new version of the zone dictionary file was found.  Update now?", "Update?", MessageBoxButtons.YesNo ) == DialogResult.Yes )
+					//	Only handle configuration updates if the program itself is up to date (since file formats could conceivably change).
+					if( VersionInfoHelper.Parse( FileVersionInfo.GetVersionInfo( System.Reflection.Assembly.GetExecutingAssembly().Location ) ) == ProgramSettings.LastProgramUpdateVersionSeen )
 					{
-						try
+						//	Update game data config.
+						if( gameDataCfgVer != GameDataSettings.GameVersion &&
+							MessageBox.Show( "A new version of the game data configuration file was found.  Update now?", "Update?", MessageBoxButtons.YesNo ) == DialogResult.Yes )
 						{
-							if( File.Exists( ZoneInfoSettings.ConfigFilePath ) && Directory.Exists( backupFolderPath ) ) File.Copy( ZoneInfoSettings.ConfigFilePath, backupFolderPath + "\\ZoneDictionary.dat." + DateTime.Now.ToString( "yyyy-MM-dd-HH-mm-ss" ) + ".bak", true );
-							byte[] rawData = httpClient.GetByteArrayAsync( "https://punishedpineapple.github.io/WaymarkLibrarian/Support/ZoneDictionary.dat" ).Result;
-							File.WriteAllBytes( ZoneInfoSettings.ConfigFilePath, rawData );
+							try
+							{
+								if( File.Exists( GameDataSettings.ConfigFilePath ) && Directory.Exists( backupFolderPath ) ) File.Copy( GameDataSettings.ConfigFilePath, backupFolderPath + "\\GameData.cfg." + DateTime.Now.ToString( "yyyy-MM-dd-HH-mm-ss" ) + ".bak", true );
+								byte[] rawData = httpClient.GetByteArrayAsync( "https://punishedpineapple.github.io/WaymarkLibrarian/Support/GameData.cfg" ).Result;
+								File.WriteAllBytes( GameDataSettings.ConfigFilePath, rawData );
+							}
+							catch( Exception exception )
+							{
+								MessageBox.Show( "Offsets update failed: " + exception.ToString(), "Failure!" );
+							}
 						}
-						catch( Exception exception )
-						{
-							MessageBox.Show( "Zone info update failed: " + exception.ToString(), "Failure!" );
-						}
-					}
 
-					//	Mark that we checked for configuration updates.
-					ProgramSettings.LastConfigUpdateCheck = DateTimeOffset.UtcNow;
+						//	Update zone dictionary.
+						if( zoneDictionaryDatVer != ZoneInfoSettings.GameVersion &&
+							MessageBox.Show( "A new version of the zone dictionary file was found.  Update now?", "Update?", MessageBoxButtons.YesNo ) == DialogResult.Yes )
+						{
+							try
+							{
+								if( File.Exists( ZoneInfoSettings.ConfigFilePath ) && Directory.Exists( backupFolderPath ) ) File.Copy( ZoneInfoSettings.ConfigFilePath, backupFolderPath + "\\ZoneDictionary.dat." + DateTime.Now.ToString( "yyyy-MM-dd-HH-mm-ss" ) + ".bak", true );
+								byte[] rawData = httpClient.GetByteArrayAsync( "https://punishedpineapple.github.io/WaymarkLibrarian/Support/ZoneDictionary.dat" ).Result;
+								File.WriteAllBytes( ZoneInfoSettings.ConfigFilePath, rawData );
+							}
+							catch( Exception exception )
+							{
+								MessageBox.Show( "Zone info update failed: " + exception.ToString(), "Failure!" );
+							}
+						}
+
+						//	Mark that we checked for configuration updates.
+						ProgramSettings.LastConfigUpdateCheck = DateTimeOffset.UtcNow;
+					}
 				}
 			}
 
