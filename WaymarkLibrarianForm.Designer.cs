@@ -105,6 +105,8 @@
 			this.MainFormToolTip = new System.Windows.Forms.ToolTip(this.components);
 			this.label18 = new System.Windows.Forms.Label();
 			this.LibraryPresetNewButton = new System.Windows.Forms.Button();
+			this.HelpLinkLabel = new System.Windows.Forms.LinkLabel();
+			this.UpdateLinkLabel = new System.Windows.Forms.LinkLabel();
 			this.SuspendLayout();
 			// 
 			// CharacterListDropdown
@@ -305,7 +307,6 @@
 			// 
 			this.PresetDatePicker.CustomFormat = "";
 			this.PresetDatePicker.Location = new System.Drawing.Point(656, 72);
-			this.PresetDatePicker.MinDate = new System.DateTime(2020, 2, 18, 0, 0, 0, 0);
 			this.PresetDatePicker.Name = "PresetDatePicker";
 			this.PresetDatePicker.Size = new System.Drawing.Size(256, 20);
 			this.PresetDatePicker.TabIndex = 14;
@@ -754,11 +755,38 @@
 			this.LibraryPresetNewButton.UseVisualStyleBackColor = true;
 			this.LibraryPresetNewButton.Click += new System.EventHandler(this.LibraryPresetNewButton_Click);
 			// 
+			// HelpLinkLabel
+			// 
+			this.HelpLinkLabel.AutoSize = true;
+			this.HelpLinkLabel.Location = new System.Drawing.Point(8, 456);
+			this.HelpLinkLabel.Name = "HelpLinkLabel";
+			this.HelpLinkLabel.Size = new System.Drawing.Size(52, 13);
+			this.HelpLinkLabel.TabIndex = 76;
+			this.HelpLinkLabel.TabStop = true;
+			this.HelpLinkLabel.Text = "Info/Help";
+			this.HelpLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.HelpLinkLabel_LinkClicked);
+			// 
+			// UpdateLinkLabel
+			// 
+			this.UpdateLinkLabel.AutoSize = true;
+			this.UpdateLinkLabel.Enabled = false;
+			this.UpdateLinkLabel.LinkColor = System.Drawing.Color.Red;
+			this.UpdateLinkLabel.Location = new System.Drawing.Point(153, 445);
+			this.UpdateLinkLabel.Name = "UpdateLinkLabel";
+			this.UpdateLinkLabel.Size = new System.Drawing.Size(130, 13);
+			this.UpdateLinkLabel.TabIndex = 77;
+			this.UpdateLinkLabel.TabStop = true;
+			this.UpdateLinkLabel.Text = "Program Update Available";
+			this.UpdateLinkLabel.VisitedLinkColor = System.Drawing.Color.Red;
+			this.UpdateLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.UpdateLinkLabel_LinkClicked);
+			// 
 			// WaymarkLibrarianForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1034, 476);
+			this.Controls.Add(this.UpdateLinkLabel);
+			this.Controls.Add(this.HelpLinkLabel);
 			this.Controls.Add(this.LibraryPresetNewButton);
 			this.Controls.Add(this.label18);
 			this.Controls.Add(this.PresetZoneTextBox);
@@ -919,6 +947,8 @@
 		private System.Windows.Forms.ToolTip MainFormToolTip;
 		private System.Windows.Forms.Label label18;
 		private System.Windows.Forms.Button LibraryPresetNewButton;
-	}
+		private System.Windows.Forms.LinkLabel HelpLinkLabel;
+        private System.Windows.Forms.LinkLabel UpdateLinkLabel;
+    }
 }
 

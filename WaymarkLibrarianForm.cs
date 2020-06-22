@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Diagnostics;
+
 using Newtonsoft.Json;
 
 //	Use for InputBox rather than rolling our own trivial input dialog.
@@ -61,8 +63,20 @@ namespace WaymarkLibrarian
 			//	Show a warning about backing up character data if this is the first time that the program has been used.
 			if( mSettings.ProgramSettings.ShowInitialWarning )
 			{
-				MessageBox.Show( "Please back up your character configuration data before using this program.  This can be done either through the configuration options in the FFXIV launcher, or on the character selection screen in-game.", "Warning" );
+				MessageBox.Show( "Please back up your character configuration data before using this program.  This can be done either through the configuration options in the FFXIV launcher, or on the character selection screen in-game.\r\n\r\nIf you would like a detailed explanation of how to use this program, click on the\"Info/Help\" link in the bottom left corner of the main program window.", "Warning" );
 				mSettings.ProgramSettings.ShowInitialWarning = false;
+			}
+
+			//	Show/Enable the update link as appropriate.
+			if( mSettings.ProgramSettings.LastProgramUpdateVersionSeen > VersionInfoHelper.Parse( FileVersionInfo.GetVersionInfo( System.Reflection.Assembly.GetExecutingAssembly().Location ) ) )
+            {
+				UpdateLinkLabel.Enabled = true;
+				UpdateLinkLabel.Show();
+            }
+            else
+            {
+				UpdateLinkLabel.Enabled = false;
+				UpdateLinkLabel.Hide();
 			}
 		}
 
@@ -444,7 +458,7 @@ namespace WaymarkLibrarian
 				CharacterListDropdown.SelectedIndex > -1 && CharacterListDropdown.SelectedIndex < mCharacterFolderList.Length )
 			{
 				WaymarkPreset newPreset = new WaymarkPreset( mGamePresetContainer.Presets[GamePresetListBox.SelectedIndex] );
-				newPreset.Name = mSettings.CharacterAliasSettings.GetAlias( mCharacterFolderList[CharacterListDropdown.SelectedIndex].Split( '\\' ).Last() ) + " Slot " + ( GamePresetListBox.SelectedIndex + 1 ).ToString();
+				newPreset.Name = mSettings.ZoneInfoSettings.GetZoneName( newPreset.ZoneID ) + " (" + mSettings.CharacterAliasSettings.GetAlias( mCharacterFolderList[CharacterListDropdown.SelectedIndex].Split( '\\' ).Last() ) + " Slot " + ( GamePresetListBox.SelectedIndex + 1 ).ToString() + ")";
 				mPresetLibrary.AddPreset( newPreset );
 				PopulateLibraryListBox();
 			}
@@ -545,13 +559,24 @@ namespace WaymarkLibrarian
 		{
 			if( LibraryListBox.SelectedIndex > -1 && LibraryListBox.SelectedIndex < mPresetLibrary.Presets.Count )
 			{
+				//	Name is whatever's in the box.
 				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Name = PresetNameTextBox.Text;
-				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].LastModified = ( PresetDatePicker.Value.Date + PresetTimePicker.Value.TimeOfDay ).ToUniversalTime();
+
+				//	Limit the date to something feasible.
+				if( ( PresetDatePicker.Value.Date + PresetTimePicker.Value.TimeOfDay ).ToUniversalTime() > mSettings.ProgramSettings.EarliestPresetTimestampAllowed )
+				{
+					mPresetLibrary.Presets[LibraryListBox.SelectedIndex].LastModified = ( PresetDatePicker.Value.Date + PresetTimePicker.Value.TimeOfDay ).ToUniversalTime();
+				}
+				else
+				{
+					mPresetLibrary.Presets[LibraryListBox.SelectedIndex].LastModified = mSettings.ProgramSettings.EarliestPresetTimestampAllowed;
+				}
 
 				//	The Zone ID will always come from the text box because the dropdown will populate that in the event that the user cannot edit it.
 				UInt16 tempShort;
 				if( UInt16.TryParse( PresetZoneTextBox.Text, out tempShort ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].ZoneID = tempShort;
 
+				//	Read all of the waymark flags and positions.
 				double tempDouble;
 				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].IsEnabled = WaymarkACheckbox.Checked;
 				if( double.TryParse( WaymarkATextBox_X.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.X = tempDouble;
@@ -593,6 +618,7 @@ namespace WaymarkLibrarian
 				if( double.TryParse( Waymark4TextBox_Y.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.Y = tempDouble;
 				if( double.TryParse( Waymark4TextBox_Z.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( '4' )].Pos.Z = tempDouble;
 
+				//	Repopulate the library preset list.
 				PopulateLibraryListBox();
 			}
 		}
@@ -777,6 +803,16 @@ namespace WaymarkLibrarian
 				PresetZoneTextBox.Text = mSettings.ZoneInfoSettings.GetKeyFromIndex( PresetZoneDropdown.SelectedIndex - 1 ).ToString();
 			}
 		}
+		
+		private void HelpLinkLabel_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
+		{
+			System.Diagnostics.Process.Start( "https://github.com/PunishedPineapple/WaymarkLibrarian#waymarklibrarian" );
+		}
 		#endregion
+
+		private void UpdateLinkLabel_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
+		{
+			System.Diagnostics.Process.Start( "https://github.com/PunishedPineapple/WaymarkLibrarian/releases" );
+		}
 	}
 }

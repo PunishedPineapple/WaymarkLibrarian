@@ -2,21 +2,22 @@
 
 High Priority:
 
-- Why are character directory last modified times being updated, but then only sometimes?  May be related to copying a backup of the UISAVE?
 - Try to see if the UISAVE.DAT header contains a file format version that can be used instead of hoping that file length is a good enough discriminator.
 - Dictionary is a most likely poor choice for the underlying data structure in the zone dictionary since we want to be able to access by index as well.  Maybe keep two lists and manage them ourselves?
+- Updater logic still kinda looks ugly.
 
 
 Low Priority / Cleanup:
 
-- Have some kind of simple first-run tutorial?  Explain basic functionality (including how character should be logged out before reading/saving).
-- Use zone name as preset name when copying to library instead of character name and slot (maybe have character name in parentheses after it?).
+- Why are character directory last modified times being updated, but then only sometimes?  May be related to copying a backup of the UISAVE?
+- Should updating a library preset use Parse instead of TryParse, catch any exceptions, and prompt the user that changes were not saved and ask them to fix it?  Right now it fails silently to update any unparseable fields.  Have to not repopulate the library until success if this is done.
+- Can we easily notify/ask the user about selecting another preset from the library to edit if they have unsaved changes?
 - It feels super janky having web stuff and especially popup dialogs in the config classes.  See about making that stuff less of a mess.
 - Config classes are kind of a mess overall.
 - Clean up code formatting as much as reasonably possible.
 - Keep looking for ways to get character name from configuration data.
 - See if there is a good way to get duty names from zone names so that the zone dictionary looks a bit better.
-- Fix any wonky tab indices.  Maybe leave space between groups of indices for future expansion.
+- Fix any wonky tab indices in the form designer.  Maybe leave space between groups of indices for future expansion.
 - Handle big-endian architectures in the ReadBytes and WriteBytes function.
 - Maybe check for identical presets in the library when adding a new one, but maybe not.
 - It would be nice to set the selection back on the updated preset in the library, but that's kind of hard if we're sorting after updating.  See what we can do.
