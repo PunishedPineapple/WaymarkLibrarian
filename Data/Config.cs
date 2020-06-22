@@ -113,10 +113,10 @@ namespace WaymarkLibrarian
 				if( versionInfoValid )
 				{
 					//	See if a newer version of the program is available than what we've seen.
+					ProgramSettings.LastProgramUpdateVersionSeen = VersionInfoHelper.Parse( programVer );
 					if( VersionInfoHelper.Parse( programVer ) > ProgramSettings.LastProgramUpdateVersionSeen )
 					{
 						MessageBox.Show( "A new version of this program is available.  Click on the update link in the main window or go to https://github.com/PunishedPineapple/WaymarkLibrarian/releases to download the latest version.", "New Version" );
-						ProgramSettings.LastProgramUpdateVersionSeen = VersionInfoHelper.Parse( programVer );
 					}
 
 					//	Only handle configuration updates if the program itself is up to date (since file formats could conceivably change).
