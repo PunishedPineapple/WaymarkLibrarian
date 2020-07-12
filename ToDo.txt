@@ -2,13 +2,14 @@
 
 High Priority:
 
-- Try to see if the UISAVE.DAT header contains a file format version that can be used instead of hoping that file length is a good enough discriminator.
+- Maybe just get rid of time as an editable parameter and actually keep it as an actual last-modified time.
 - Dictionary is a most likely poor choice for the underlying data structure in the zone dictionary since we want to be able to access by index as well.  Maybe keep two lists and manage them ourselves?
 - Updater logic still kinda looks ugly.
 
 
 Low Priority / Cleanup:
 
+- Use PadLeft instead of leading zeroes on slot info.  This actually doesn't look right either.  May want to do more complex formatting, but does it really matter?
 - Why are character directory last modified times being updated, but then only sometimes?  May be related to copying a backup of the UISAVE?
 - Should updating a library preset use Parse instead of TryParse, catch any exceptions, and prompt the user that changes were not saved and ask them to fix it?  Right now it fails silently to update any unparseable fields.  Have to not repopulate the library until success if this is done.
 - Can we easily notify/ask the user about selecting another preset from the library to edit if they have unsaved changes?
@@ -23,6 +24,7 @@ Low Priority / Cleanup:
 - It would be nice to set the selection back on the updated preset in the library, but that's kind of hard if we're sorting after updating.  See what we can do.
 - Can the Newtonsoft JSON dll be packaged in with the executable easily?  Probably need to wait until the .net core WinForms designer is added.  ILMerge seems like a bad idea, and Costura (Fody) seems a bit sketchy with being supported.
 - Make the waymark and preset get string methods be ToString.  Actually maybe not; does all that formatted information make sense as a simple "ToString" call?  Maybe it does for the individual waymark, since that's a one-line thing.
+- Probably also apply the date low-limit when copying a preset to the game and maybe when importing and exporting.
 
 
 Very Low Priority / Potential New Features:
@@ -30,5 +32,4 @@ Very Low Priority / Potential New Features:
 - Maybe have copy to game bring up a context menu of which slot to use instead of relying on having a slot selected?  Maybe just make a copy to slot context menu in the library list instead?
 - Have date in zone dictionary with release date for each zone and restrict to that?
 - Prompt user before switching character or closing program if there are unwritten changes?
-- Possibly add a quick waymark generator that takes an arena center and adds evenly spaced x number of waymarks at a given radius.
-- Add a "Sync to Library" button that overwrites only the coordinates/active flags in the library with the ones from the game (if the zones match).
+- Possibly add a quick waymark generator that takes an arena center and adds evenly spaced x number of waymarks at a given radius and rotational offset.
