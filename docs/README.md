@@ -42,7 +42,7 @@ By default, the program checks for availabe updates up to once a day (this can b
 The five waymark presets that the game provides are saved by the game per-character in UISAVE.DAT under the corresponding character config folder.  As of patch 5.25, the format is as follows:
 * Valid regions of the file are XOR-encoded by 0x31.
 * Each data field is little-endian.
-* Waymark preset data starts at 0x6C97, and is 104 bytes per slot (second slot starts at 0x6CFF, etc.).
+* See the [UISAVE format](https://github.com/PunishedPineapple/UISAVE_Reader) for how this file is organized and how to find where waymark data starts.
 * There are 12 bytes per waymark (96 bytes total for eight waymarks), with a 4-byte signed integer each for the X, Y, and Z coordinates (in that order).  Divide the integer by 1000 to get the actual decimal value.
 * The final eight bytes of each preset are as follows:
   * One byte containing a bitmask of which markers are enabled.
