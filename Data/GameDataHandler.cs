@@ -21,15 +21,19 @@ namespace WaymarkLibrarian
 			//	Object to populate with the game data.
 			GamePresetContainer presets = new GamePresetContainer( mGameDataConfig.NumberOfPresets );
 
+			//	Determine the offset into the file where the waymark data is located.
+			if( !File.Exists( fileName ) ) throw new Exception( "Error while reading game data file: File does not exist (" + fileName + ")" );
+			uint waymarkDataLocation = GetWaymarkDataOffset( fileName );
+			if( waymarkDataLocation == 0 ) throw new Exception( "Error while reading game data file: Could not find waymark section." );
+
 			//	Read the raw data from the file.
-			if( !File.Exists( fileName ) ) throw new Exception( "File does not exist (" + fileName + ")" ) ;
 			FileStream fs = File.OpenRead( fileName );
-			if( fs.Length != mGameDataConfig.ExpectedFileLength_Bytes ) throw new Exception( "Error while reading game data file: Unexpected file size.  You may not have logged on with this character since the latest patch, or this program may not have been updated for the current patch." );
+			if( fs.Length < waymarkDataLocation + mGameDataConfig.BytesPerPreset() * mGameDataConfig.NumberOfPresets ) throw new Exception( "Error while reading game data file: Unexpected file size." );
 			byte[] rawData = new byte[mGameDataConfig.NumberOfPresets * mGameDataConfig.BytesPerPreset()];
 			int numBytesToRead = (int)mGameDataConfig.NumberOfPresets * (int)mGameDataConfig.BytesPerPreset();
-			fs.Seek( (int)mGameDataConfig.WaymarkDataOffset, SeekOrigin.Begin );
+			fs.Seek( (int)waymarkDataLocation, SeekOrigin.Begin );
 			uint bytesRead = (uint)fs.Read( rawData, 0, numBytesToRead );
-			if( bytesRead != ( mGameDataConfig.NumberOfPresets * mGameDataConfig.BytesPerPreset() ) ) throw new Exception( "Unexpected number of bytes read from file: " + bytesRead.ToString() );
+			if( bytesRead != ( mGameDataConfig.NumberOfPresets * mGameDataConfig.BytesPerPreset() ) ) throw new Exception( "Error while reading game data file: Unexpected number of bytes read from file: " + bytesRead.ToString() );
 			fs.Close();
 
 			//	Process the data.
@@ -74,13 +78,15 @@ namespace WaymarkLibrarian
 			//	XOR the data as expected by the game.
 			byte[] correctedData = CorrectData( data );
 
-			//	Write the data to the file.  Create a backup first.
-			if( !File.Exists( fileName ) ) throw new Exception( "File does not exist (" + fileName + ")" );
+			//	Write the data to the file.
+			if( !File.Exists( fileName ) ) throw new Exception( "Error while preparing to write game data file: File does not exist (" + fileName + ")" );
+			uint waymarkDataLocation = GetWaymarkDataOffset( fileName );
+			if( waymarkDataLocation == 0 ) throw new Exception( "Error while preparing to write game data file: Could not find waymark section." );
 			//Copying to a backup has occasionally changed the timestamps on the containing folder, so don't do it for now.  Maybe place it somewhere else too so there's less evidence of messing around in the configuration folders.
 			//File.Copy( fileName, fileName + ".bak", true );
 			FileStream fs = File.OpenWrite( fileName );
-			if( fs.Length != mGameDataConfig.ExpectedFileLength_Bytes ) throw new Exception( "Error while preparing to write game data file: Unexpected file size." );
-			fs.Seek( (int)mGameDataConfig.WaymarkDataOffset, SeekOrigin.Begin );
+			if( fs.Length < waymarkDataLocation + mGameDataConfig.BytesPerPreset() * mGameDataConfig.NumberOfPresets ) throw new Exception( "Error while preparing to write game data file: Unexpected file size." );
+			fs.Seek( (int)waymarkDataLocation, SeekOrigin.Begin );
 			fs.Write( correctedData, 0, correctedData.Length );
 			fs.Close();
 		}
@@ -135,7 +141,6 @@ namespace WaymarkLibrarian
 		//	Encode or decode raw data as required by the game's file format.
 		protected byte[] CorrectData( byte[] data )
 		{
-			
 			byte[] newData = (byte[])data.Clone();
 			for( uint i = 0; i < newData.Length; ++i ) newData[i] ^= mGameDataConfig.ConfigFileMagicNumber;
 			return newData;
@@ -163,6 +168,68 @@ namespace WaymarkLibrarian
 			{
 				dest[startPos + i] = bytesToWrite[i];
 			}
+		}
+
+		//	Copied in from a barebones UISAVE file reader and stripped to do just enough processing to find the waymark section.  It is going to be less error-prone to use this to find the offset into the file than rewriting this entire class to handle the file properly.
+		public uint GetWaymarkDataOffset( string fileName )
+		{
+			//	Check that we can do stuff.
+			if( !File.Exists( fileName ) ) throw new Exception( "File does not exist (" + fileName + ")" );
+			if( !BitConverter.IsLittleEndian ) throw new Exception( "BitConverter is reporting Big-Endian, and we're not set up to deal with this." );
+
+			//	Read in the raw data.
+			byte[] rawData = File.ReadAllBytes( fileName );
+
+			//	Parse the parts of the (16 byte) header that we care about.
+			if( rawData.Length < 16 ) throw new Exception( "The file was not long enough to contain a full header.  Either the file or the header is corrupt, or the file was not completely read." );
+			UInt32 numValidBytes = BitConverter.ToUInt32( rawData, 8 );
+
+			//	Obtain the rest of the valid data and unpad it.
+			if( rawData.Length < numValidBytes + 16 ) throw new Exception( "The file was shorter than the header indicated.  Either the file or the header is corrupt, or the file was not completely read." );
+			byte[] correctedData = CorrectData( ReadBytes( rawData, 16u, numValidBytes, false ) );
+
+			//	We don't care about the next 16 bytes.
+
+			//	Locals for processing sections.
+			uint currentOffset = 16u;
+			UInt16 sectionID;
+			UInt32 sectionLength;
+			uint waymarkSectionOffset = 0u;
+
+			//	And now we can start processing the sections.
+			while( currentOffset < numValidBytes )
+			{
+				if( numValidBytes > currentOffset + 16u )
+				{
+					//	Read Section Header
+					sectionID = BitConverter.ToUInt16( correctedData, (int)currentOffset );
+					sectionLength = BitConverter.ToUInt32( correctedData, (int)currentOffset + 8 );
+				}
+				else
+				{
+					throw new Exception( "Expected section header, but encountered premature end of valid file region." );
+				}
+
+				if( numValidBytes > currentOffset + sectionLength )
+				{
+					//	If we found the section that we wanted, we can get out now.
+					if( sectionID == mGameDataConfig.WaymarkDataSectionIndex )
+					{
+						//	Remember to offset by the 16 byte file header that we're not counting when looping through the sections, as well as the 16 byte section header.
+						waymarkSectionOffset = currentOffset + 32 + mGameDataConfig.NumWaymarkDataLeadingBytes;
+						break;
+					}
+
+					//	Move our current offset to the end of the section, including the header and the four bytes of trailing padding.
+					currentOffset += 16u + sectionLength + 4u;
+				}
+				else
+				{
+					throw new Exception( "Encountered premature end of valid file region while processing a section." );
+				}
+			}
+
+			return waymarkSectionOffset;
 		}
 
 		//	Data Members

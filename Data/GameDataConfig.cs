@@ -30,8 +30,8 @@ namespace WaymarkLibrarian
 		{
 			GameVersion = "2020.03.27.0000.0000";
 			WaymarkDataFileName = "UISAVE.DAT";
-			ExpectedFileLength_Bytes = 0x7420;
-			WaymarkDataOffset = 0x6C97;
+			WaymarkDataSectionIndex = 0x11;
+			NumWaymarkDataLeadingBytes = 16u;
 			NumberOfPresets = 5u;
 			WaymarkIDOrder = "ABCD1234";
 			BytesPerWaymark = 12u;
@@ -48,8 +48,8 @@ namespace WaymarkLibrarian
 				{
 					if( line.Split( '=' ).First().Trim().Equals( "GameVersion" ) ) GameVersion = line.Split( '=' ).Last().Trim();
 					if( line.Split( '=' ).First().Trim().Equals( "WaymarkDataFileName" ) ) WaymarkDataFileName = line.Split( '=' ).Last().Trim();
-					if( line.Split( '=' ).First().Trim().Equals( "ExpectedFileLength_Bytes" ) ) ExpectedFileLength_Bytes = uint.Parse( line.Split( '=' ).Last().Trim() );
-					if( line.Split( '=' ).First().Trim().Equals( "WaymarkDataOffset" ) ) WaymarkDataOffset = uint.Parse( line.Split( '=' ).Last().Trim() );
+					if( line.Split( '=' ).First().Trim().Equals( "WaymarkDataSectionIndex" ) ) WaymarkDataSectionIndex = uint.Parse( line.Split( '=' ).Last().Trim() );
+					if( line.Split( '=' ).First().Trim().Equals( "NumWaymarkDataLeadingBytes" ) ) NumWaymarkDataLeadingBytes = uint.Parse( line.Split( '=' ).Last().Trim() );
 					if( line.Split( '=' ).First().Trim().Equals( "NumberOfPresets" ) ) NumberOfPresets = uint.Parse( line.Split( '=' ).Last().Trim() );
 					if( line.Split( '=' ).First().Trim().Equals( "WaymarkIDOrder" ) ) WaymarkIDOrder = line.Split( '=' ).Last().Trim();
 					if( line.Split( '=' ).First().Trim().Equals( "BytesPerWaymark" ) ) BytesPerWaymark = uint.Parse( line.Split( '=' ).Last().Trim() );
@@ -62,8 +62,8 @@ namespace WaymarkLibrarian
 		//	Data Members
 		public string GameVersion { get; protected set; }
 		public string WaymarkDataFileName { get; protected set; }
-		public uint ExpectedFileLength_Bytes { get; protected set; }
-		public uint WaymarkDataOffset { get; protected set; }
+		public uint WaymarkDataSectionIndex { get; protected set; }
+		public uint NumWaymarkDataLeadingBytes { get; protected set; }
 		public uint NumberOfPresets { get; protected set; }
 		public uint NumberOfWaymarks() { return (uint)WaymarkIDOrder.Length; }
 		public uint BytesPerWaymark { get; protected set; }
