@@ -949,6 +949,6 @@
 		private System.Windows.Forms.Button LibraryPresetNewButton;
 		private System.Windows.Forms.LinkLabel HelpLinkLabel;
         private System.Windows.Forms.LinkLabel UpdateLinkLabel;
-    }
+	}
 }
 
