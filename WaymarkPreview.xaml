@@ -1,0 +1,86 @@
+<UserControl
+  x:Class="WaymarkLibrarian.WaymarkPreview"
+  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+  xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+  xmlns:local="clr-namespace:WaymarkLibrarian"
+  mc:Ignorable="d"
+  d:DesignHeight="200" d:DesignWidth="200"
+  DataContext="{Binding RelativeSource={RelativeSource Self}, Mode=OneWay}">
+
+  <UserControl.Resources>
+    <BooleanToVisibilityConverter x:Key="VisibilityConverter" />
+  </UserControl.Resources>
+
+  <Viewbox
+    StretchDirection="Both"
+    Stretch="UniformToFill">
+    <Grid Width="40" Height="40" Background="#111">
+      <Canvas
+      Width="200" Height="200"
+      HorizontalAlignment="Center"
+      VerticalAlignment="Center">
+        <Line
+        X1="100" Y1="0"
+        X2="100" Y2="200"
+        Stroke="DimGray"
+        StrokeThickness="0.2" />
+
+        <Line
+          X1="0" Y1="100"
+          X2="200" Y2="100"
+          Stroke="DimGray"
+          StrokeThickness="0.2" />
+
+        <Path Stroke="Silver" StrokeThickness="0.2" Fill="Red" Visibility="{Binding A.IsVisible, Mode=OneWay, Converter={StaticResource VisibilityConverter}}">
+          <Path.Data>
+            <EllipseGeometry RadiusX="0.7" RadiusY="0.7" Center="{Binding A.Point, Mode=OneWay}" />
+          </Path.Data>
+        </Path>
+
+        <Path Stroke="Silver" StrokeThickness="0.2" Fill="Yellow" Visibility="{Binding B.IsVisible, Mode=OneWay, Converter={StaticResource VisibilityConverter}}">
+          <Path.Data>
+            <EllipseGeometry RadiusX="0.7" RadiusY="0.7" Center="{Binding B.Point, Mode=OneWay}" />
+          </Path.Data>
+        </Path>
+
+        <Path Stroke="Silver" StrokeThickness="0.2" Fill="DodgerBlue" Visibility="{Binding C.IsVisible, Mode=OneWay, Converter={StaticResource VisibilityConverter}}">
+          <Path.Data>
+            <EllipseGeometry RadiusX="0.7" RadiusY="0.7" Center="{Binding C.Point, Mode=OneWay}" />
+          </Path.Data>
+        </Path>
+
+        <Path Stroke="Silver" StrokeThickness="0.2" Fill="BlueViolet" Visibility="{Binding D.IsVisible, Mode=OneWay, Converter={StaticResource VisibilityConverter}}">
+          <Path.Data>
+            <EllipseGeometry RadiusX="0.7" RadiusY="0.7" Center="{Binding D.Point, Mode=OneWay}" />
+          </Path.Data>
+        </Path>
+
+        <Path Stroke="Red" StrokeThickness="0.3" Fill="Transparent" Visibility="{Binding One.IsVisible, Mode=OneWay, Converter={StaticResource VisibilityConverter}}">
+          <Path.Data>
+            <EllipseGeometry RadiusX="0.7" RadiusY="0.7" Center="{Binding One.Point, Mode=OneWay}" />
+          </Path.Data>
+        </Path>
+
+        <Path Stroke="Yellow" StrokeThickness="0.3" Fill="Transparent" Visibility="{Binding Two.IsVisible, Mode=OneWay, Converter={StaticResource VisibilityConverter}}">
+          <Path.Data>
+            <EllipseGeometry RadiusX="0.7" RadiusY="0.7" Center="{Binding Two.Point, Mode=OneWay}" />
+          </Path.Data>
+        </Path>
+
+        <Path Stroke="DodgerBlue" StrokeThickness="0.3" Fill="Transparent" Visibility="{Binding Three.IsVisible, Mode=OneWay, Converter={StaticResource VisibilityConverter}}">
+          <Path.Data>
+            <EllipseGeometry RadiusX="0.7" RadiusY="0.7" Center="{Binding Three.Point, Mode=OneWay}" />
+          </Path.Data>
+        </Path>
+
+        <Path Stroke="BlueViolet" StrokeThickness="0.3" Fill="Transparent" Visibility="{Binding Four.IsVisible, Mode=OneWay, Converter={StaticResource VisibilityConverter}}">
+          <Path.Data>
+            <EllipseGeometry RadiusX="0.7" RadiusY="0.7" Center="{Binding Four.Point, Mode=OneWay}" />
+          </Path.Data>
+        </Path>
+      </Canvas>
+    </Grid>
+  </Viewbox>
+</UserControl>

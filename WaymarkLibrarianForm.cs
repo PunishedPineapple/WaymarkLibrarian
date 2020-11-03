@@ -28,6 +28,7 @@ namespace WaymarkLibrarian
 			//	Set up controls.
 			PresetTimePicker.Format = DateTimePickerFormat.Time;
 			PresetTimePicker.ShowUpDown = true;
+            SetupWaymarkPreview();
 
 			//	Get config settings.
 			mSettings = new Config();
@@ -817,7 +818,7 @@ namespace WaymarkLibrarian
 				PresetZoneTextBox.Text = mSettings.ZoneInfoSettings.GetKeyFromIndex( PresetZoneDropdown.SelectedIndex - 1 ).ToString();
 			}
 		}
-		
+
 		private void HelpLinkLabel_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
 		{
 			System.Diagnostics.Process.Start( "https://github.com/PunishedPineapple/WaymarkLibrarian#waymarklibrarian" );
@@ -827,6 +828,42 @@ namespace WaymarkLibrarian
 		private void UpdateLinkLabel_LinkClicked( object sender, LinkLabelLinkClickedEventArgs e )
 		{
 			System.Diagnostics.Process.Start( "https://github.com/PunishedPineapple/WaymarkLibrarian/releases" );
+		}
+
+		private void SetupWaymarkPreview()
+		{
+			var bindings = new[]
+			{
+                (CheckBox: this.WaymarkACheckbox, XTextBox: this.WaymarkATextBox_X, ZTextBox: this.WaymarkATextBox_Z, Point: this.waymarkPreview1.A),
+                (CheckBox: this.WaymarkBCheckbox, XTextBox: this.WaymarkBTextBox_X, ZTextBox: this.WaymarkBTextBox_Z, Point: this.waymarkPreview1.B),
+                (CheckBox: this.WaymarkCCheckbox, XTextBox: this.WaymarkCTextBox_X, ZTextBox: this.WaymarkCTextBox_Z, Point: this.waymarkPreview1.C),
+                (CheckBox: this.WaymarkDCheckbox, XTextBox: this.WaymarkDTextBox_X, ZTextBox: this.WaymarkDTextBox_Z, Point: this.waymarkPreview1.D),
+                (CheckBox: this.Waymark1Checkbox, XTextBox: this.Waymark1TextBox_X, ZTextBox: this.Waymark1TextBox_Z, Point: this.waymarkPreview1.One),
+                (CheckBox: this.Waymark2Checkbox, XTextBox: this.Waymark2TextBox_X, ZTextBox: this.Waymark2TextBox_Z, Point: this.waymarkPreview1.Two),
+                (CheckBox: this.Waymark3Checkbox, XTextBox: this.Waymark3TextBox_X, ZTextBox: this.Waymark3TextBox_Z, Point: this.waymarkPreview1.Three),
+                (CheckBox: this.Waymark4Checkbox, XTextBox: this.Waymark4TextBox_X, ZTextBox: this.Waymark4TextBox_Z, Point: this.waymarkPreview1.Four),
+			};
+
+			foreach (var binding in bindings)
+			{
+				binding.CheckBox.CheckedChanged += (_, __) => binding.Point.IsVisible = binding.CheckBox.Checked;
+
+				binding.XTextBox.TextChanged += (_, __) =>
+				{
+					if (double.TryParse(binding.XTextBox.Text, out double d))
+					{
+						binding.Point.X = d;
+					}
+				};
+
+				binding.ZTextBox.TextChanged += (_, __) =>
+				{
+					if (double.TryParse(binding.ZTextBox.Text, out double d))
+					{
+						binding.Point.Z = d;
+					}
+				};
+			}
 		}
 	}
 }
