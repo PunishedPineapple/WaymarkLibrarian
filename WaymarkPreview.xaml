@@ -18,14 +18,14 @@
     Stretch="UniformToFill">
     <Grid Width="40" Height="40" Background="#111">
       <Canvas
-      Width="200" Height="200"
-      HorizontalAlignment="Center"
-      VerticalAlignment="Center">
+        Width="200" Height="200"
+        HorizontalAlignment="Center"
+        VerticalAlignment="Center">
         <Line
-        X1="100" Y1="0"
-        X2="100" Y2="200"
-        Stroke="DimGray"
-        StrokeThickness="0.2" />
+          X1="100" Y1="0"
+          X2="100" Y2="200"
+          Stroke="DimGray"
+          StrokeThickness="0.2" />
 
         <Line
           X1="0" Y1="100"

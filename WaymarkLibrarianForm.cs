@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -28,7 +28,7 @@ namespace WaymarkLibrarian
 			//	Set up controls.
 			PresetTimePicker.Format = DateTimePickerFormat.Time;
 			PresetTimePicker.ShowUpDown = true;
-            SetupWaymarkPreview();
+			SetupWaymarkPreview();
 
 			//	Get config settings.
 			mSettings = new Config();
@@ -70,12 +70,12 @@ namespace WaymarkLibrarian
 
 			//	Show/Enable the update link as appropriate.
 			if( mSettings.ProgramSettings.LastProgramUpdateVersionSeen > VersionInfoHelper.Parse( FileVersionInfo.GetVersionInfo( System.Reflection.Assembly.GetExecutingAssembly().Location ) ) )
-            {
+			{
 				UpdateLinkLabel.Enabled = true;
 				UpdateLinkLabel.Show();
-            }
-            else
-            {
+			}
+			else
+			{
 				UpdateLinkLabel.Enabled = false;
 				UpdateLinkLabel.Hide();
 			}
@@ -832,16 +832,22 @@ namespace WaymarkLibrarian
 
 		private void SetupWaymarkPreview()
 		{
+			this.CenterXNumericUpDown.Value = (decimal)WaymarkPreview.Current.CenterX;
+			this.CenterZNumericUpDown.Value = (decimal)WaymarkPreview.Current.CenterZ;
+
+			this.CenterXNumericUpDown.ValueChanged += (s, _) => WaymarkPreview.Current.CenterX = (double)(s as NumericUpDown).Value;
+			this.CenterZNumericUpDown.ValueChanged += (s, _) => WaymarkPreview.Current.CenterZ = (double)(s as NumericUpDown).Value;
+
 			var bindings = new[]
 			{
-                (CheckBox: this.WaymarkACheckbox, XTextBox: this.WaymarkATextBox_X, ZTextBox: this.WaymarkATextBox_Z, Point: this.waymarkPreview1.A),
-                (CheckBox: this.WaymarkBCheckbox, XTextBox: this.WaymarkBTextBox_X, ZTextBox: this.WaymarkBTextBox_Z, Point: this.waymarkPreview1.B),
-                (CheckBox: this.WaymarkCCheckbox, XTextBox: this.WaymarkCTextBox_X, ZTextBox: this.WaymarkCTextBox_Z, Point: this.waymarkPreview1.C),
-                (CheckBox: this.WaymarkDCheckbox, XTextBox: this.WaymarkDTextBox_X, ZTextBox: this.WaymarkDTextBox_Z, Point: this.waymarkPreview1.D),
-                (CheckBox: this.Waymark1Checkbox, XTextBox: this.Waymark1TextBox_X, ZTextBox: this.Waymark1TextBox_Z, Point: this.waymarkPreview1.One),
-                (CheckBox: this.Waymark2Checkbox, XTextBox: this.Waymark2TextBox_X, ZTextBox: this.Waymark2TextBox_Z, Point: this.waymarkPreview1.Two),
-                (CheckBox: this.Waymark3Checkbox, XTextBox: this.Waymark3TextBox_X, ZTextBox: this.Waymark3TextBox_Z, Point: this.waymarkPreview1.Three),
-                (CheckBox: this.Waymark4Checkbox, XTextBox: this.Waymark4TextBox_X, ZTextBox: this.Waymark4TextBox_Z, Point: this.waymarkPreview1.Four),
+				(CheckBox: this.WaymarkACheckbox, XTextBox: this.WaymarkATextBox_X, ZTextBox: this.WaymarkATextBox_Z, Point: this.waymarkPreview1.A),
+				(CheckBox: this.WaymarkBCheckbox, XTextBox: this.WaymarkBTextBox_X, ZTextBox: this.WaymarkBTextBox_Z, Point: this.waymarkPreview1.B),
+				(CheckBox: this.WaymarkCCheckbox, XTextBox: this.WaymarkCTextBox_X, ZTextBox: this.WaymarkCTextBox_Z, Point: this.waymarkPreview1.C),
+				(CheckBox: this.WaymarkDCheckbox, XTextBox: this.WaymarkDTextBox_X, ZTextBox: this.WaymarkDTextBox_Z, Point: this.waymarkPreview1.D),
+				(CheckBox: this.Waymark1Checkbox, XTextBox: this.Waymark1TextBox_X, ZTextBox: this.Waymark1TextBox_Z, Point: this.waymarkPreview1.One),
+				(CheckBox: this.Waymark2Checkbox, XTextBox: this.Waymark2TextBox_X, ZTextBox: this.Waymark2TextBox_Z, Point: this.waymarkPreview1.Two),
+				(CheckBox: this.Waymark3Checkbox, XTextBox: this.Waymark3TextBox_X, ZTextBox: this.Waymark3TextBox_Z, Point: this.waymarkPreview1.Three),
+				(CheckBox: this.Waymark4Checkbox, XTextBox: this.Waymark4TextBox_X, ZTextBox: this.Waymark4TextBox_Z, Point: this.waymarkPreview1.Four),
 			};
 
 			foreach (var binding in bindings)
