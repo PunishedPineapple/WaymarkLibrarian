@@ -107,15 +107,16 @@ namespace WaymarkLibrarian
 			this.LibraryPresetNewButton = new System.Windows.Forms.Button();
 			this.HelpLinkLabel = new System.Windows.Forms.LinkLabel();
 			this.UpdateLinkLabel = new System.Windows.Forms.LinkLabel();
-			this.elementHost1 = new System.Windows.Forms.Integration.ElementHost();
-			this.waymarkPreview1 = new WaymarkLibrarian.WaymarkPreview();
 			this.CenterXNumericUpDown = new System.Windows.Forms.NumericUpDown();
 			this.CenterZNumericUpDown = new System.Windows.Forms.NumericUpDown();
 			this.label22 = new System.Windows.Forms.Label();
 			this.label23 = new System.Windows.Forms.Label();
 			this.label24 = new System.Windows.Forms.Label();
-			( (System.ComponentModel.ISupportInitialize)( this.CenterXNumericUpDown ) ).BeginInit();
-			( (System.ComponentModel.ISupportInitialize)( this.CenterZNumericUpDown ) ).BeginInit();
+			this.label25 = new System.Windows.Forms.Label();
+			this.WaymarkPreviewHost = new System.Windows.Forms.Integration.ElementHost();
+			this.waymarkPreview1 = new WaymarkLibrarian.WaymarkPreview();
+			((System.ComponentModel.ISupportInitialize)(this.CenterXNumericUpDown)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.CenterZNumericUpDown)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// CharacterListDropdown
@@ -789,79 +790,109 @@ namespace WaymarkLibrarian
 			this.UpdateLinkLabel.VisitedLinkColor = System.Drawing.Color.Red;
 			this.UpdateLinkLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.UpdateLinkLabel_LinkClicked);
 			// 
-			// elementHost1
-			// 
-			this.elementHost1.Location = new System.Drawing.Point( 1036, 22 );
-			this.elementHost1.Name = "elementHost1";
-			this.elementHost1.Size = new System.Drawing.Size( 374, 374 );
-			this.elementHost1.TabIndex = 78;
-			this.elementHost1.Text = "elementHost1";
-			this.elementHost1.Child = this.waymarkPreview1;
-			// 
 			// CenterXNumericUpDown
 			// 
-			this.CenterXNumericUpDown.Location = new System.Drawing.Point( 1170, 408 );
+			this.CenterXNumericUpDown.Location = new System.Drawing.Point(1170, 408);
+			this.CenterXNumericUpDown.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+			this.CenterXNumericUpDown.Minimum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            -2147483648});
 			this.CenterXNumericUpDown.Name = "CenterXNumericUpDown";
-			this.CenterXNumericUpDown.Size = new System.Drawing.Size( 55, 19 );
+			this.CenterXNumericUpDown.Size = new System.Drawing.Size(55, 20);
 			this.CenterXNumericUpDown.TabIndex = 79;
 			this.CenterXNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.CenterXNumericUpDown.Value = new decimal( new int[] {
-			100,
-			0,
-			0,
-			0} );
+			this.CenterXNumericUpDown.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
 			// 
 			// CenterZNumericUpDown
 			// 
-			this.CenterZNumericUpDown.Location = new System.Drawing.Point( 1249, 408 );
+			this.CenterZNumericUpDown.Location = new System.Drawing.Point(1249, 408);
+			this.CenterZNumericUpDown.Maximum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            0});
+			this.CenterZNumericUpDown.Minimum = new decimal(new int[] {
+            9999,
+            0,
+            0,
+            -2147483648});
 			this.CenterZNumericUpDown.Name = "CenterZNumericUpDown";
-			this.CenterZNumericUpDown.Size = new System.Drawing.Size( 55, 19 );
+			this.CenterZNumericUpDown.Size = new System.Drawing.Size(55, 20);
 			this.CenterZNumericUpDown.TabIndex = 80;
 			this.CenterZNumericUpDown.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
-			this.CenterZNumericUpDown.Value = new decimal( new int[] {
-			100,
-			0,
-			0,
-			0} );
+			this.CenterZNumericUpDown.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
 			// 
 			// label22
 			// 
 			this.label22.AutoSize = true;
-			this.label22.Location = new System.Drawing.Point( 1107, 410 );
+			this.label22.Location = new System.Drawing.Point(1080, 410);
 			this.label22.Name = "label22";
-			this.label22.Size = new System.Drawing.Size( 39, 12 );
+			this.label22.Size = new System.Drawing.Size(69, 13);
 			this.label22.TabIndex = 81;
-			this.label22.Text = "Center";
+			this.label22.Text = "Arena Center";
 			// 
 			// label23
 			// 
 			this.label23.AutoSize = true;
-			this.label23.Location = new System.Drawing.Point( 1152, 410 );
+			this.label23.Location = new System.Drawing.Point(1152, 410);
 			this.label23.Name = "label23";
-			this.label23.Size = new System.Drawing.Size( 12, 12 );
+			this.label23.Size = new System.Drawing.Size(17, 13);
 			this.label23.TabIndex = 82;
-			this.label23.Text = "X";
+			this.label23.Text = "X:";
 			// 
 			// label24
 			// 
 			this.label24.AutoSize = true;
-			this.label24.Location = new System.Drawing.Point( 1231, 410 );
+			this.label24.Location = new System.Drawing.Point(1231, 410);
 			this.label24.Name = "label24";
-			this.label24.Size = new System.Drawing.Size( 12, 12 );
+			this.label24.Size = new System.Drawing.Size(17, 13);
 			this.label24.TabIndex = 83;
-			this.label24.Text = "Z";
+			this.label24.Text = "Z:";
+			// 
+			// label25
+			// 
+			this.label25.AutoSize = true;
+			this.label25.Location = new System.Drawing.Point(1033, 8);
+			this.label25.Name = "label25";
+			this.label25.Size = new System.Drawing.Size(96, 13);
+			this.label25.TabIndex = 84;
+			this.label25.Text = "Waymark Preview:";
+			// 
+			// WaymarkPreviewHost
+			// 
+			this.WaymarkPreviewHost.Location = new System.Drawing.Point(1036, 24);
+			this.WaymarkPreviewHost.Name = "WaymarkPreviewHost";
+			this.WaymarkPreviewHost.Size = new System.Drawing.Size(374, 374);
+			this.WaymarkPreviewHost.TabIndex = 78;
+			this.WaymarkPreviewHost.Text = "WaymarkPreviewHost";
+			this.WaymarkPreviewHost.Child = this.waymarkPreview1;
 			// 
 			// WaymarkLibrarianForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size( 1422, 476 );
-			this.Controls.Add( this.label24 );
-			this.Controls.Add( this.label23 );
-			this.Controls.Add( this.label22 );
-			this.Controls.Add( this.CenterZNumericUpDown );
-			this.Controls.Add( this.CenterXNumericUpDown );
-			this.Controls.Add( this.elementHost1 );
+			this.ClientSize = new System.Drawing.Size(1422, 476);
+			this.Controls.Add(this.label25);
+			this.Controls.Add(this.label24);
+			this.Controls.Add(this.label23);
+			this.Controls.Add(this.label22);
+			this.Controls.Add(this.CenterZNumericUpDown);
+			this.Controls.Add(this.CenterXNumericUpDown);
+			this.Controls.Add(this.WaymarkPreviewHost);
 			this.Controls.Add(this.UpdateLinkLabel);
 			this.Controls.Add(this.HelpLinkLabel);
 			this.Controls.Add(this.LibraryPresetNewButton);
@@ -941,8 +972,8 @@ namespace WaymarkLibrarian
 			this.Name = "WaymarkLibrarianForm";
 			this.Text = "FFXIV Waymark Librarian";
 			this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.WaymarkLibrarianForm_FormClosed);
-			( (System.ComponentModel.ISupportInitialize)( this.CenterXNumericUpDown ) ).EndInit();
-			( (System.ComponentModel.ISupportInitialize)( this.CenterZNumericUpDown ) ).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.CenterXNumericUpDown)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.CenterZNumericUpDown)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -1028,13 +1059,14 @@ namespace WaymarkLibrarian
 		private System.Windows.Forms.Button LibraryPresetNewButton;
 		private System.Windows.Forms.LinkLabel HelpLinkLabel;
         private System.Windows.Forms.LinkLabel UpdateLinkLabel;
-		private System.Windows.Forms.Integration.ElementHost elementHost1;
+		private System.Windows.Forms.Integration.ElementHost WaymarkPreviewHost;
 		private WaymarkPreview waymarkPreview1;
 		private System.Windows.Forms.NumericUpDown CenterXNumericUpDown;
 		private System.Windows.Forms.NumericUpDown CenterZNumericUpDown;
 		private System.Windows.Forms.Label label22;
 		private System.Windows.Forms.Label label23;
 		private System.Windows.Forms.Label label24;
+		private System.Windows.Forms.Label label25;
 	}
 }
 
