@@ -137,7 +137,7 @@ namespace WaymarkLibrarian
 			mCharacterFolderList = Directory.GetDirectories( mSettings.ProgramSettings.CharacterDataFolderPath, "FFXIV_CHR*", SearchOption.TopDirectoryOnly );
 			foreach( string dir in mCharacterFolderList )
 			{
-				CharacterListDropdown.Items.Add( mSettings.CharacterAliasSettings.GetAlias( dir.Split('\\').Last() ) );
+				CharacterListDropdown.Items.Add( mSettings.CharacterAliasSettings.GetAlias( dir.Split( '\\' ).Last() ) );
 			}
 		}
 		private void PopulateGamePresetListBox( bool clear = false )
@@ -835,8 +835,8 @@ namespace WaymarkLibrarian
 			this.CenterXNumericUpDown.Value = (decimal)WaymarkPreview.Current.CenterX;
 			this.CenterZNumericUpDown.Value = (decimal)WaymarkPreview.Current.CenterZ;
 
-			this.CenterXNumericUpDown.ValueChanged += (s, _) => WaymarkPreview.Current.CenterX = (double)(s as NumericUpDown).Value;
-			this.CenterZNumericUpDown.ValueChanged += (s, _) => WaymarkPreview.Current.CenterZ = (double)(s as NumericUpDown).Value;
+			this.CenterXNumericUpDown.ValueChanged += ( s, _ ) => WaymarkPreview.Current.CenterX = (double)( s as NumericUpDown ).Value;
+			this.CenterZNumericUpDown.ValueChanged += ( s, _ ) => WaymarkPreview.Current.CenterZ = (double)( s as NumericUpDown ).Value;
 
 			var bindings = new[]
 			{
@@ -850,21 +850,21 @@ namespace WaymarkLibrarian
 				(CheckBox: this.Waymark4Checkbox, XTextBox: this.Waymark4TextBox_X, ZTextBox: this.Waymark4TextBox_Z, Point: this.waymarkPreview1.Four),
 			};
 
-			foreach (var binding in bindings)
+			foreach( var binding in bindings )
 			{
-				binding.CheckBox.CheckedChanged += (_, __) => binding.Point.IsVisible = binding.CheckBox.Checked;
+				binding.CheckBox.CheckedChanged += ( _, __ ) => binding.Point.IsVisible = binding.CheckBox.Checked;
 
-				binding.XTextBox.TextChanged += (_, __) =>
+				binding.XTextBox.TextChanged += ( _, __ ) =>
 				{
-					if (double.TryParse(binding.XTextBox.Text, out double d))
+					if( double.TryParse( binding.XTextBox.Text, out double d ) )
 					{
 						binding.Point.X = d;
 					}
 				};
 
-				binding.ZTextBox.TextChanged += (_, __) =>
+				binding.ZTextBox.TextChanged += ( _, __ ) =>
 				{
-					if (double.TryParse(binding.ZTextBox.Text, out double d))
+					if( double.TryParse( binding.ZTextBox.Text, out double d ) )
 					{
 						binding.Point.Z = d;
 					}
