@@ -2,13 +2,16 @@
 
 High Priority:
 
-- Maybe just get rid of time as an editable parameter and actually keep it as an actual last-modified time.
+- Maybe just get rid of time as an editable parameter and keep it as an actual last-modified time.
 - Dictionary is a most likely poor choice for the underlying data structure in the zone dictionary since we want to be able to access by index as well.  Maybe keep two lists and manage them ourselves?
 - Updater logic still kinda looks ugly.
+- Make stuff export as floats, not doubles just to be safe.
 
 
 Low Priority / Cleanup:
 
+- Make preview canvas also have a settable arena size under the center if practical.
+- Set up bindings and geometry to use rectangle instead of ellipse for 1/2/3/4 waymarks.
 - Use PadLeft instead of leading zeroes on slot info.  This actually doesn't look right either.  May want to do more complex formatting, but does it really matter?
 - Why are character directory last modified times being updated, but then only sometimes?  May be related to copying a backup of the UISAVE?
 - Should updating a library preset use Parse instead of TryParse, catch any exceptions, and prompt the user that changes were not saved and ask them to fix it?  Right now it fails silently to update any unparseable fields.  Have to not repopulate the library until success if this is done.
@@ -33,3 +36,4 @@ Very Low Priority / Potential New Features:
 - Have date in zone dictionary with release date for each zone and restrict to that?
 - Prompt user before switching character or closing program if there are unwritten changes?
 - Possibly add a quick waymark generator that takes an arena center and adds evenly spaced x number of waymarks at a given radius and rotational offset.
+- Eventually do on-map preview like in the Dalamud plugin if it seems to be worth the time.  This could make the program a maintenance headache though with game updates, and being more likely to work at servers up is the main benefit to this as a standalone program.  Also not sure how hard it's going to be to get Lumina set up and textures decoded/displayed without Dalamud helper functions.
