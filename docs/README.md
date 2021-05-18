@@ -1,5 +1,7 @@
 # WaymarkLibrarian
-[![Screenshot](WaymarkLibrarianScreenshot_Small.png)](WaymarkLibrarianScreenshot.png?raw=true)
+
+## Superseded
+**This program has basically been superseded by the [XIVLauncher/Dalamud plugin version](https://github.com/PunishedPineapple/WaymarkPresetPlugin).  You should probably use that instead unless Dalamud is unavailable due to a game patch.**
 
 ## Purpose
 This is a tool for Final Fantasy XIV that allows swapping an unlimited number of waymark presets into and out of the extremely limited number of slots that the game provides.  While I've tried to make everything function correctly (I wrote this for myself to use, after all), use of this program is at your own risk (please read the [IMPORTANT](#important) section below).
