@@ -1,5 +1,4 @@
 # WaymarkLibrarian
-[![Screenshot](WaymarkLibrarianScreenshot_Small.png)](WaymarkLibrarianScreenshot.png?raw=true)
 
 ## Superseded
 **This program has basically been superseded by the [XIVLauncher/Dalaumd plugin version](https://github.com/goatcorp/FFXIVQuickLauncher).  You should probably use that instead unless Dalamud is unavailable due to a game patch.**
