@@ -16,8 +16,10 @@ namespace ZoneDictionaryGenerator
 		//	This is a list of names that we want to hardcode for some reason.  The initial use case for this is removed Unreal trials, so that people aren't just left with a blank duty name.
 		private static readonly Dictionary<UInt16, string> mHardcodedDutyNames = new Dictionary<ushort, string>()
 		{
-			{ 744, "The Akh Afah Amphitheatre (Unreal)" },	//	Shiva Unreal
-			{ 757, "The Navel (Unreal)" }	//	Titan Unreal
+			{ 62, "Cape Westwind" },
+			{ 744, "The Akh Afah Amphitheatre (Unreal)" },
+			{ 757, "The Navel (Unreal)" },
+			{ 776, "The Whorleater (Unreal)" }
 		};
 
 		public static void Main( string[] args )
@@ -63,8 +65,7 @@ namespace ZoneDictionaryGenerator
 			uint zoneTypeColNum = 9u;
 
 			uint contentFinderConditionIDColNum = 0u;
-			uint contentFinderConditionNameColNum = 38u;
-
+			uint contentFinderConditionNameColNum = 39u;
 
 			//	Construct ContentFinderCondition dictionary.
 			SortedDictionary<UInt16, string> contentFinderConditionDictionary = new SortedDictionary<UInt16, string>();
