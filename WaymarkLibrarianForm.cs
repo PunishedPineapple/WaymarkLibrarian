@@ -583,7 +583,7 @@ namespace WaymarkLibrarian
 				if( double.TryParse( WaymarkATextBox_Y.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.Y = tempDouble;
 				if( double.TryParse( WaymarkATextBox_Z.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'A' )].Pos.Z = tempDouble;
 
-				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].IsEnabled = WaymarkACheckbox.Checked;
+				mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].IsEnabled = WaymarkBCheckbox.Checked;
 				if( double.TryParse( WaymarkBTextBox_X.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.X = tempDouble;
 				if( double.TryParse( WaymarkBTextBox_Y.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.Y = tempDouble;
 				if( double.TryParse( WaymarkBTextBox_Z.Text, out tempDouble ) ) mPresetLibrary.Presets[LibraryListBox.SelectedIndex].Waymarks[WaymarkPreset.GetWaymarkNumber( 'B' )].Pos.Z = tempDouble;
