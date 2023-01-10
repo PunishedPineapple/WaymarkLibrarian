@@ -65,7 +65,7 @@ namespace ZoneDictionaryGenerator
 			uint zoneTypeColNum = 9u;
 
 			uint contentFinderConditionIDColNum = 0u;
-			uint contentFinderConditionNameColNum = 39u;
+			uint contentFinderConditionNameColNum = 42u;
 
 			//	Construct ContentFinderCondition dictionary.
 			SortedDictionary<UInt16, string> contentFinderConditionDictionary = new SortedDictionary<UInt16, string>();
